@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- Background circle -->
+  <circle cx="32" cy="32" r="32" fill="#0066ff"/>
+  
+  <!-- Letter G -->
+  <text x="16" y="45" font-family="Inter, sans-serif" font-size="32" font-weight="700" fill="white">G</text>
+  
+  <!-- Number 4 -->
+  <text x="32" y="45" font-family="Inter, sans-serif" font-size="32" font-weight="700" fill="#ff6b35">4</text>
+  
+  <!-- Letter U -->
+  <text x="48" y="45" font-family="Inter, sans-serif" font-size="32" font-weight="700" fill="white">U</text>
+</svg>
