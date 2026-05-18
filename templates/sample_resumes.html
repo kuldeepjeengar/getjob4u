@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Sample Resumes — getjob4u{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="pill">ATS-friendly · Real structure · Quantified impact</span>
+    <h1>Sample Resumes</h1>
+    <p class="lead">Three resume templates built to clear ATS scanners and impress hiring managers — fresher, mid-level ML engineer, and AI/LLM engineer.</p>
+  </div>
+</section>
+
+<section class="container">
+  <div class="tab-bar" id="resumeTabs">
+    {% for r in resumes %}
+      <button class="tab {% if loop.first %}active{% endif %}" data-tab="{{ r.id }}">{{ r.title }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="tip-panels">
+    {% for r in resumes %}
+    <div class="tip-panel {% if loop.first %}active{% endif %}" id="tab-{{ r.id }}">
+      <div class="resume-meta">
+        <h2>{{ r.title }}</h2>
+        <p class="lead">{{ r.summary }}</p>
+        <ul class="checklist">
+          {% for h in r.highlights %}<li>{{ h }}</li>{% endfor %}
+        </ul>
+        <button class="btn btn-ghost copy-resume" data-target="resume-{{ r.id }}">📋 Copy resume text</button>
+      </div>
+      <pre class="resume-content" id="resume-{{ r.id }}">{{ r.content }}</pre>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="tip-grid resume-tips">
+    <article class="tip-card highlight">
+      <h3>Universal resume rules</h3>
+      <ul>
+        {% for t in tips %}<li>{{ t }}</li>{% endfor %}
+      </ul>
+    </article>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='/js/tabs.js') }}"></script>
+<script src="{{ url_for('static', path='/js/copy.js') }}"></script>
+{% endblock %}

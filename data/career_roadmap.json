@@ -1,0 +1,43 @@
+{
+  "roadmaps": [
+    {
+      "id": "data_scientist",
+      "title": "Data Scientist Roadmap",
+      "duration": "9-12 months from scratch",
+      "stages": [
+        {"stage": "1. Foundations (Month 1-2)", "items": ["Python (variables, data structures, OOP)", "Statistics basics (mean, median, std, distributions)", "Linear algebra (vectors, matrices, dot product)", "Probability (Bayes, conditional, distributions)", "SQL (joins, group by, window functions)"]},
+        {"stage": "2. Data Handling (Month 3)", "items": ["pandas (loading, cleaning, merging)", "NumPy (vectorized operations)", "Matplotlib + Seaborn (EDA)", "Real-world dataset cleaning project on Kaggle"]},
+        {"stage": "3. Classical ML (Month 4-5)", "items": ["Linear/Logistic Regression", "Decision Trees, Random Forest, XGBoost", "Clustering (K-means, DBSCAN)", "Model evaluation (CV, metrics, leakage)", "scikit-learn end-to-end project"]},
+        {"stage": "4. Deep Learning Basics (Month 6-7)", "items": ["Neural network from scratch (NumPy)", "PyTorch or TensorFlow basics", "CNNs for image tasks", "RNNs / Transformers intro", "1 DL project deployed"]},
+        {"stage": "5. Business + Communication (Month 8)", "items": ["A/B testing", "Storytelling with data", "Dashboards (Tableau/Power BI)", "Stakeholder communication", "Case study practice"]},
+        {"stage": "6. Job-Ready (Month 9-12)", "items": ["3-5 portfolio projects on GitHub", "Resume + LinkedIn polished", "Mock interviews (SQL, stats, ML, behavioral)", "Apply + cold outreach", "Open-source / Kaggle competitions"]}
+      ]
+    },
+    {
+      "id": "ml_engineer",
+      "title": "ML Engineer Roadmap",
+      "duration": "12-15 months from coding background",
+      "stages": [
+        {"stage": "1. Strong CS Fundamentals", "items": ["Data structures + algorithms", "System design basics", "Distributed systems intro", "Linux + Bash + Git mastery"]},
+        {"stage": "2. ML Foundations", "items": ["Classical ML (same as DS)", "Deep learning theory + practice", "Math: linear algebra, calculus, prob"]},
+        {"stage": "3. Software Engineering for ML", "items": ["Python testing (pytest)", "Type hints + linting", "FastAPI / Flask", "Docker + Docker Compose", "Async Python"]},
+        {"stage": "4. MLOps Tooling", "items": ["MLflow / Weights & Biases", "DVC for data versioning", "Airflow / Prefect for orchestration", "Feature stores (Feast)", "Monitoring (Evidently, Prometheus)"]},
+        {"stage": "5. Cloud + Deployment", "items": ["AWS SageMaker or GCP Vertex AI", "Kubernetes basics", "CI/CD with GitHub Actions", "Inference optimization (ONNX, TensorRT, quantization)"]},
+        {"stage": "6. Job-Ready", "items": ["1-2 deployed end-to-end ML projects", "Open-source contribution to ML lib", "System design + leetcode prep", "Interview practice with mock"]}
+      ]
+    },
+    {
+      "id": "ai_engineer",
+      "title": "AI Engineer (LLM/GenAI) Roadmap",
+      "duration": "6-9 months from Python background",
+      "stages": [
+        {"stage": "1. LLM Fundamentals", "items": ["Transformer architecture (read Andrej Karpathy's series)", "Tokenization, embeddings, attention", "Prompt engineering basics", "OpenAI / Anthropic API"]},
+        {"stage": "2. RAG Systems", "items": ["LangChain or LlamaIndex", "Vector DBs (Pinecone, Chroma, pgvector)", "Chunking strategies", "Hybrid search (BM25 + embeddings)", "Citations and grounding"]},
+        {"stage": "3. Production LLM Apps", "items": ["FastAPI for LLM serving", "Streaming responses", "Async + concurrency", "Caching (semantic + exact)", "Cost optimization (prompt compression, model routing)"]},
+        {"stage": "4. Agents + Tool Use", "items": ["LangGraph / CrewAI", "Function calling / tool use", "Multi-agent workflows", "Memory + state management"]},
+        {"stage": "5. Evaluation + Observability", "items": ["LLM-as-judge", "RAGAS / DeepEval", "LangSmith / Helicone for tracing", "Human eval rubrics", "Regression testing for prompts"]},
+        {"stage": "6. Advanced", "items": ["Fine-tuning (LoRA, QLoRA)", "Self-hosting open models (vLLM)", "Multimodal (vision + audio)", "Build 2-3 real applications"]}
+      ]
+    }
+  ]
+}

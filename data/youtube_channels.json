@@ -1,0 +1,84 @@
+{
+  "categories": [
+    {
+      "id": "ml_foundations",
+      "title": "ML Foundations & Theory",
+      "channels": [
+        {"name": "StatQuest with Josh Starmer", "url": "https://www.youtube.com/@statquest", "description": "Crystal-clear explanations of stats and ML. Famous 'BAM!'. Start here if maths feels scary."},
+        {"name": "3Blue1Brown", "url": "https://www.youtube.com/@3blue1brown", "description": "Beautiful visual math. The neural networks series is iconic."},
+        {"name": "Andrew Ng — DeepLearning.AI", "url": "https://www.youtube.com/@Deeplearningai", "description": "Co-founder of Coursera ML. Foundational and well-structured."},
+        {"name": "Sentdex", "url": "https://www.youtube.com/@sentdex", "description": "Hands-on Python ML tutorials, from basics to advanced projects."},
+        {"name": "Two Minute Papers", "url": "https://www.youtube.com/@TwoMinutePapers", "description": "Latest AI research papers explained in under 5 minutes. Great for staying current."}
+      ]
+    },
+    {
+      "id": "deep_learning",
+      "title": "Deep Learning & Neural Nets",
+      "channels": [
+        {"name": "Yannic Kilcher", "url": "https://www.youtube.com/@YannicKilcher", "description": "Deep paper walkthroughs. Great for understanding state-of-the-art research."},
+        {"name": "Andrej Karpathy", "url": "https://www.youtube.com/@AndrejKarpathy", "description": "Ex-OpenAI/Tesla. Builds GPT from scratch. The best YouTube series on transformers, period."},
+        {"name": "Aladdin Persson", "url": "https://www.youtube.com/@AladdinPersson", "description": "PyTorch and TensorFlow from-scratch implementations. Excellent for hands-on learners."},
+        {"name": "Lex Fridman", "url": "https://www.youtube.com/@lexfridman", "description": "Long-form interviews with AI pioneers. Great for understanding the field's direction."}
+      ]
+    },
+    {
+      "id": "llm_genai",
+      "title": "LLMs & Generative AI",
+      "channels": [
+        {"name": "AI Engineer", "url": "https://www.youtube.com/@aiDotEngineer", "description": "Conference talks on building production LLM apps. RAG, agents, evals."},
+        {"name": "James Briggs", "url": "https://www.youtube.com/@jamesbriggs", "description": "LangChain, vector DBs, RAG pipelines. Hands-on tutorials with code."},
+        {"name": "AssemblyAI", "url": "https://www.youtube.com/@AssemblyAI", "description": "Modern AI applications — speech, LLMs, multimodal."},
+        {"name": "AI Anytime", "url": "https://www.youtube.com/@AIAnytime", "description": "End-to-end GenAI projects with deployment. Great portfolio inspiration."},
+        {"name": "Greg Kamradt (Data Indy)", "url": "https://www.youtube.com/@DataIndependent", "description": "LangChain tutorials, embeddings, RAG patterns."}
+      ]
+    },
+    {
+      "id": "data_science",
+      "title": "Data Science & Analytics",
+      "channels": [
+        {"name": "Ken Jee", "url": "https://www.youtube.com/@KenJee_ds", "description": "Data science career advice, portfolio projects, interview prep."},
+        {"name": "Krish Naik", "url": "https://www.youtube.com/@krishnaik06", "description": "Full DS/ML/AI courses in Hindi & English. Beginner-friendly."},
+        {"name": "Alex The Analyst", "url": "https://www.youtube.com/@AlexTheAnalyst", "description": "Data analyst roadmap, SQL, Tableau, Power BI portfolio projects."},
+        {"name": "Tina Huang", "url": "https://www.youtube.com/@TinaHuang1", "description": "Ex-Meta DS. Career advice, interview prep, productivity for tech workers."},
+        {"name": "Luke Barousse", "url": "https://www.youtube.com/@LukeBarousse", "description": "Data job market analysis with real data. Eye-opening salary and skills insights."}
+      ]
+    },
+    {
+      "id": "interview_prep",
+      "title": "Interview Prep & Career",
+      "channels": [
+        {"name": "Emma Ding (Data Interview Pro)", "url": "https://www.youtube.com/@DataInterviewPro", "description": "Ex-Airbnb DS. Behavioral, SQL, product sense, and case interview prep."},
+        {"name": "Mahesh Huddar", "url": "https://www.youtube.com/@MaheshHuddar", "description": "ML algorithm tutorials with worked examples. Great for interview brush-up."},
+        {"name": "NeetCode", "url": "https://www.youtube.com/@NeetCode", "description": "Best YouTube channel for coding interview prep. LeetCode patterns explained clearly."},
+        {"name": "Exponent", "url": "https://www.youtube.com/@tryexponent", "description": "Mock interviews for PM, DS, ML engineer roles at FAANG companies."}
+      ]
+    },
+    {
+      "id": "math_stats",
+      "title": "Math & Statistics",
+      "channels": [
+        {"name": "Khan Academy", "url": "https://www.youtube.com/@khanacademy", "description": "Solid foundations in calculus, linear algebra, probability."},
+        {"name": "MIT OpenCourseWare", "url": "https://www.youtube.com/@mitocw", "description": "Full MIT courses. Gilbert Strang's linear algebra is a classic."},
+        {"name": "Brandon Foltz", "url": "https://www.youtube.com/@BrandonFoltz", "description": "Statistics 101 series. Patient, clear, gap-free."}
+      ]
+    },
+    {
+      "id": "mlops_engineering",
+      "title": "MLOps & ML Engineering",
+      "channels": [
+        {"name": "DataTalksClub", "url": "https://www.youtube.com/@DataTalksClub", "description": "Free MLOps Zoomcamp, real-time ML, data engineering. Free, high-quality cohorts."},
+        {"name": "MLOps Community", "url": "https://www.youtube.com/@MLOps", "description": "Talks from practitioners shipping ML in production at scale."},
+        {"name": "ArjanCodes", "url": "https://www.youtube.com/@ArjanCodes", "description": "Python software engineering — design patterns, clean code, FastAPI. Levels up your code quality."}
+      ]
+    }
+  ],
+  "free_courses": [
+    {"name": "Fast.ai — Practical Deep Learning", "url": "https://course.fast.ai/", "description": "Top-down approach. Build state-of-the-art models in week 1."},
+    {"name": "Andrew Ng's ML Specialization (Coursera audit)", "url": "https://www.coursera.org/specializations/machine-learning-introduction", "description": "The classic foundational ML course. Free if you audit."},
+    {"name": "CS50's Intro to AI with Python (Harvard)", "url": "https://cs50.harvard.edu/ai/", "description": "Free Harvard course. Search, knowledge, ML, neural nets, NLP."},
+    {"name": "Hugging Face NLP Course", "url": "https://huggingface.co/learn/nlp-course", "description": "Free, hands-on transformers and NLP using HF libraries."},
+    {"name": "MLOps Zoomcamp (DataTalksClub)", "url": "https://github.com/DataTalksClub/mlops-zoomcamp", "description": "Free 9-week MLOps course. Experiment tracking, orchestration, deployment, monitoring."},
+    {"name": "DeepLearning.AI Short Courses", "url": "https://www.deeplearning.ai/short-courses/", "description": "1-2 hour focused courses on LLMs, RAG, agents — usually free."},
+    {"name": "Full Stack Deep Learning", "url": "https://fullstackdeeplearning.com/", "description": "How to ship ML systems. Free lecture series."}
+  ]
+}

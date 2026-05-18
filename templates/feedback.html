@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Share Feedback — getjob4u{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="pill">3-min form · We read every response</span>
+    <h1>Help us make getjob4u better</h1>
+    <p class="lead">What's working? What's broken? What feature would you love to see next? Drop a note below.</p>
+  </div>
+</section>
+
+<section class="container">
+  <form id="feedbackForm" class="feedback-form card">
+    <div class="form-grid two">
+      <label>Your Name<input type="text" name="name" required maxlength="100" /></label>
+      <label>Your Email<input type="email" name="email" required maxlength="120" placeholder="you@example.com" /></label>
+    </div>
+
+    <label>Category
+      <select name="category" required>
+        <option value="">Pick one…</option>
+        <option value="bug">🐛 Bug or issue</option>
+        <option value="feature">💡 Feature request</option>
+        <option value="content">📚 Content suggestion</option>
+        <option value="general">💬 General feedback</option>
+        <option value="praise">❤️ Just want to say thanks</option>
+      </select>
+    </label>
+
+    <fieldset class="rating-field">
+      <legend>How would you rate getjob4u?</legend>
+      <div class="rating-stars" id="ratingStars">
+        {% for i in range(1, 6) %}
+        <button type="button" class="star" data-value="{{ i }}" aria-label="Rate {{ i }}">★</button>
+        {% endfor %}
+      </div>
+      <input type="hidden" name="rating" id="ratingInput" required />
+    </fieldset>
+
+    <label>Your message
+      <textarea name="message" rows="6" required maxlength="2000" placeholder="What's on your mind? Bugs, ideas, anything goes."></textarea>
+    </label>
+
+    <button type="submit" class="btn btn-primary btn-block">Send feedback</button>
+    <div class="form-status" id="formStatus" aria-live="polite"></div>
+  </form>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='/js/feedback.js') }}"></script>
+{% endblock %}

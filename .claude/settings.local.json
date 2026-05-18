@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir d:\\\\first_project)",
+      "Bash(uv init *)"
+    ]
+  }
+}

@@ -1,0 +1,31 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Local SQLite DB
+getjob4u.db
+getjob4u.db-journal
+
+# Uploads (resumes parsed in memory; this dir is unused but kept as a placeholder)
+uploads/*
+!uploads/.gitkeep
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local secrets
+.env
+.env.local
+
+# AWS / Elastic Beanstalk
+.elasticbeanstalk/

@@ -1,0 +1,51 @@
+{
+  "resumes": [
+    {
+      "id": "ds_fresher",
+      "title": "Data Scientist — Fresher / 0-1 yr",
+      "summary": "A graduate-level resume showcasing strong projects, internships, and academic ML work. Optimized to clear ATS for entry-level DS roles.",
+      "highlights": [
+        "Strong project section with quantified impact",
+        "Tech stack clearly listed (Python, SQL, scikit-learn, TensorFlow)",
+        "GitHub and Kaggle profiles linked",
+        "Coursework + certifications integrated"
+      ],
+      "content": "JANE DOE\nemail@example.com | +91-9876543210 | linkedin.com/in/janedoe | github.com/janedoe | kaggle.com/janedoe\n\nSUMMARY\nAspiring Data Scientist with hands-on experience in supervised learning, NLP, and SQL. Strong foundations in statistics and Python. Looking to apply ML to real business problems.\n\nEDUCATION\nBachelor of Technology, Computer Science | XYZ University | 2022-2026\nCGPA: 8.7/10 | Relevant Coursework: Machine Learning, Statistics, Linear Algebra, DBMS\n\nSKILLS\nLanguages: Python, SQL, R\nML/DS: scikit-learn, pandas, NumPy, TensorFlow, PyTorch, XGBoost\nViz: Matplotlib, Seaborn, Tableau, Power BI\nTools: Git, Docker, Jupyter, AWS (S3, EC2), Linux\n\nPROJECTS\nCustomer Churn Prediction (Python, XGBoost) — github.com/janedoe/churn\n- Built end-to-end churn model on 50K customer dataset; achieved 0.89 ROC-AUC\n- Engineered 24 features; reduced false negatives by 32% vs baseline logistic regression\n- Deployed via FastAPI + Docker on AWS EC2\n\nMovie Recommendation System (collaborative filtering + content-based)\n- Hybrid system on MovieLens 100K; RMSE of 0.91 on test set\n- A/B tested ranking strategies; documented results on Kaggle (top 8%)\n\nNLP Sentiment Classifier for Product Reviews\n- Fine-tuned DistilBERT on 100K Amazon reviews; 92% F1\n- Reduced inference latency by 40% via ONNX export and quantization\n\nINTERNSHIPS\nData Science Intern | ABC Analytics | Jun 2025 - Aug 2025\n- Built dashboards in Power BI tracking 12 KPIs, used by 30+ stakeholders\n- Automated weekly report generation with Python; saved 8 hours/week\n\nCERTIFICATIONS\nAndrew Ng's ML Specialization (Coursera) | AWS Cloud Practitioner | Google Data Analytics"
+    },
+    {
+      "id": "ml_engineer_mid",
+      "title": "ML Engineer — 3-5 yrs",
+      "summary": "Mid-level ML engineer resume emphasizing production deployment, MLOps, and scale. Designed to clear ATS for IC4/IC5 ML roles.",
+      "highlights": [
+        "Production impact metrics (latency, scale, $$ saved)",
+        "MLOps tooling explicitly listed",
+        "Cross-functional collaboration shown",
+        "Open-source contributions / talks (if any)"
+      ],
+      "content": "JOHN SMITH\nemail@example.com | linkedin.com/in/johnsmith | github.com/johnsmith\n\nSUMMARY\nMachine Learning Engineer with 4+ years building and shipping models at scale. Strong in deep learning, MLOps, and Python systems. Shipped models serving 50M+ predictions/day at <100ms p99.\n\nEXPERIENCE\nSenior ML Engineer | TechCorp | Mar 2023 - Present\n- Lead ML engineer for fraud detection platform serving 12M transactions/day\n- Built real-time inference service in FastAPI + ONNX; reduced p99 latency from 220ms to 78ms\n- Designed feature store on Feast + Redis, cutting feature retrieval from 80ms to 6ms\n- Led migration to MLflow for experiment tracking; adopted by 4 ML teams\n- Mentored 2 junior engineers and ran weekly paper-reading group\n\nML Engineer | StartupXYZ | Jul 2021 - Mar 2023\n- Built recommendation system serving 8M users; lifted CTR by 18% over baseline\n- Productionized 6 models on AWS SageMaker with full CI/CD via GitHub Actions\n- Implemented A/B testing framework, increasing experiment velocity 3x\n\nML Engineer Intern | BigCo | May 2020 - Aug 2020\n- Improved image classification model accuracy from 91% to 94% via data augmentation\n\nEDUCATION\nM.S. Computer Science, Stanford University | 2019-2021 | Focus: ML Systems\nB.Tech CS, IIT Bombay | 2015-2019 | CGPA: 9.1/10\n\nSKILLS\nML: PyTorch, TensorFlow, scikit-learn, XGBoost, transformers, ONNX\nMLOps: MLflow, Kubeflow, SageMaker, Vertex AI, Airflow, DVC\nLangs: Python (expert), Go, SQL, Bash\nInfra: AWS, GCP, Docker, Kubernetes, Terraform, Redis, Kafka\nObservability: Prometheus, Grafana, OpenTelemetry\n\nPUBLICATIONS / TALKS\n- 'Scaling Real-Time Inference at TechCorp' — MLOps Community Conference 2024\n- Co-author, 'Embedding Cache Strategies' — Workshop @ NeurIPS 2023"
+    },
+    {
+      "id": "ai_engineer_genai",
+      "title": "AI Engineer (LLM/GenAI) — 2-4 yrs",
+      "summary": "Resume for the new wave of AI Engineer roles focused on LLMs, RAG, agents, and prompt engineering.",
+      "highlights": [
+        "LangChain, RAG, vector DBs front and center",
+        "Production GenAI applications with metrics",
+        "Cost-per-query optimization shown",
+        "Open weights + closed models experience"
+      ],
+      "content": "PRIYA SHARMA\nemail@example.com | linkedin.com/in/priyasharma | github.com/priyasharma\n\nSUMMARY\nAI Engineer specializing in production LLM systems. Built and deployed RAG pipelines, multi-agent workflows, and fine-tuned open models serving 200K queries/day.\n\nEXPERIENCE\nAI Engineer | AI Startup | Aug 2023 - Present\n- Built customer-support RAG over 12M docs (Pinecone + GPT-4o); deflected 41% of tickets\n- Reduced average LLM cost/query from $0.18 to $0.04 via prompt compression, caching, and routing to smaller models for simple queries\n- Designed eval harness with LLM-as-judge + human review; uncovered 7 prompt regressions before prod\n- Shipped agentic workflow using LangGraph for invoice automation; processes 4K invoices/week\n- Fine-tuned Llama 3.1 8B on internal data with LoRA; matched GPT-4 quality for domain tasks at 1/20th cost\n\nML Engineer | OldCo | Jan 2022 - Aug 2023\n- Built classical NLP pipeline for compliance review; reduced manual review hours by 60%\n- Migrated legacy TF1 models to PyTorch; cut training time 4x\n\nPROJECTS\nOpen-source RAG framework — github.com/priyasharma/rag-kit | 1.2K stars\nLLM eval toolkit blog — priyasharma.dev/llm-evals (8K reads)\n\nSKILLS\nLLM: OpenAI, Anthropic, Llama, Mistral, fine-tuning (LoRA/QLoRA), RLHF basics\nRAG: LangChain, LlamaIndex, Pinecone, Chroma, Weaviate, hybrid search\nAgents: LangGraph, CrewAI, function calling, tool use\nEval: RAGAS, LangSmith, Helicone, custom LLM-as-judge\nInfra: FastAPI, AWS Bedrock, vLLM, Docker, Modal, Replicate\nLangs: Python (expert), TypeScript, SQL\n\nEDUCATION\nB.Tech AI & DS, NIT Surathkal | 2018-2022 | CGPA: 8.9"
+    }
+  ],
+  "general_tips": [
+    "Keep it to 1 page if you have <5 years of experience, 2 pages max.",
+    "Lead with impact, not responsibilities. 'Reduced X by Y%' beats 'Responsible for X'.",
+    "Tailor keywords to the job description — ATS systems match heavily on this.",
+    "Use a clean, single-column layout. ATS struggles with tables and columns.",
+    "Save as PDF (not image PDF). Test extraction with the ATS scanner on this site.",
+    "List a tech stack section near the top. Recruiters scan it first.",
+    "Include links: GitHub, LinkedIn, portfolio, Kaggle, blog. Make them clickable.",
+    "Order experience by reverse chronological. Most recent role gets the most bullets.",
+    "Use consistent date formats (MMM YYYY) and tense (past for past roles, present for current)."
+  ]
+}

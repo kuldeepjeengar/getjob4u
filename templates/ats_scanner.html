@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}ATS Resume Scanner — getjob4u{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="pill">Tool · 100% private — your file never leaves the server's RAM</span>
+    <h1>ATS Resume Scanner</h1>
+    <p class="lead">Upload your resume (PDF, DOCX, or TXT). Get a score out of 100, role-specific keyword analysis, and concrete fixes.</p>
+  </div>
+</section>
+
+<section class="container">
+  <div class="ats-grid">
+    <form id="atsForm" class="ats-form card">
+      <h3>1. Choose your target role</h3>
+      <select name="target_role" id="targetRole" required>
+        {% for r in roles %}<option value="{{ r.value }}">{{ r.label }}</option>{% endfor %}
+      </select>
+
+      <h3>2. Upload resume</h3>
+      <label for="fileInput" class="dropzone" id="dropzone">
+        <span class="dz-icon">📤</span>
+        <span class="dz-title">Drop your resume here</span>
+        <span class="dz-sub">PDF, DOCX, or TXT · 5MB max</span>
+        <input type="file" id="fileInput" name="file" accept=".pdf,.docx,.txt" hidden required />
+        <span class="dz-filename" id="fileName"></span>
+      </label>
+
+      <button class="btn btn-primary btn-block" type="submit" id="scanBtn">Scan resume</button>
+      <p class="muted small">No login. No tracking. The file is parsed in memory and discarded.</p>
+    </form>
+
+    <div class="ats-result card" id="atsResult" hidden>
+      <div class="score-circle" id="scoreCircle">
+        <span class="score-num" id="scoreNum">0</span>
+        <span class="score-label" id="scoreGrade">—</span>
+      </div>
+      <h2 id="scoreTitle">Your ATS score</h2>
+      <p class="muted" id="scoreSub"></p>
+
+      <h4>Breakdown</h4>
+      <div class="breakdown" id="breakdown"></div>
+
+      <h4>Suggestions</h4>
+      <ul class="suggestions" id="suggestions"></ul>
+
+      <details class="keyword-details">
+        <summary>Keyword analysis</summary>
+        <div class="kw-grid">
+          <div>
+            <h5>Matched</h5>
+            <div class="kw-list" id="matchedKw"></div>
+          </div>
+          <div>
+            <h5>Top missing</h5>
+            <div class="kw-list missing" id="missingKw"></div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <div class="ats-result card placeholder" id="atsPlaceholder">
+      <div class="placeholder-icon">📊</div>
+      <h3>Your results will appear here</h3>
+      <p class="muted">Pick a role, upload your resume, and click scan.</p>
+      <ul class="checklist">
+        <li>Keyword match for the target role</li>
+        <li>Section + contact info checks</li>
+        <li>Action verbs & quantified impact</li>
+        <li>Length and formatting score</li>
+        <li>Actionable suggestions</li>
+      </ul>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='/js/ats.js') }}"></script>
+{% endblock %}

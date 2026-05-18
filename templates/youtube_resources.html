@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}YouTube + Free Courses — getjob4u{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="pill">Curated · 30+ channels · 7+ free courses</span>
+    <h1>Stop scrolling. Start learning.</h1>
+    <p class="lead">The best YouTube channels and free courses for AI, ML, and Data Science — organized so you find what you need in 10 seconds.</p>
+  </div>
+</section>
+
+<section class="container">
+  {% for cat in categories %}
+  <div class="resource-section">
+    <h2>{{ cat.title }}</h2>
+    <div class="channel-grid">
+      {% for ch in cat.channels %}
+      <a class="channel-card" href="{{ ch.url }}" target="_blank" rel="noopener noreferrer">
+        <div class="channel-icon">▶</div>
+        <h3>{{ ch.name }}</h3>
+        <p>{{ ch.description }}</p>
+        <span class="link-arrow">Open on YouTube →</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+
+  <div class="resource-section">
+    <h2>Free Courses Worth Your Time</h2>
+    <div class="course-grid">
+      {% for c in courses %}
+      <a class="course-card" href="{{ c.url }}" target="_blank" rel="noopener noreferrer">
+        <h3>{{ c.name }}</h3>
+        <p>{{ c.description }}</p>
+        <span class="link-arrow">Start course →</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}

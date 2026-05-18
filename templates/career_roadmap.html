@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Career Roadmap — getjob4u{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="pill">Month-by-month · 3 career paths · Curated learning order</span>
+    <h1>Career Roadmap</h1>
+    <p class="lead">Month-by-month plans for Data Scientist, ML Engineer, and AI Engineer. Pick a path, follow the stages, build projects.</p>
+  </div>
+</section>
+
+<section class="container">
+  <div class="tab-bar" id="roadmapTabs">
+    {% for r in roadmaps %}
+      <button class="tab {% if loop.first %}active{% endif %}" data-tab="{{ r.id }}">{{ r.title }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="tip-panels">
+    {% for r in roadmaps %}
+    <div class="tip-panel {% if loop.first %}active{% endif %}" id="tab-{{ r.id }}">
+      <div class="roadmap-head">
+        <h2>{{ r.title }}</h2>
+        <span class="pill">{{ r.duration }}</span>
+      </div>
+      <ol class="roadmap-list">
+        {% for s in r.stages %}
+        <li class="roadmap-stage">
+          <h3>{{ s.stage }}</h3>
+          <ul>
+            {% for i in s["items"] %}<li>{{ i }}</li>{% endfor %}
+          </ul>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='/js/tabs.js') }}"></script>
+{% endblock %}

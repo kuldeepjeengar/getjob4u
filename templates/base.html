@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}getjob4u — Land Your AI/ML/DS Job{% endblock %}</title>
+  <meta name="description" content="Free toolkit for AI, ML, and Data Science job seekers — ATS resume scanner, interview tips, cold email generator, and curated learning resources." />
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="/">
+        <span class="brand-mark">G4U</span>
+        <span class="brand-text">getjob<span class="accent">4u</span></span>
+      </a>
+      <button class="nav-toggle" aria-label="Toggle menu" id="navToggle">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="primary-nav" id="primaryNav">
+        <a href="/ats-scanner">ATS Scanner</a>
+        <a href="/interview-tips">Interview Tips</a>
+        <a href="/email-generator">Cold Emails</a>
+        <a href="/youtube-resources">Learn</a>
+        <a href="/sample-resumes">Sample Resumes</a>
+        <a href="/career-roadmap">Roadmap</a>
+        <a href="/feedback" class="nav-cta">Feedback</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>{% block content %}{% endblock %}</main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="brand">
+            <span class="brand-mark">G4U</span>
+            <span class="brand-text">getjob<span class="accent">4u</span></span>
+          </div>
+          <p class="muted">Free career toolkit for AI, ML, and Data Science aspirants.</p>
+        </div>
+        <div>
+          <h4>Tools</h4>
+          <a href="/ats-scanner">ATS Scanner</a>
+          <a href="/email-generator">Cold Email Generator</a>
+          <a href="/sample-resumes">Sample Resumes</a>
+        </div>
+        <div>
+          <h4>Learn</h4>
+          <a href="/interview-tips">Interview Tips</a>
+          <a href="/youtube-resources">YouTube + Courses</a>
+          <a href="/career-roadmap">Career Roadmap</a>
+        </div>
+        <div>
+          <h4>Connect</h4>
+          <a href="/feedback">Share Feedback</a>
+          <a href="/api/health">API Health</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="muted">&copy; <span id="year"></span> getjob4u. Built with FastAPI.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', path='/js/main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

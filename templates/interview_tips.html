@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Interview Tips — getjob4u{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="pill">Curated · 35+ tips · AI/ML/DS specific</span>
+    <h1>Interview Tips & Tricks</h1>
+    <p class="lead">Battle-tested guidance across ML, deep learning, LLMs, statistics, SQL, and behavioral rounds.</p>
+  </div>
+</section>
+
+<section class="container">
+  <div class="tab-bar" id="tipsTabs">
+    {% for cat in categories %}
+      <button class="tab {% if loop.first %}active{% endif %}" data-tab="{{ cat.id }}">{{ cat.title }}</button>
+    {% endfor %}
+  </div>
+
+  <div class="tip-panels">
+    {% for cat in categories %}
+    <div class="tip-panel {% if loop.first %}active{% endif %}" id="tab-{{ cat.id }}">
+      <h2>{{ cat.title }}</h2>
+      <div class="tip-grid">
+        {% for tip in cat.tips %}
+        <article class="tip-card">
+          <h3>{{ tip.title }}</h3>
+          <p>{{ tip.content }}</p>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='/js/tabs.js') }}"></script>
+{% endblock %}

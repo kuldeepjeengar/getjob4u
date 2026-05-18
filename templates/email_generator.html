@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Cold Email & LinkedIn DM Generator — getjob4u{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="pill">Tool · Get more replies · Templates that actually work</span>
+    <h1>Cold Email & LinkedIn DM Generator</h1>
+    <p class="lead">Pick a scenario, fill in the slots, copy the message. Tested templates for referrals, recruiters, alumni, and follow-ups.</p>
+  </div>
+</section>
+
+<section class="container">
+  <div class="email-grid">
+    <form id="emailForm" class="email-form card">
+      <div class="medium-toggle">
+        <button type="button" class="med-btn active" data-medium="email">📧 Email</button>
+        <button type="button" class="med-btn" data-medium="linkedin">💼 LinkedIn DM</button>
+      </div>
+
+      <label>Template
+        <select id="templateKey" name="template_key"></select>
+      </label>
+
+      <div class="form-grid">
+        <label>Your Name<input type="text" name="your_name" placeholder="Jane Doe" /></label>
+        <label>Your Current Role<input type="text" name="your_role" placeholder="Data Scientist" /></label>
+        <label>Your Top Skills<input type="text" name="your_skills" placeholder="Python, ML, SQL" /></label>
+        <label>Recipient Name<input type="text" name="recipient_name" placeholder="Alex Kumar" /></label>
+        <label>Company<input type="text" name="company" placeholder="Google" /></label>
+        <label>Target Role<input type="text" name="role" placeholder="ML Engineer" /></label>
+        <label>Team / Group<input type="text" name="team" placeholder="Search Quality" /></label>
+        <label>Their Work / Project<input type="text" name="their_work" placeholder="LLM ranking systems" /></label>
+        <label>Top Achievement<input type="text" name="achievement" placeholder="Shipped model improving CTR 18%" /></label>
+        <label class="alumni-field" hidden>Alma Mater<input type="text" name="alma_mater" placeholder="IIT Bombay" /></label>
+        <label class="recruiter-field" hidden>Your Availability<input type="text" name="availability" placeholder="Tue/Thu afternoons" /></label>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">Generate message</button>
+      <p class="muted small">Tip: Personalize "Their Work" with a specific project — that's what gets replies.</p>
+    </form>
+
+    <div class="email-output card" id="emailOutput">
+      <h3 id="outputTitle">Your generated message</h3>
+      <div class="msg-box" id="msgBox">
+        <div class="placeholder muted">Fill in the form and click generate. You'll see the message here, ready to copy.</div>
+      </div>
+      <div class="output-actions" hidden id="outputActions">
+        <button class="btn btn-ghost" id="copyBtn">📋 Copy</button>
+        <button class="btn btn-ghost" id="regenerateBtn">🔄 Regenerate</button>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  window.__TEMPLATES__ = {{ templates | tojson }};
+</script>
+<script src="{{ url_for('static', path='/js/email.js') }}"></script>
+{% endblock %}
