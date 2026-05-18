@@ -1,0 +1,4 @@
+.well-known/security.txt:
+Contact: mailto:security@getjob4u.com
+Expires: 2027-05-18T00:00:00.000Z
+Preferred-Languages: en

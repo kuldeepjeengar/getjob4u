@@ -1,7 +1,11 @@
 [project]
 name = "getjob4u"
 version = "0.1.0"
-description = "Add your description here"
+description = "Free AI/ML/DS job seeker toolkit - Resume ATS scanner, interview prep, cold email templates, and career roadmap"
+readme = "README.md"
+authors = [{name = "Kuldeep Jeengar", email = "kuldeep@getjob4u.com"}]
+license = {text = "MIT"}
+keywords = ["career", "ai", "ml", "data-science", "job-search", "resume", "ats-scanner", "interview-prep"]
 requires-python = ">=3.11"
 dependencies = [
     "aiofiles>=25.1.0",

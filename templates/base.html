@@ -3,13 +3,55 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{% block title %}getjob4u — Land Your AI/ML/DS Job{% endblock %}</title>
-  <meta name="description" content="Free toolkit for AI, ML, and Data Science job seekers — ATS resume scanner, interview tips, cold email generator, and curated learning resources." />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="author" content="getjob4u" />
+  <meta name="keywords" content="{% block keywords %}{{ keywords | default('ATS scanner, resume optimizer, AI jobs, ML jobs, Data Science jobs, interview tips, cold email generator, career roadmap') }}{% endblock %}" />
+  
+  <title>{% block title %}{{ page_title | default('getjob4u — Land Your AI/ML/DS Job') }}{% endblock %}</title>
+  <meta name="description" content="{% block meta_description %}{{ page_description | default('Free career toolkit for AI, ML, and Data Science job seekers. ATS resume scanner, interview prep, cold email templates, and learning resources.') }}{% endblock %}" />
+  
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://getjob4u.com{% block og_url %}{{ og_url | default('/') }}{% endblock %}" />
+  <meta property="og:title" content="{% block og_title %}{{ page_title | default('getjob4u — Land Your AI/ML/DS Job') }}{% endblock %}" />
+  <meta property="og:description" content="{% block og_description %}{{ page_description | default('Free career toolkit for AI, ML, and Data Science job seekers. ATS resume scanner, interview prep, cold email templates, and learning resources.') }}{% endblock %}" />
+  <meta property="og:image" content="https://getjob4u.com{{ url_for('static', path='/images/favicon.svg') }}" />
+  
+  <!-- Twitter Card -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://getjob4u.com{% block twitter_url %}{{ canonical_url | default('/') }}{% endblock %}" />
+  <meta property="twitter:title" content="{% block twitter_title %}{{ page_title | default('getjob4u — Land Your AI/ML/DS Job') }}{% endblock %}" />
+  <meta property="twitter:description" content="{% block twitter_description %}{{ page_description | default('Free career toolkit for AI, ML, and Data Science job seekers.') }}{% endblock %}" />
+  <meta property="twitter:image" content="https://getjob4u.com{{ url_for('static', path='/images/favicon.svg') }}" />
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://getjob4u.com{% block canonical_url %}{{ canonical_url | default('/') }}{% endblock %}" />
+  
+  <!-- Icons -->
   <link rel="icon" type="image/svg+xml" href="{{ url_for('static', path='/images/favicon.svg') }}" />
+  <link rel="apple-touch-icon" href="{{ url_for('static', path='/images/favicon.svg') }}" />
+  
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "getjob4u",
+    "url": "https://getjob4u.com",
+    "logo": "https://getjob4u.com{{ url_for('static', path='/images/favicon.svg') }}",
+    "description": "Free career toolkit for AI, ML, and Data Science job seekers",
+    "sameAs": [
+      "https://twitter.com/getjob4u",
+      "https://github.com/kuldeepjeengar/getjob4u"
+    ]
+  }
+  </script>
 </head>
 <body>
   <header class="site-header">
