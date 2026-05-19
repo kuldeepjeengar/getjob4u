@@ -303,8 +303,8 @@ def robots():
     """Robots.txt for search engines."""
     return """User-agent: *
 Allow: /
+Allow: /static/
 Disallow: /api/
-Disallow: /static/
 
 Sitemap: https://getjob4u.com/sitemap.xml
 
