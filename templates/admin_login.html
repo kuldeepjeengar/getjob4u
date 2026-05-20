@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Admin Login — getjob4u{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="pill">Restricted · Admins only</span>
+    <h1>Admin sign in</h1>
+    <p class="lead">Access the dashboard for uploaded resumes, ATS scans, and user feedback.</p>
+  </div>
+</section>
+
+<section class="container">
+  <form class="admin-login-form card" method="post" action="/admin/login">
+    {% if error %}
+    <div class="form-status error" style="display:block; margin-bottom: 1rem;">{{ error }}</div>
+    {% endif %}
+    <label>Admin name
+      <input type="text" name="username" required autocomplete="username" placeholder="admin" />
+    </label>
+    <label>Password
+      <input type="password" name="password" required autocomplete="current-password" placeholder="••••••••" />
+    </label>
+    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+    <p class="muted small" style="margin-top: 1rem;">Default admin is created on first run. Change it via the <code>GETJOB4U_ADMIN_USER</code> and <code>GETJOB4U_ADMIN_PASS</code> env vars before deploying.</p>
+  </form>
+</section>
+{% endblock %}

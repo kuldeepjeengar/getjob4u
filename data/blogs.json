@@ -1,0 +1,277 @@
+{
+  "categories": [
+    {
+      "name": "Machine Learning",
+      "icon": "🤖",
+      "blogs": [
+        {
+          "title": "Distill — Clear explanations of machine learning",
+          "author": "Distill.pub",
+          "source": "distill.pub",
+          "url": "https://distill.pub/",
+          "description": "Beautifully interactive deep-dives into ML concepts — attention, optimization, GNNs, RL. Best when you want to truly understand something visually."
+        },
+        {
+          "title": "Towards Data Science — Machine Learning",
+          "author": "Various authors",
+          "source": "Medium",
+          "url": "https://towardsdatascience.com/tagged/machine-learning",
+          "description": "The biggest ML publication on Medium. Practical tutorials, end-to-end projects, and career write-ups updated daily."
+        },
+        {
+          "title": "Sebastian Raschka — Ahead of AI",
+          "author": "Sebastian Raschka",
+          "source": "Substack",
+          "url": "https://magazine.sebastianraschka.com/",
+          "description": "Author of 'Build a Large Language Model (From Scratch)'. Deep, paper-grounded explainers on LLMs, fine-tuning, and ML research trends."
+        },
+        {
+          "title": "Lilian Weng's Log",
+          "author": "Lilian Weng (OpenAI)",
+          "source": "lilianweng.github.io",
+          "url": "https://lilianweng.github.io/",
+          "description": "Long-form survey posts that have become canonical references — attention, prompt engineering, agents, reward hacking."
+        },
+        {
+          "title": "Machine Learning Mastery",
+          "author": "Jason Brownlee",
+          "source": "machinelearningmastery.com",
+          "url": "https://machinelearningmastery.com/blog/",
+          "description": "Hands-on tutorials with runnable code. Great for going from 'I read about it' to 'I built it' in scikit-learn, Keras, and PyTorch."
+        }
+      ]
+    },
+    {
+      "name": "Deep Learning & LLMs",
+      "icon": "🧠",
+      "blogs": [
+        {
+          "title": "The Illustrated Transformer",
+          "author": "Jay Alammar",
+          "source": "jalammar.github.io",
+          "url": "https://jalammar.github.io/illustrated-transformer/",
+          "description": "If you only read one post on transformers, read this one. Illustrated explanations of BERT, GPT, attention, and embeddings."
+        },
+        {
+          "title": "Andrej Karpathy's blog",
+          "author": "Andrej Karpathy",
+          "source": "karpathy.github.io",
+          "url": "https://karpathy.github.io/",
+          "description": "Classics like 'A Recipe for Training Neural Networks' and 'The Unreasonable Effectiveness of RNNs'. Few posts, all gold."
+        },
+        {
+          "title": "Hugging Face Blog",
+          "author": "Hugging Face team",
+          "source": "huggingface.co",
+          "url": "https://huggingface.co/blog",
+          "description": "Walkthroughs of new open models, fine-tuning recipes, RLHF, quantization, and inference tricks — from the people shipping them."
+        },
+        {
+          "title": "Chip Huyen — Designing Machine Learning Systems",
+          "author": "Chip Huyen",
+          "source": "huyenchip.com",
+          "url": "https://huyenchip.com/blog/",
+          "description": "ML systems, production GenAI, RAG, agents, and the gap between research and reality. A must-read for ML/AI engineers."
+        },
+        {
+          "title": "Anthropic Research",
+          "author": "Anthropic",
+          "source": "anthropic.com",
+          "url": "https://www.anthropic.com/research",
+          "description": "Frontier LLM research — interpretability, alignment, constitutional AI, agent capabilities. Heavier reading but the source of record."
+        },
+        {
+          "title": "OpenAI Research",
+          "author": "OpenAI",
+          "source": "openai.com",
+          "url": "https://openai.com/research",
+          "description": "Papers and posts behind GPT, function calling, and reasoning models. Pair with the API documentation when shipping with them."
+        }
+      ]
+    },
+    {
+      "name": "Data Science & Analytics",
+      "icon": "📊",
+      "blogs": [
+        {
+          "title": "Towards Data Science",
+          "author": "Various authors",
+          "source": "Medium",
+          "url": "https://towardsdatascience.com/",
+          "description": "The default Medium publication for data science. Filter by 'Editor's Picks' to avoid the noise."
+        },
+        {
+          "title": "KDnuggets",
+          "author": "Various authors",
+          "source": "kdnuggets.com",
+          "url": "https://www.kdnuggets.com/",
+          "description": "One of the oldest data-science publications. Weekly digests, cheat sheets, and career advice for analysts and scientists."
+        },
+        {
+          "title": "Stitch Fix Algorithms",
+          "author": "Stitch Fix team",
+          "source": "multithreaded.stitchfix.com",
+          "url": "https://multithreaded.stitchfix.com/blog/",
+          "description": "Industrial DS done right — experimentation, causal inference, recommendations. Read for how DS actually shows up at a real company."
+        },
+        {
+          "title": "Variance Explained",
+          "author": "David Robinson",
+          "source": "varianceexplained.org",
+          "url": "http://varianceexplained.org/posts/",
+          "description": "Tidy-data thinking, R + Python deep dives, and statistical reasoning by a former DataCamp / Heap chief data scientist."
+        },
+        {
+          "title": "Eugene Yan",
+          "author": "Eugene Yan",
+          "source": "eugeneyan.com",
+          "url": "https://eugeneyan.com/writing/",
+          "description": "Practical essays on ML systems, recommender systems, applied LLMs, and how senior ICs work. Perennially shared on Twitter for a reason."
+        }
+      ]
+    },
+    {
+      "name": "MLOps & ML Engineering",
+      "icon": "⚙️",
+      "blogs": [
+        {
+          "title": "Made With ML",
+          "author": "Goku Mohandas",
+          "source": "madewithml.com",
+          "url": "https://madewithml.com/",
+          "description": "A full free curriculum on going from notebook to production — pipelines, monitoring, CI/CD for ML, and testing."
+        },
+        {
+          "title": "Neptune.ai Blog",
+          "author": "Neptune team",
+          "source": "neptune.ai",
+          "url": "https://neptune.ai/blog",
+          "description": "Tool-agnostic write-ups on experiment tracking, model registries, drift detection, and choosing infra for ML teams."
+        },
+        {
+          "title": "Weights & Biases — Fully Connected",
+          "author": "W&B team",
+          "source": "wandb.ai",
+          "url": "https://wandb.ai/fully-connected",
+          "description": "Reports, interviews, and reproducible notebooks. Strong on training-pipeline best practices and evaluation."
+        },
+        {
+          "title": "MLOps Community Blog",
+          "author": "MLOps Community",
+          "source": "mlops.community",
+          "url": "https://mlops.community/blog/",
+          "description": "Practitioner voices on real MLOps problems — vector stores, feature stores, eval, and on-call for ML systems."
+        }
+      ]
+    },
+    {
+      "name": "Engineering Big Tech Blogs",
+      "icon": "🏢",
+      "blogs": [
+        {
+          "title": "Netflix Tech Blog",
+          "author": "Netflix engineering",
+          "source": "netflixtechblog.com",
+          "url": "https://netflixtechblog.com/",
+          "description": "How Netflix builds personalization, A/B testing platforms, and ML infra at scale. Required reading for senior DS/ML candidates."
+        },
+        {
+          "title": "Uber Engineering",
+          "author": "Uber engineering",
+          "source": "uber.com",
+          "url": "https://www.uber.com/blog/engineering/",
+          "description": "Michelangelo (their ML platform), forecasting, geospatial ML, and large-scale data engineering."
+        },
+        {
+          "title": "Airbnb Engineering & Data Science",
+          "author": "Airbnb engineering",
+          "source": "Medium",
+          "url": "https://medium.com/airbnb-engineering",
+          "description": "Search ranking, pricing models, experimentation, and how Airbnb structures its DS function. Excellent for interview prep."
+        },
+        {
+          "title": "Google Research Blog",
+          "author": "Google Research",
+          "source": "research.google",
+          "url": "https://research.google/blog/",
+          "description": "The latest from Google's research arm — Gemini, robotics, health AI, responsible AI."
+        },
+        {
+          "title": "Meta AI Blog",
+          "author": "Meta AI",
+          "source": "ai.meta.com",
+          "url": "https://ai.meta.com/blog/",
+          "description": "Llama releases, recommender systems, multimodal models, and infrastructure posts from FAIR."
+        },
+        {
+          "title": "Spotify Engineering",
+          "author": "Spotify engineering",
+          "source": "engineering.atspotify.com",
+          "url": "https://engineering.atspotify.com/",
+          "description": "Music recommendations, large-scale embeddings, audio ML, and the ML platform behind Discover Weekly."
+        }
+      ]
+    },
+    {
+      "name": "Statistics & Research",
+      "icon": "📐",
+      "blogs": [
+        {
+          "title": "Andrew Gelman — Statistical Modeling",
+          "author": "Andrew Gelman",
+          "source": "statmodeling.stat.columbia.edu",
+          "url": "https://statmodeling.stat.columbia.edu/",
+          "description": "Bayesian thinking, causal inference, and merciless critique of bad statistics in published papers. Sharpens how you reason about data."
+        },
+        {
+          "title": "Cross Validated — Most Voted",
+          "author": "Community",
+          "source": "stats.stackexchange.com",
+          "url": "https://stats.stackexchange.com/questions?tab=Votes",
+          "description": "Top-voted Q&A on statistics and ML. The highest-voted answers are often a faster path to understanding than textbooks."
+        },
+        {
+          "title": "The Gradient",
+          "author": "Various authors",
+          "source": "thegradient.pub",
+          "url": "https://thegradient.pub/",
+          "description": "Long-form essays surveying AI research areas — accessible enough to be readable, deep enough to be useful."
+        },
+        {
+          "title": "AI Snake Oil",
+          "author": "Arvind Narayanan, Sayash Kapoor",
+          "source": "Substack",
+          "url": "https://www.aisnakeoil.com/",
+          "description": "Princeton researchers cutting through AI hype. Read before believing the next viral benchmark claim."
+        }
+      ]
+    }
+  ],
+  "newsletters": [
+    {
+      "title": "The Batch — DeepLearning.AI",
+      "url": "https://www.deeplearning.ai/the-batch/",
+      "description": "Weekly AI news roundup curated by Andrew Ng's team. Best 5-minute read each week to stay current."
+    },
+    {
+      "title": "Import AI",
+      "url": "https://importai.substack.com/",
+      "description": "Jack Clark's weekly newsletter on AI research and policy. Influential among practitioners."
+    },
+    {
+      "title": "Data Elixir",
+      "url": "https://dataelixir.com/",
+      "description": "Curated data science links — tutorials, tools, and notable papers — delivered weekly."
+    },
+    {
+      "title": "TLDR AI",
+      "url": "https://tldr.tech/ai",
+      "description": "Daily 5-minute AI digest. Good signal-to-noise for staying on top of releases without doomscrolling."
+    },
+    {
+      "title": "Ben's Bites",
+      "url": "https://www.bensbites.co/",
+      "description": "Daily GenAI / LLM newsletter with new tools, releases, and tutorials. Light reading, useful breadth."
+    }
+  ]
+}

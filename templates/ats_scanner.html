@@ -6,17 +6,30 @@
   <div class="container">
     <span class="pill">Tool · 100% private — your file never leaves the server's RAM</span>
     <h1>ATS Resume Scanner</h1>
-    <p class="lead">Upload your resume (PDF, DOCX, or TXT). Get a score out of 100, role-specific keyword analysis, and concrete fixes.</p>
+    <p class="lead">Upload your resume (PDF, DOCX, or TXT). Score it against a target role or paste a job description for an instant match.</p>
   </div>
 </section>
 
 <section class="container">
   <div class="ats-grid">
     <form id="atsForm" class="ats-form card">
-      <h3>1. Choose your target role</h3>
-      <select name="target_role" id="targetRole" required>
-        {% for r in roles %}<option value="{{ r.value }}">{{ r.label }}</option>{% endfor %}
-      </select>
+      <div class="medium-toggle ats-mode-toggle" role="tablist">
+        <button type="button" class="med-btn active" data-mode="role">🎯 Match a role</button>
+        <button type="button" class="med-btn" data-mode="jd">📋 Match a JD</button>
+      </div>
+
+      <div class="ats-mode-panel" data-panel="role">
+        <h3>1. Choose your target role</h3>
+        <select name="target_role" id="targetRole" required>
+          {% for r in roles %}<option value="{{ r.value }}">{{ r.label }}</option>{% endfor %}
+        </select>
+      </div>
+
+      <div class="ats-mode-panel" data-panel="jd" hidden>
+        <h3>1. Paste the job description</h3>
+        <textarea id="jdText" rows="8" placeholder="Paste the full job description here — responsibilities, requirements, nice-to-haves. The more text, the better the match."></textarea>
+        <p class="muted small">Your resume is compared against the language of this JD. Useful for tailoring per application.</p>
+      </div>
 
       <h3>2. Upload resume</h3>
       <label for="fileInput" class="dropzone" id="dropzone">
@@ -28,7 +41,7 @@
       </label>
 
       <button class="btn btn-primary btn-block" type="submit" id="scanBtn">Scan resume</button>
-      <p class="muted small">No login. No tracking. The file is parsed in memory and discarded.</p>
+      <p class="muted small">No login. Your resume is stored only so admins can review submissions and improve the tool.</p>
     </form>
 
     <div class="ats-result card" id="atsResult" hidden>
@@ -63,9 +76,9 @@
     <div class="ats-result card placeholder" id="atsPlaceholder">
       <div class="placeholder-icon">📊</div>
       <h3>Your results will appear here</h3>
-      <p class="muted">Pick a role, upload your resume, and click scan.</p>
+      <p class="muted">Pick a mode, upload your resume, and click scan.</p>
       <ul class="checklist">
-        <li>Keyword match for the target role</li>
+        <li>Role-based or job-description match</li>
         <li>Section + contact info checks</li>
         <li>Action verbs & quantified impact</li>
         <li>Length and formatting score</li>

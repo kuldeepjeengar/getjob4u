@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}AI / ML / DS Blogs — getjob4u{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="pill">Hand-picked · No paywalled junk</span>
+    <h1>Blogs worth reading</h1>
+    <p class="lead">A curated list of the best AI, ML, and Data Science writing from Medium, personal blogs, and big-tech engineering teams. Stop scrolling Twitter — start reading.</p>
+  </div>
+</section>
+
+<section class="container blogs-page">
+  {% for cat in categories %}
+  <div class="blog-category">
+    <h2><span class="blog-cat-icon">{{ cat.icon }}</span>{{ cat.name }}</h2>
+    <div class="blog-grid">
+      {% for b in cat.blogs %}
+      <a class="blog-card" href="{{ b.url }}" target="_blank" rel="noopener noreferrer">
+        <div class="blog-source">{{ b.source }}</div>
+        <h3>{{ b.title }}</h3>
+        <p class="blog-author">by {{ b.author }}</p>
+        <p class="blog-desc">{{ b.description }}</p>
+        <span class="link-arrow">Read →</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+
+  <div class="blog-category">
+    <h2><span class="blog-cat-icon">📬</span>Newsletters</h2>
+    <div class="newsletter-grid">
+      {% for n in newsletters %}
+      <a class="blog-card newsletter-card" href="{{ n.url }}" target="_blank" rel="noopener noreferrer">
+        <h3>{{ n.title }}</h3>
+        <p class="blog-desc">{{ n.description }}</p>
+        <span class="link-arrow">Subscribe →</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
