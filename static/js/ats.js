@@ -1,4 +1,4 @@
-// ATS scanner client.
+// ATS scanner client — supports role-based and JD-based scoring.
 (function () {
   const form = document.getElementById('atsForm');
   const fileInput = document.getElementById('fileInput');
@@ -7,6 +7,21 @@
   const scanBtn = document.getElementById('scanBtn');
   const placeholder = document.getElementById('atsPlaceholder');
   const resultBox = document.getElementById('atsResult');
+  const modeButtons = document.querySelectorAll('.ats-mode-toggle .med-btn');
+  const rolePanel = document.querySelector('[data-panel="role"]');
+  const jdPanel = document.querySelector('[data-panel="jd"]');
+  const jdText = document.getElementById('jdText');
+
+  let mode = 'role';
+
+  modeButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      mode = btn.dataset.mode;
+      modeButtons.forEach((b) => b.classList.toggle('active', b === btn));
+      rolePanel.hidden = mode !== 'role';
+      jdPanel.hidden = mode !== 'jd';
+    });
+  });
 
   fileInput.addEventListener('change', () => {
     if (fileInput.files[0]) fileName.textContent = fileInput.files[0].name;
@@ -33,16 +48,38 @@
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (!fileInput.files[0]) return;
+    if (!fileInput.files[0]) {
+      alert('Please upload a resume file first.');
+      return;
+    }
+    if (mode === 'jd' && (!jdText.value || jdText.value.trim().length < 30)) {
+      alert('Paste a job description (30+ characters) to use JD match mode.');
+      return;
+    }
+
     scanBtn.disabled = true;
     scanBtn.textContent = 'Scanning…';
     try {
       const fd = new FormData();
       fd.append('file', fileInput.files[0]);
-      fd.append('target_role', document.getElementById('targetRole').value);
-      const r = await fetch('/api/ats/scan', { method: 'POST', body: fd });
-      const data = await r.json();
-      if (!r.ok) throw new Error(data.detail || 'Scan failed');
+      let endpoint = '/api/ats/scan';
+      if (mode === 'jd') {
+        endpoint = '/api/ats/scan-jd';
+        fd.append('jd_text', jdText.value);
+      } else {
+        fd.append('target_role', document.getElementById('targetRole').value);
+      }
+      const r = await fetch(endpoint, { method: 'POST', body: fd });
+      const raw = await r.text();
+      let data;
+      try {
+        data = JSON.parse(raw);
+      } catch {
+        // server returned HTML / plain text instead of JSON — surface the real status
+        const snippet = raw.slice(0, 120).replace(/\s+/g, ' ').trim();
+        throw new Error(`Server returned ${r.status} ${r.statusText || ''} (not JSON). ${snippet ? 'Preview: ' + snippet : ''}`);
+      }
+      if (!r.ok) throw new Error(data.detail || `Scan failed (${r.status})`);
       renderResult(data);
     } catch (err) {
       alert('Scan failed: ' + err.message);
@@ -58,7 +95,11 @@
 
     document.getElementById('scoreNum').textContent = Math.round(data.overall_score);
     document.getElementById('scoreGrade').textContent = data.grade;
-    document.getElementById('scoreSub').textContent = `${data.word_count} words · target role: ${data.target_role.replace('_', ' ')}`;
+    const targetLabel = data.target_role === 'custom_jd'
+      ? 'custom job description'
+      : data.target_role.replace(/_/g, ' ');
+    document.getElementById('scoreSub').textContent =
+      `${data.word_count} words · matched against: ${targetLabel}`;
 
     const circle = document.getElementById('scoreCircle');
     const color = data.overall_score >= 70 ? '#00d4b4' : data.overall_score >= 50 ? '#ffaa3c' : '#ff5a6b';
@@ -67,7 +108,7 @@
     const bd = document.getElementById('breakdown');
     bd.innerHTML = '';
     const labels = {
-      keywords: 'Role keywords',
+      keywords: data.target_role === 'custom_jd' ? 'JD keywords' : 'Role keywords',
       sections: 'Resume sections',
       contact: 'Contact info',
       action_verbs: 'Action verbs',

@@ -2,7 +2,13 @@
   "permissions": {
     "allow": [
       "Bash(dir d:\\\\first_project)",
-      "Bash(uv init *)"
+      "Bash(uv init *)",
+      "Bash(uv run *)",
+      "Bash(curl -s -o /dev/null -w \"/ -> %{http_code}\\\\n\" \"http://127.0.0.1:8765/\")",
+      "Bash(curl -s -o /dev/null -w \"/blogs -> %{http_code}\\\\n\" \"http://127.0.0.1:8765/blogs\")",
+      "Bash(curl -s -o /dev/null -w \"/ats-scanner -> %{http_code}\\\\n\" \"http://127.0.0.1:8765/ats-scanner\")",
+      "Bash(curl -s -o /dev/null -w \"/admin/login -> %{http_code}\\\\n\" \"http://127.0.0.1:8765/admin/login\")",
+      "Bash(curl -s -o /dev/null -w \"/admin \\(no-auth redirect\\) -> %{http_code}\\\\n\" \"http://127.0.0.1:8765/admin\")"
     ]
   }
 }

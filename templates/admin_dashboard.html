@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard — getjob4u{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container admin-hero">
+    <div>
+      <span class="pill">Admin · {{ admin_name }}</span>
+      <h1>Dashboard</h1>
+      <p class="lead">Uploaded resumes, ATS scans, and user feedback at a glance.</p>
+    </div>
+    <form method="post" action="/admin/logout" class="admin-logout">
+      <button class="btn btn-ghost" type="submit">Sign out</button>
+    </form>
+  </div>
+</section>
+
+<section class="container admin-page">
+  <div class="admin-stats">
+    <div class="stat-card">
+      <span class="stat-label">Total resume scans</span>
+      <strong>{{ stats.total_scans }}</strong>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">JD-based scans</span>
+      <strong>{{ stats.jd_scans }}</strong>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Avg ATS score</span>
+      <strong>{{ stats.avg_score }}</strong>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Feedback received</span>
+      <strong>{{ stats.total_feedback }}</strong>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Avg rating</span>
+      <strong>{{ stats.avg_rating }} / 5</strong>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Emails generated</span>
+      <strong>{{ stats.total_emails }}</strong>
+    </div>
+  </div>
+
+  <div class="admin-section">
+    <div class="admin-section-head">
+      <h2>📄 Uploaded resumes ({{ scans|length }} latest)</h2>
+    </div>
+    {% if scans %}
+    <div class="table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Filename</th>
+            <th>Type</th>
+            <th>Target</th>
+            <th>Score</th>
+            <th>Grade</th>
+            <th>Words</th>
+            <th>Uploaded</th>
+            <th>Download</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in scans %}
+          <tr>
+            <td>{{ s.id }}</td>
+            <td title="{{ s.filename }}">{{ s.filename or "—" }}</td>
+            <td><span class="tag {% if s.scan_type == 'jd' %}tag-jd{% endif %}">{{ s.scan_type or 'role' }}</span></td>
+            <td>{{ s.target_role or "—" }}</td>
+            <td><strong>{{ "%.1f"|format(s.score or 0) }}</strong></td>
+            <td>{{ s.grade or "—" }}</td>
+            <td>{{ s.word_count or "—" }}</td>
+            <td class="muted small">{{ s.created_at.strftime('%Y-%m-%d %H:%M') if s.created_at else "—" }}</td>
+            <td>
+              {% if s.file_content %}
+              <a class="btn btn-small btn-ghost" href="/admin/resumes/{{ s.id }}/download">⬇ File</a>
+              {% else %}
+              <span class="muted small">n/a</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% if s.jd_text %}
+          <tr class="admin-table-sub">
+            <td></td>
+            <td colspan="8"><span class="muted small">JD:</span> {{ s.jd_text[:280] }}{% if s.jd_text|length > 280 %}…{% endif %}</td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <p class="muted">No resume scans yet.</p>
+    {% endif %}
+  </div>
+
+  <div class="admin-section">
+    <div class="admin-section-head">
+      <h2>💬 Feedback ({{ feedback|length }} latest)</h2>
+    </div>
+    {% if feedback %}
+    <div class="feedback-list">
+      {% for f in feedback %}
+      <div class="feedback-item card">
+        <div class="fb-head">
+          <div>
+            <strong>{{ f.name }}</strong> <span class="muted small">· {{ f.email }}</span>
+          </div>
+          <div class="fb-meta">
+            <span class="tag">{{ f.category }}</span>
+            <span class="fb-rating">{{ "★" * f.rating }}{{ "☆" * (5 - f.rating) }}</span>
+            <span class="muted small">{{ f.created_at.strftime('%Y-%m-%d %H:%M') if f.created_at else "" }}</span>
+          </div>
+        </div>
+        <p class="fb-msg">{{ f.message }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <p class="muted">No feedback yet.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
