@@ -23,8 +23,23 @@
     });
   });
 
+  const MAX_FILE_BYTES = Math.floor(2.5 * 1024 * 1024);
+
+  function validateFile(f) {
+    if (!f) return true;
+    if (f.size > MAX_FILE_BYTES) {
+      alert('File is too large. Maximum size is 2.5 MB.');
+      fileInput.value = '';
+      fileName.textContent = '';
+      return false;
+    }
+    return true;
+  }
+
   fileInput.addEventListener('change', () => {
-    if (fileInput.files[0]) fileName.textContent = fileInput.files[0].name;
+    if (fileInput.files[0] && validateFile(fileInput.files[0])) {
+      fileName.textContent = fileInput.files[0].name;
+    }
   });
 
   ['dragenter', 'dragover'].forEach((ev) =>
@@ -40,7 +55,7 @@
     })
   );
   dropzone.addEventListener('drop', (e) => {
-    if (e.dataTransfer.files[0]) {
+    if (e.dataTransfer.files[0] && validateFile(e.dataTransfer.files[0])) {
       fileInput.files = e.dataTransfer.files;
       fileName.textContent = e.dataTransfer.files[0].name;
     }
@@ -70,6 +85,10 @@
         fd.append('target_role', document.getElementById('targetRole').value);
       }
       const r = await fetch(endpoint, { method: 'POST', body: fd });
+      if (r.status === 413) {
+        // Reverse proxy (nginx / ALB / CloudFront) rejected the upload before it reached FastAPI.
+        throw new Error('Your resume is too large for the server. Please upload a file under 2.5 MB.');
+      }
       const raw = await r.text();
       let data;
       try {

@@ -10,15 +10,23 @@
   <title>{% block title %}{{ page_title | default('getjob4u — Land Your AI/ML/DS Job') }}{% endblock %}</title>
   <meta name="description" content="{% block meta_description %}{{ page_description | default('Free career toolkit for AI, ML, and Data Science job seekers. ATS resume scanner, interview prep, cold email templates, and learning resources.') }}{% endblock %}" />
   
+  <!-- Mobile / browser theming -->
+  <meta name="theme-color" content="#7c5cff" />
+  <meta name="color-scheme" content="dark light" />
+
   <!-- Open Graph / Social Sharing -->
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="getjob4u" />
+  <meta property="og:locale" content="en_US" />
   <meta property="og:url" content="https://getjob4u.com{% block og_url %}{{ og_url | default('/') }}{% endblock %}" />
   <meta property="og:title" content="{% block og_title %}{{ page_title | default('getjob4u — Land Your AI/ML/DS Job') }}{% endblock %}" />
   <meta property="og:description" content="{% block og_description %}{{ page_description | default('Free career toolkit for AI, ML, and Data Science job seekers. ATS resume scanner, interview prep, cold email templates, and learning resources.') }}{% endblock %}" />
   <meta property="og:image" content="https://getjob4u.com{{ url_for('static', path='/images/favicon.svg') }}" />
-  
+
   <!-- Twitter Card -->
   <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:site" content="@getjob4u" />
+  <meta property="twitter:creator" content="@getjob4u" />
   <meta property="twitter:url" content="https://getjob4u.com{% block twitter_url %}{{ canonical_url | default('/') }}{% endblock %}" />
   <meta property="twitter:title" content="{% block twitter_title %}{{ page_title | default('getjob4u — Land Your AI/ML/DS Job') }}{% endblock %}" />
   <meta property="twitter:description" content="{% block twitter_description %}{{ page_description | default('Free career toolkit for AI, ML, and Data Science job seekers.') }}{% endblock %}" />
@@ -52,14 +60,66 @@
     ]
   }
   </script>
-  
+
+  <!-- WebSite + sitelinks SearchAction (helps Google show a search box) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "getjob4u",
+    "url": "https://getjob4u.com",
+    "description": "Free ATS resume scanner, interview tips, cold email generator, and career roadmap for AI / ML / Data Science job seekers.",
+    "publisher": { "@type": "Organization", "name": "getjob4u" },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://getjob4u.com/blogs?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  {% if breadcrumbs %}
+  <!-- Breadcrumb structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {% for crumb in breadcrumbs %}
+      {
+        "@type": "ListItem",
+        "position": {{ loop.index }},
+        "name": "{{ crumb.name }}",
+        "item": "https://getjob4u.com{{ crumb.url }}"
+      }{% if not loop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }
+  </script>
+  {% endif %}
+
   <!-- Google Analytics (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-EN17K7WRB1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-EN17K7WRB1');
+    gtag('config', 'G-EN17K7WRB1', {
+      page_path: '{{ canonical_url | default("/") }}',
+      page_title: {{ (page_title | default("getjob4u")) | tojson }},
+      send_page_view: true,
+    });
+    // Per-page context picked up by analytics.js for richer events.
+    window.__G4U_PAGE__ = {
+      category: {{ (page_category | default("home")) | tojson }},
+      section:  {{ (page_section  | default(""))     | tojson }}
+    };
+    // Server-side path/title we send up explicitly so reports group cleanly.
+    gtag('event', 'page_view_route', {
+      event_category: 'route',
+      event_label: {{ (page_category | default("home")) | tojson }},
+      page_path: '{{ canonical_url | default("/") }}'
+    });
   </script>
 </head>
 <body>
@@ -73,14 +133,15 @@
         <span></span><span></span><span></span>
       </button>
       <nav class="primary-nav" id="primaryNav">
-        <a href="/ats-scanner">ATS Scanner</a>
-        <a href="/interview-tips">Interview Tips</a>
-        <a href="/email-generator">Cold Emails</a>
-        <a href="/blogs">Blogs</a>
-        <a href="/youtube-resources">Learn</a>
-        <a href="/sample-resumes">Resumes</a>
-        <a href="/career-roadmap">Roadmap</a>
-        <a href="/feedback" class="nav-cta">Feedback</a>
+        <a href="/ats-scanner"       data-gtag="nav_click" data-gtag-label="ATS Scanner">ATS Scanner</a>
+        <a href="/python-questions"  data-gtag="nav_click" data-gtag-label="Python Q">Python Q</a>
+        <a href="/interview-tips"    data-gtag="nav_click" data-gtag-label="Interview Tips">Interview Tips</a>
+        <a href="/email-generator"   data-gtag="nav_click" data-gtag-label="Cold Emails">Cold Emails</a>
+        <a href="/blogs"             data-gtag="nav_click" data-gtag-label="Blogs">Blogs</a>
+        <a href="/youtube-resources" data-gtag="nav_click" data-gtag-label="Learn">Learn</a>
+        <a href="/sample-resumes"    data-gtag="nav_click" data-gtag-label="Resumes">Resumes</a>
+        <a href="/career-roadmap"    data-gtag="nav_click" data-gtag-label="Roadmap">Roadmap</a>
+        <a href="/feedback" class="nav-cta" data-gtag="nav_cta_click" data-gtag-label="Feedback">Feedback</a>
       </nav>
     </div>
   </header>
@@ -99,22 +160,23 @@
         </div>
         <div>
           <h4>Tools</h4>
-          <a href="/ats-scanner">ATS Scanner</a>
-          <a href="/email-generator">Cold Email Generator</a>
-          <a href="/sample-resumes">Sample Resumes</a>
+          <a href="/ats-scanner"     data-gtag="footer_click" data-gtag-label="ATS Scanner">ATS Scanner</a>
+          <a href="/email-generator" data-gtag="footer_click" data-gtag-label="Cold Email Generator">Cold Email Generator</a>
+          <a href="/sample-resumes"  data-gtag="footer_click" data-gtag-label="Sample Resumes">Sample Resumes</a>
         </div>
         <div>
           <h4>Learn</h4>
-          <a href="/interview-tips">Interview Tips</a>
-          <a href="/blogs">Blogs</a>
-          <a href="/youtube-resources">YouTube + Courses</a>
-          <a href="/career-roadmap">Career Roadmap</a>
+          <a href="/python-questions" data-gtag="footer_click" data-gtag-label="Python Questions">100 Python Questions</a>
+          <a href="/interview-tips"    data-gtag="footer_click" data-gtag-label="Interview Tips">Interview Tips</a>
+          <a href="/blogs"             data-gtag="footer_click" data-gtag-label="Blogs">Blogs</a>
+          <a href="/youtube-resources" data-gtag="footer_click" data-gtag-label="YouTube + Courses">YouTube + Courses</a>
+          <a href="/career-roadmap"    data-gtag="footer_click" data-gtag-label="Career Roadmap">Career Roadmap</a>
         </div>
         <div>
           <h4>Connect</h4>
-          <a href="/feedback">Share Feedback</a>
-          <a href="/api/health">API Health</a>
-          <a href="/admin/login">Admin</a>
+          <a href="/feedback"   data-gtag="footer_click" data-gtag-label="Share Feedback">Share Feedback</a>
+          <a href="/api/health" data-gtag="footer_click" data-gtag-label="API Health">API Health</a>
+          <a href="/admin/login" data-gtag="footer_click" data-gtag-label="Admin">Admin</a>
         </div>
       </div>
       <div class="footer-bottom">
@@ -123,6 +185,7 @@
     </div>
   </footer>
 
+  <script src="{{ url_for('static', path='/js/analytics.js') }}"></script>
   <script src="{{ url_for('static', path='/js/main.js') }}"></script>
   {% block scripts %}{% endblock %}
 </body>
