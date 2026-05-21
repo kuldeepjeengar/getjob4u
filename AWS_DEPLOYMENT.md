@@ -10,6 +10,7 @@ Three deployment options, ranked by simplicity and cost. **All three fit comfort
 
 **Cost:** Free tier covers 750 hours/month of `t2.micro` + EBS storage for 12 months. After that ~$10-15/mo for a single instance.
 
+
 ### Step 1 — Prep the code
 
 Create `Procfile` in project root:
