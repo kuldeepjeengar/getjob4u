@@ -14,8 +14,8 @@
   <div class="ats-grid">
     <form id="atsForm" class="ats-form card">
       <div class="medium-toggle ats-mode-toggle" role="tablist">
-        <button type="button" class="med-btn active" data-mode="role">🎯 Match a role</button>
-        <button type="button" class="med-btn" data-mode="jd">📋 Match a JD</button>
+        <button type="button" class="med-btn active" data-mode="role" data-gtag="ats_mode_toggle" data-gtag-label="role">🎯 Match a role</button>
+        <button type="button" class="med-btn"        data-mode="jd"   data-gtag="ats_mode_toggle" data-gtag-label="jd">📋 Match a JD</button>
       </div>
 
       <div class="ats-mode-panel" data-panel="role">
@@ -35,12 +35,12 @@
       <label for="fileInput" class="dropzone" id="dropzone">
         <span class="dz-icon">📤</span>
         <span class="dz-title">Drop your resume here</span>
-        <span class="dz-sub">PDF, DOCX, or TXT · 5MB max</span>
+        <span class="dz-sub">PDF, DOCX, or TXT · 2.5MB max</span>
         <input type="file" id="fileInput" name="file" accept=".pdf,.docx,.txt" hidden required />
         <span class="dz-filename" id="fileName"></span>
       </label>
 
-      <button class="btn btn-primary btn-block" type="submit" id="scanBtn">Scan resume</button>
+      <button class="btn btn-primary btn-block" type="submit" id="scanBtn" data-gtag="ats_scan_click" data-gtag-label="Scan resume">Scan resume</button>
       <p class="muted small">No login. Your resume is stored only so admins can review submissions and improve the tool.</p>
     </form>
 

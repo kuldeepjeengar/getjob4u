@@ -14,8 +14,8 @@
   <div class="email-grid">
     <form id="emailForm" class="email-form card">
       <div class="medium-toggle">
-        <button type="button" class="med-btn active" data-medium="email">📧 Email</button>
-        <button type="button" class="med-btn" data-medium="linkedin">💼 LinkedIn DM</button>
+        <button type="button" class="med-btn active" data-medium="email"    data-gtag="email_medium_toggle" data-gtag-label="email">📧 Email</button>
+        <button type="button" class="med-btn"        data-medium="linkedin" data-gtag="email_medium_toggle" data-gtag-label="linkedin">💼 LinkedIn DM</button>
       </div>
 
       <label>Template
@@ -36,7 +36,7 @@
         <label class="recruiter-field" hidden>Your Availability<input type="text" name="availability" placeholder="Tue/Thu afternoons" /></label>
       </div>
 
-      <button type="submit" class="btn btn-primary btn-block">Generate message</button>
+      <button type="submit" class="btn btn-primary btn-block" data-gtag="email_generate_click" data-gtag-label="Generate message">Generate message</button>
       <p class="muted small">Tip: Personalize "Their Work" with a specific project — that's what gets replies.</p>
     </form>
 
@@ -46,8 +46,8 @@
         <div class="placeholder muted">Fill in the form and click generate. You'll see the message here, ready to copy.</div>
       </div>
       <div class="output-actions" hidden id="outputActions">
-        <button class="btn btn-ghost" id="copyBtn">📋 Copy</button>
-        <button class="btn btn-ghost" id="regenerateBtn">🔄 Regenerate</button>
+        <button class="btn btn-ghost" id="copyBtn"       data-gtag="email_copy"       data-gtag-label="Copy message">📋 Copy</button>
+        <button class="btn btn-ghost" id="regenerateBtn" data-gtag="email_regenerate" data-gtag-label="Regenerate message">🔄 Regenerate</button>
       </div>
     </div>
   </div>

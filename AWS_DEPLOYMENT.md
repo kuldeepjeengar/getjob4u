@@ -130,7 +130,7 @@ server {
     listen 80;
     server_name _;
 
-    client_max_body_size 6M;
+    client_max_body_size 3M;   # app caps uploads at 2.5 MB; 3M leaves headroom for multipart overhead
 
     location / {
         proxy_pass http://127.0.0.1:8000;
@@ -276,6 +276,11 @@ App Runner: set via console → service → Configuration.
 
 **`uv: command not found` when service starts:** systemd doesn't load your shell profile. Either hard-code the full path (`/home/ubuntu/.local/bin/uv`) in `ExecStart`, or install uv system-wide.
 
-**Resume upload fails with "Request Entity Too Large":** Bump `client_max_body_size` in nginx (already set to 6M above).
+**Resume upload fails with "Request Entity Too Large" (413):** A reverse proxy (nginx) in front of FastAPI is rejecting the upload before it reaches Python — its `client_max_body_size` default is 1 MB.
+
+- **Elastic Beanstalk (Amazon Linux 2 / 2023):** the repo ships a `.platform/nginx/conf.d/proxy.conf` that sets `client_max_body_size 3M;`. Re-deploy with `eb deploy` to pick it up.
+- **Elastic Beanstalk (legacy Amazon Linux):** uses `.ebextensions/nginx/conf.d/proxy.conf` (also shipped). Re-deploy with `eb deploy`.
+- **EC2 + nginx:** the example in Step 6 above already sets `client_max_body_size 3M;`. After editing the file: `sudo nginx -t && sudo systemctl reload nginx`.
+- **App Runner / CloudFront / ALB in front:** also raise the body-size limit on that layer (App Runner: `MaxRequestBodySize` in the service config; ALB has no body limit but CloudFront caps at 10 MB by default which is fine).
 
 **SQLite "database is locked":** You're running multiple instances. Switch to PostgreSQL.

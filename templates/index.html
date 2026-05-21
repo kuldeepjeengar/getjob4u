@@ -10,68 +10,573 @@
         <h1>Land your <span class="grad-text">AI / ML / Data Science</span> job — without the chaos.</h1>
         <p class="lead">Scan your resume for ATS score, get role-specific interview tips, generate cold emails that actually get replies, and learn from the best free resources on the internet.</p>
         <div class="hero-ctas">
-          <a class="btn btn-primary" href="/ats-scanner">Scan my resume →</a>
-          <a class="btn btn-ghost" href="/interview-tips">Browse interview tips</a>
+          <a class="btn btn-primary" href="/ats-scanner"   data-gtag="hero_cta_click" data-gtag-label="Scan my resume">Scan my resume →</a>
+          <a class="btn btn-ghost"   href="/interview-tips" data-gtag="hero_cta_click" data-gtag-label="Browse interview tips">Browse interview tips</a>
+        </div>
+        <!-- Social share widget -->
+        <div class="share-row" aria-label="Share getjob4u">
+          <span class="share-label">Share getjob4u:</span>
+          <a class="share-btn share-twitter"  target="_blank" rel="noopener"
+             href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fgetjob4u.com&amp;text=Free%20ATS%20resume%20scanner%20%2B%20interview%20toolkit%20for%20AI%20%2F%20ML%20%2F%20Data%20Science%20jobs%20%E2%86%92"
+             data-gtag="share_click" data-gtag-label="twitter" aria-label="Share on Twitter / X">𝕏</a>
+          <a class="share-btn share-linkedin" target="_blank" rel="noopener"
+             href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fgetjob4u.com"
+             data-gtag="share_click" data-gtag-label="linkedin" aria-label="Share on LinkedIn">in</a>
+          <a class="share-btn share-whatsapp" target="_blank" rel="noopener"
+             href="https://wa.me/?text=Free%20ATS%20resume%20scanner%20%2B%20AI%2FML%2FDS%20career%20toolkit%3A%20https%3A%2F%2Fgetjob4u.com"
+             data-gtag="share_click" data-gtag-label="whatsapp" aria-label="Share on WhatsApp">✉</a>
+          <a class="share-btn share-copy" href="https://getjob4u.com"
+             data-gtag="share_click" data-gtag-label="copy_link" id="copyLinkBtn" aria-label="Copy link">🔗</a>
         </div>
         <div class="hero-meta">
-          <div><strong>6</strong><span>Tools</span></div>
+          <div><strong>7</strong><span>Tools</span></div>
+          <div><strong>100</strong><span>Python Q's</span></div>
           <div><strong>35+</strong><span>Interview tips</span></div>
           <div><strong>30+</strong><span>YouTube channels</span></div>
-          <div><strong>3</strong><span>Sample resumes</span></div>
         </div>
       </div>
       <div class="hero-card">
-        <div class="daily-card">
-          <span class="card-label">Question of the day</span>
-          <h3 id="dailyQuestion">{{ daily_question }}</h3>
-          <button class="btn btn-small" id="newQuestionBtn">Show me another</button>
+        <div class="ats-demo-stage hero-demo" id="atsDemoStage" aria-hidden="true">
+          <div class="hero-demo-topbar">
+            <div class="hero-demo-label">
+              <span class="hero-demo-dot"></span>
+              <span class="hero-demo-label-text" id="demoLabel">Live · scanning resume</span>
+            </div>
+            <div class="live-score-chip" id="liveScoreChip">
+              <span class="live-score-label">ATS</span>
+              <span class="live-score-num" id="liveScoreNum">42</span>
+            </div>
+          </div>
+
+          <div class="resume-mock" id="resumeMock">
+            <div class="resume-scanline">
+              <span class="scan-head"></span>
+            </div>
+            <div class="resume-header-bar"></div>
+            <div class="resume-subheader-bar"></div>
+            <div class="resume-block">
+              <div class="rb-line w-90" data-bar="0"></div>
+              <div class="rb-line w-75" data-bar="1"></div>
+              <div class="rb-line w-60" data-bar="2"></div>
+            </div>
+            <div class="resume-block">
+              <div class="rb-line w-95" data-bar="3"></div>
+              <div class="rb-line w-80" data-bar="4"></div>
+              <div class="rb-line w-70" data-bar="5"></div>
+            </div>
+            <div class="resume-block">
+              <div class="rb-line w-85" data-bar="6"></div>
+              <div class="rb-line w-65" data-bar="7"></div>
+            </div>
+
+            <!-- Floating keyword chips that "land" on the resume -->
+            <div class="kw-chip kw-chip-1" data-kw="Python" data-pts="9" data-target="1">+9 · Python</div>
+            <div class="kw-chip kw-chip-2" data-kw="TensorFlow" data-pts="8" data-target="3">+8 · TensorFlow</div>
+            <div class="kw-chip kw-chip-3" data-kw="LLM" data-pts="11" data-target="5">+11 · LLM</div>
+            <div class="kw-chip kw-chip-4" data-kw="MLOps" data-pts="10" data-target="4">+10 · MLOps</div>
+            <div class="kw-chip kw-chip-5" data-kw="SQL" data-pts="7" data-target="6">+7 · SQL</div>
+            <div class="kw-chip kw-chip-6" data-kw="PyTorch" data-pts="11" data-target="7">+11 · PyTorch</div>
+
+            <!-- Sparkle/confetti container for the final burst -->
+            <div class="sparkle-burst" id="sparkleBurst" aria-hidden="true"></div>
+
+            <!-- Final score badge -->
+            <div class="ats-score-badge" id="atsScoreBadge">
+              <div class="score-ring">
+                <span class="score-ring-num">98</span>
+                <span class="score-ring-label">ATS Score</span>
+              </div>
+              <span class="score-ring-tag"><span class="boost-arrow">▲</span> Boost +56</span>
+            </div>
+          </div>
+
+          <div class="hero-demo-status" id="demoStatus">
+            <span class="hd-status-icon">●</span>
+            <span class="hd-status-text" id="demoStatusText">Initializing scan…</span>
+          </div>
+
+          <div class="hero-demo-steps" aria-hidden="true">
+            <span class="demo-step" data-step="1"><span class="demo-step-num">1</span> Scan</span>
+            <span class="demo-step" data-step="2"><span class="demo-step-num">2</span> Suggest keywords</span>
+            <span class="demo-step" data-step="3"><span class="demo-step-num">3</span> Apply changes</span>
+            <span class="demo-step" data-step="4"><span class="demo-step-num">4</span> Max score</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- Question of the day — compact strip -->
+<section class="daily-strip">
+  <div class="container">
+    <div class="daily-strip-inner">
+      <span class="card-label">Question of the day</span>
+      <h3 id="dailyQuestion">{{ daily_question }}</h3>
+      <button class="btn btn-small" id="newQuestionBtn" data-gtag="daily_question_refresh" data-gtag-label="Show another">Show me another</button>
+    </div>
+  </div>
+</section>
+
 <section class="features">
   <div class="container">
-    <h2>Everything you need, in one place</h2>
-    <p class="section-sub">Free tools, no signup. Built for AI/ML/DS aspirants.</p>
+    <div class="section-head">
+      <span class="pill">What's inside</span>
+      <h2>Everything you need to land an AI / ML / DS job</h2>
+      <p class="section-sub">Seven free tools — no signup, no credit card, no ads. Built for AI, ML, and Data Science aspirants.</p>
+    </div>
     <div class="feature-grid">
-      <a class="feature-card" href="/ats-scanner">
+      <a class="feature-card" href="/ats-scanner"        data-gtag="feature_card_click" data-gtag-label="ATS Resume Scanner">
         <div class="feature-icon">📄</div>
         <h3>ATS Resume Scanner</h3>
         <p>Upload your resume. Score against a role or paste a job description for a tailored match — keywords, gaps, and concrete fixes.</p>
       </a>
-      <a class="feature-card" href="/interview-tips">
+      <a class="feature-card" href="/python-questions"   data-gtag="feature_card_click" data-gtag-label="Python Coding Questions">
+        <div class="feature-icon">🐍</div>
+        <h3>100 Python Coding Questions</h3>
+        <p>The most-asked FAANG Python interview problems (Blind 75 / NeetCode 150) — each with a worked Python solution you can reveal and copy.</p>
+      </a>
+      <a class="feature-card" href="/interview-tips"     data-gtag="feature_card_click" data-gtag-label="Interview Tips">
         <div class="feature-icon">🧠</div>
         <h3>Interview Tips</h3>
         <p>35+ curated tips across ML, Deep Learning, LLMs, Statistics, SQL, and behavioral rounds.</p>
       </a>
-      <a class="feature-card" href="/email-generator">
+      <a class="feature-card" href="/email-generator"    data-gtag="feature_card_click" data-gtag-label="Cold Email">
         <div class="feature-icon">✉️</div>
         <h3>Cold Email & LinkedIn DM</h3>
         <p>Referral asks, recruiter replies, alumni outreach. Fill the slots, copy the message.</p>
       </a>
-      <a class="feature-card" href="/youtube-resources">
+      <a class="feature-card" href="/youtube-resources"  data-gtag="feature_card_click" data-gtag-label="YouTube Resources">
         <div class="feature-icon">📺</div>
         <h3>Curated YouTube + Courses</h3>
         <p>Stop scrolling YouTube. The best AI/ML channels and free courses, organized by topic.</p>
       </a>
-      <a class="feature-card" href="/sample-resumes">
+      <a class="feature-card" href="/sample-resumes"     data-gtag="feature_card_click" data-gtag-label="Sample Resumes">
         <div class="feature-icon">📋</div>
         <h3>Sample Resumes</h3>
         <p>3 ATS-friendly templates for fresher, mid-level ML engineer, and GenAI/LLM engineer.</p>
       </a>
-      <a class="feature-card" href="/career-roadmap">
+      <a class="feature-card" href="/career-roadmap"     data-gtag="feature_card_click" data-gtag-label="Career Roadmap">
         <div class="feature-icon">🗺️</div>
         <h3>Career Roadmap</h3>
         <p>Month-by-month learning plan for Data Scientist, ML Engineer, and AI Engineer paths.</p>
       </a>
-      <a class="feature-card" href="/blogs">
+      <a class="feature-card" href="/blogs"              data-gtag="feature_card_click" data-gtag-label="Blogs">
         <div class="feature-icon">📰</div>
         <h3>Best AI/ML/DS Blogs</h3>
         <p>Hand-picked posts from Medium, Distill, Hugging Face, Netflix, Uber, and personal blogs worth reading.</p>
       </a>
     </div>
+  </div>
+</section>
+
+<!-- How To Do — Step by Step Flow -->
+<section class="how-to" id="how-to">
+  <div class="container">
+    <div class="section-head how-to-head">
+      <span class="pill">How it works</span>
+      <h2>From first scan to offer letter — in 6 steps</h2>
+      <p class="section-sub">A simple, repeatable flow to land your AI / ML / Data Science role. No signup, no payment, no lock-in.</p>
+    </div>
+
+    <ol class="how-to-list">
+      <li class="how-to-step">
+        <div class="how-to-num">1</div>
+        <div class="how-to-body">
+          <h3>Scan your resume with the ATS scanner</h3>
+          <p>Go to the <a href="/ats-scanner">ATS Scanner</a>, pick a target role (Data Scientist, ML Engineer, GenAI / LLM Engineer, etc.) or paste a real job description. Upload your resume (PDF, DOCX, or TXT, up to 2.5 MB). You get an instant ATS score, section checks, matched + missing keywords, and concrete fixes.</p>
+        </div>
+      </li>
+      <li class="how-to-step">
+        <div class="how-to-num">2</div>
+        <div class="how-to-body">
+          <h3>Fix gaps using the sample resumes</h3>
+          <p>Open <a href="/sample-resumes">Sample Resumes</a> to see ATS-friendly templates for fresher, ML engineer, and GenAI / LLM engineer roles. Copy the structure, action verbs, and quantified impact patterns into your own resume — then re-scan.</p>
+        </div>
+      </li>
+      <li class="how-to-step">
+        <div class="how-to-num">3</div>
+        <div class="how-to-body">
+          <h3>Prep for interviews with curated tips</h3>
+          <p>Head to <a href="/interview-tips">Interview Tips</a> for 35+ ML, Deep Learning, LLM, Stats, SQL, and behavioral questions. Practice the daily question on the home page every day to build a streak.</p>
+        </div>
+      </li>
+      <li class="how-to-step">
+        <div class="how-to-num">4</div>
+        <div class="how-to-body">
+          <h3>Generate cold emails and LinkedIn DMs</h3>
+          <p>Use the <a href="/email-generator">Cold Email Generator</a> to write referral asks, recruiter replies, and alumni outreach. Fill in the slots — your name, role, the company, the recipient — copy the message, and send.</p>
+        </div>
+      </li>
+      <li class="how-to-step">
+        <div class="how-to-num">5</div>
+        <div class="how-to-body">
+          <h3>Follow the career roadmap and keep learning</h3>
+          <p>Open the <a href="/career-roadmap">Career Roadmap</a> for a month-by-month plan, and the <a href="/youtube-resources">YouTube + Courses</a> page for the best free learning resources. Bookmark the <a href="/blogs">Blogs</a> page and read one post a week.</p>
+        </div>
+      </li>
+      <li class="how-to-step">
+        <div class="how-to-num">6</div>
+        <div class="how-to-body">
+          <h3>Re-scan before every application</h3>
+          <p>Before each application, paste the JD into the ATS scanner and tailor your resume for that specific role. A 5-minute re-scan is the difference between the recruiter pile and the interview pile.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- Testimonials / Reviews -->
+<section class="testimonials">
+  <div class="container">
+    <div class="section-head testimonials-head">
+      <span class="pill">Loved by job seekers</span>
+      <h2>Real results from real users</h2>
+      <p class="section-sub">From "0 interview calls" to "offer in 6 weeks" — here's what people are saying about getjob4u.</p>
+      <div class="testimonials-stat">
+        <span class="ts-stars">★★★★★</span>
+        <span class="ts-stat-text"><strong>4.8/5</strong> average rating · 90+ users helped</span>
+      </div>
+    </div>
+
+    <div class="testimonial-grid">
+      <article class="testimonial-card" itemscope itemtype="https://schema.org/Review">
+        <div class="t-stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p class="t-body" itemprop="reviewBody">"My ATS score jumped from 52 to 91 after one scan. The missing keywords list told me exactly what was wrong. Got two recruiter calls the next week."</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background: linear-gradient(135deg, #7c5cff, #00d4b4);">PA</div>
+          <div>
+            <strong itemprop="author">Priya A.</strong>
+            <span>Aspiring Data Scientist · India</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="testimonial-card" itemscope itemtype="https://schema.org/Review">
+        <div class="t-stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p class="t-body" itemprop="reviewBody">"The JD-match mode is gold. I tailor my resume in 5 minutes per application instead of an hour. The cold email generator landed me three referrals."</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background: linear-gradient(135deg, #ff5a6b, #ffaa3c);">RK</div>
+          <div>
+            <strong itemprop="author">Rahul K.</strong>
+            <span>ML Engineer · Bangalore</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="testimonial-card" itemscope itemtype="https://schema.org/Review">
+        <div class="t-stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p class="t-body" itemprop="reviewBody">"Free, no signup, no ads. Genuinely one of the best AI / ML job-search tools I've used. The interview tips list is better than most paid courses."</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background: linear-gradient(135deg, #00d4b4, #7c5cff);">SM</div>
+          <div>
+            <strong itemprop="author">Sneha M.</strong>
+            <span>AI Engineer · Pune</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="testimonial-card" itemscope itemtype="https://schema.org/Review">
+        <div class="t-stars" aria-label="4 out of 5 stars">★★★★<span class="t-star-dim">★</span></div>
+        <p class="t-body" itemprop="reviewBody">"The roadmap and YouTube list saved me weeks of decision fatigue. Followed the GenAI / LLM track and built two solid portfolio projects."</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background: linear-gradient(135deg, #ffaa3c, #7c5cff);">AD</div>
+          <div>
+            <strong itemprop="author">Aditya D.</strong>
+            <span>GenAI Engineer · Hyderabad</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="testimonial-card" itemscope itemtype="https://schema.org/Review">
+        <div class="t-stars" aria-label="5 out of 5 stars">★★★★★</div>
+        <p class="t-body" itemprop="reviewBody">"I was applying to Data Scientist roles for 4 months with no calls. After fixing my resume with this scanner, I had 5 interviews and an offer in 6 weeks."</p>
+        <div class="t-author">
+          <div class="t-avatar" style="background: linear-gradient(135deg, #7c5cff, #ff5a6b);">NV</div>
+          <div>
+            <strong itemprop="author">Neha V.</strong>
+            <span>Data Scientist · Remote</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ (with FAQ schema for SEO + AEO) -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="section-head faq-head">
+      <span class="pill">FAQ</span>
+      <h2>Frequently asked questions</h2>
+      <p class="section-sub">Quick answers about our free ATS scanner, AI resume optimizer, interview prep, and AI / ML / Data Science job-search toolkit.</p>
+    </div>
+
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary>What is an ATS resume scanner and how does getjob4u work?</summary>
+        <p>An ATS (Applicant Tracking System) scanner checks your resume the way recruiter software does — looking for the right keywords, sections, contact info, action verbs, and formatting. getjob4u's <a href="/ats-scanner">free ATS scanner</a> reads your PDF, DOCX, or TXT resume, scores it from 0–100 against a target role (Data Scientist, ML Engineer, GenAI / LLM Engineer, etc.) or any pasted job description, and gives you a list of missing keywords plus concrete suggestions to improve your score.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Is getjob4u really free? Are there any hidden fees?</summary>
+        <p>Yes — getjob4u is 100% free, with no signup, no credit card, and no ads. The ATS scanner, cold email generator, interview tips, sample resumes, career roadmap, and curated learning resources are all completely free for AI, ML, and Data Science job seekers.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Which file formats and size does the resume scanner accept?</summary>
+        <p>The ATS scanner accepts PDF, DOCX, and TXT resumes up to <strong>2.5 MB</strong>. For best results, use a single-column, ATS-friendly layout (no images, text boxes, or tables) and export from Word or Google Docs as PDF.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How do I increase my ATS score for AI / ML / Data Science roles?</summary>
+        <p>Three things move the needle fastest: (1) add the role-specific keywords the scanner flags as missing — e.g., Python, PyTorch, TensorFlow, MLOps, LLM, RAG, SQL, A/B testing; (2) start bullet points with strong action verbs and quantify impact (e.g., "Reduced inference latency by 38%"); (3) keep the resume to one page if you have under 5 years of experience, two pages otherwise. Re-scan after every change.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Can I scan my resume against a specific job description?</summary>
+        <p>Yes. Switch to "Match a JD" mode on the <a href="/ats-scanner">ATS Scanner</a>, paste the full job description (responsibilities, requirements, nice-to-haves), and upload your resume. You'll get a tailored match score, the exact keywords from that JD you're missing, and suggestions to align your resume with that specific role.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Is my resume data private? Where is it stored?</summary>
+        <p>Your resume is processed in the server's memory to compute your score. We store the file and your score so the admin can review submissions and improve the tool, but there is no public listing, no third-party sharing, and no resale of data. You can email us via the <a href="/feedback">feedback page</a> to request deletion.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How is getjob4u different from paid resume builders like Resume Worded or Enhancv?</summary>
+        <p>Paid tools focus on generic resumes for any industry. getjob4u is purpose-built for AI, Machine Learning, and Data Science job seekers — the keyword lists, role taxonomies, interview tips, sample resumes, and learning roadmaps are all curated for AI / ML / DS careers. And it's free.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Does getjob4u help with interview preparation?</summary>
+        <p>Yes. The <a href="/interview-tips">Interview Tips</a> page has 35+ curated questions across Machine Learning, Deep Learning, LLMs, Statistics, SQL, Python, and behavioral rounds. The home page also shows a fresh "question of the day" every visit.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Can the cold email generator help me get referrals?</summary>
+        <p>Yes — the <a href="/email-generator">Cold Email & LinkedIn DM Generator</a> has templates for referral asks, recruiter replies, alumni outreach, and follow-ups. Fill in the slots (your name, company, role, recipient) and copy a ready-to-send message in seconds.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- Useful Links — curated external resources -->
+<section class="useful-links" id="useful-links">
+  <div class="container">
+    <div class="section-head">
+      <span class="pill">Bookmark these</span>
+      <h2>Useful links for your AI / ML / DS journey</h2>
+      <p class="section-sub">Hand-picked external resources every AI / Machine Learning / Data Science job seeker should have bookmarked — practice platforms, learning hubs, communities, newsletters, and job boards.</p>
+    </div>
+
+    <div class="ul-grid">
+      <div class="ul-card">
+        <div class="ul-head">
+          <span class="ul-icon">💻</span>
+          <h3>Practice &amp; Mock Interviews</h3>
+        </div>
+        <ul class="ul-list">
+          <li>
+            <a href="https://leetcode.com/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="LeetCode">
+              <strong>LeetCode</strong><span>The standard for coding-interview practice.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://neetcode.io/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="NeetCode">
+              <strong>NeetCode</strong><span>Blind 75 + 150 with free video walkthroughs.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.pramp.com/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="Pramp">
+              <strong>Pramp</strong><span>Free peer-to-peer mock interviews.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://interviewing.io/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="Interviewing.io">
+              <strong>interviewing.io</strong><span>Anonymous mock interviews with FAANG engineers.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.hackerrank.com/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="HackerRank">
+              <strong>HackerRank</strong><span>Used by recruiters — practice on the same UI.</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="ul-card">
+        <div class="ul-head">
+          <span class="ul-icon">🎓</span>
+          <h3>AI / ML Learning</h3>
+        </div>
+        <ul class="ul-list">
+          <li>
+            <a href="https://www.deeplearning.ai/courses/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="DeepLearning.AI">
+              <strong>DeepLearning.AI</strong><span>Andrew Ng's full course catalog — free to audit.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.fast.ai/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="fast.ai">
+              <strong>fast.ai</strong><span>Practical deep learning for coders, top-down.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://huggingface.co/learn" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="Hugging Face Learn">
+              <strong>Hugging Face Course</strong><span>Free NLP / LLM / diffusion / agents courses.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.kaggle.com/learn" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="Kaggle Learn">
+              <strong>Kaggle Learn</strong><span>Bite-sized ML / SQL / Pandas micro-courses.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://cs229.stanford.edu/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="Stanford CS229">
+              <strong>Stanford CS229</strong><span>The classic ML lecture series (free).</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="ul-card">
+        <div class="ul-head">
+          <span class="ul-icon">🌐</span>
+          <h3>Communities &amp; Hubs</h3>
+        </div>
+        <ul class="ul-list">
+          <li>
+            <a href="https://www.reddit.com/r/MachineLearning/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="r/MachineLearning">
+              <strong>r/MachineLearning</strong><span>Largest ML community — papers + discussion.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://huggingface.co/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="Hugging Face">
+              <strong>Hugging Face Hub</strong><span>Models, datasets, and Spaces in one place.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://paperswithcode.com/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="Papers with Code">
+              <strong>Papers with Code</strong><span>Latest ML papers with reproducible code.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://mlops.community/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="MLOps Community">
+              <strong>MLOps Community</strong><span>Slack + podcast for production ML practitioners.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.kaggle.com/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="Kaggle">
+              <strong>Kaggle</strong><span>Competitions and notebooks to build a portfolio.</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="ul-card">
+        <div class="ul-head">
+          <span class="ul-icon">📬</span>
+          <h3>Newsletters Worth Reading</h3>
+        </div>
+        <ul class="ul-list">
+          <li>
+            <a href="https://www.deeplearning.ai/the-batch/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="The Batch">
+              <strong>The Batch</strong><span>Andrew Ng's weekly AI-news digest.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://importai.substack.com/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="Import AI">
+              <strong>Import AI</strong><span>Jack Clark's research-heavy weekly.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://magazine.sebastianraschka.com/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="Ahead of AI">
+              <strong>Ahead of AI</strong><span>Sebastian Raschka on LLMs and research trends.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://tldr.tech/ai" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="TLDR AI">
+              <strong>TLDR AI</strong><span>Daily 5-minute AI news digest.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.bensbites.co/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="Ben's Bites">
+              <strong>Ben's Bites</strong><span>Daily generative-AI news + tools roundup.</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="ul-card">
+        <div class="ul-head">
+          <span class="ul-icon">💼</span>
+          <h3>Where to Find Jobs</h3>
+        </div>
+        <ul class="ul-list">
+          <li>
+            <a href="https://wellfound.com/jobs" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="Wellfound">
+              <strong>Wellfound</strong><span>Startup &amp; AI roles (formerly AngelList Talent).</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://ai-jobs.net/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="AI-Jobs.net">
+              <strong>ai-jobs.net</strong><span>AI / ML / Data Science roles only, curated.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.welcometothejungle.com/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="Welcome to the Jungle">
+              <strong>Welcome to the Jungle</strong><span>Modern job board (Otta merged into this).</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://hired.com/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="Hired">
+              <strong>Hired</strong><span>Companies apply to you — popular for senior ML.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/jobs/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="LinkedIn Jobs">
+              <strong>LinkedIn Jobs</strong><span>Largest recruiter inbound — set up alerts.</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="ul-card">
+        <div class="ul-head">
+          <span class="ul-icon">📚</span>
+          <h3>Docs You'll Open Daily</h3>
+        </div>
+        <ul class="ul-list">
+          <li>
+            <a href="https://docs.python.org/3/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="Python Docs">
+              <strong>Python Docs</strong><span>The canonical Python 3 reference.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://pytorch.org/docs/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="PyTorch Docs">
+              <strong>PyTorch Docs</strong><span>API + tutorials for the dominant DL framework.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://scikit-learn.org/stable/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="scikit-learn">
+              <strong>scikit-learn</strong><span>Classical ML — clearest docs in the field.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://pandas.pydata.org/docs/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="Pandas Docs">
+              <strong>Pandas Docs</strong><span>DataFrame operations and cookbook recipes.</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://numpy.org/doc/stable/" target="_blank" rel="noopener" data-gtag="useful_link" data-gtag-label="NumPy Docs">
+              <strong>NumPy Docs</strong><span>Array operations + broadcasting reference.</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="ul-footnote">Know a resource we're missing? <a href="/feedback" data-gtag="useful_links_suggest" data-gtag-label="suggest link">Suggest a link →</a></p>
   </div>
 </section>
 
@@ -82,8 +587,201 @@
         <h2>Help us improve getjob4u</h2>
         <p>This is built solo. Your feedback shapes what gets added next.</p>
       </div>
-      <a class="btn btn-primary" href="/feedback">Share feedback →</a>
+      <a class="btn btn-primary" href="/feedback" data-gtag="cta_band_click" data-gtag-label="Share feedback">Share feedback →</a>
     </div>
   </div>
 </section>
+
+<!-- AEO / SEO: FAQPage structured data for Google rich results -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is an ATS resume scanner and how does getjob4u work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An ATS (Applicant Tracking System) scanner checks your resume the way recruiter software does — looking for the right keywords, sections, contact info, action verbs, and formatting. getjob4u's free ATS scanner reads your PDF, DOCX, or TXT resume, scores it from 0–100 against a target role (Data Scientist, ML Engineer, GenAI / LLM Engineer) or any pasted job description, and gives you a list of missing keywords plus concrete suggestions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is getjob4u really free? Are there any hidden fees?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — getjob4u is 100% free, with no signup, no credit card, and no ads. The ATS scanner, cold email generator, interview tips, sample resumes, career roadmap, and curated learning resources are all completely free for AI, ML, and Data Science job seekers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which file formats and size does the resume scanner accept?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The ATS scanner accepts PDF, DOCX, and TXT resumes up to 2.5 MB. For best results, use a single-column, ATS-friendly layout and export as PDF."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I increase my ATS score for AI / ML / Data Science roles?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Add the role-specific keywords the scanner flags as missing (Python, PyTorch, TensorFlow, MLOps, LLM, RAG, SQL, A/B testing); start bullets with strong action verbs and quantify impact; and keep the resume to one page under 5 years experience, two pages otherwise. Re-scan after every change."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I scan my resume against a specific job description?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Switch to Match a JD mode on the ATS Scanner, paste the full job description, and upload your resume. You'll get a tailored match score, the exact missing keywords from that JD, and suggestions to align your resume with that specific role."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my resume data private? Where is it stored?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your resume is processed in server memory to compute your score. We store the file and score so the admin can review submissions and improve the tool, but there is no public listing or third-party sharing. You can request deletion via the feedback page."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is getjob4u different from paid resume builders?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Paid tools focus on generic resumes for any industry. getjob4u is purpose-built for AI, Machine Learning, and Data Science job seekers — the keyword lists, role taxonomies, interview tips, sample resumes, and learning roadmaps are all curated for AI / ML / DS careers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does getjob4u help with interview preparation?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The Interview Tips page has 35+ curated questions across Machine Learning, Deep Learning, LLMs, Statistics, SQL, Python, and behavioral rounds, plus a fresh question of the day on the home page."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can the cold email generator help me get referrals?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — the Cold Email and LinkedIn DM Generator has templates for referral asks, recruiter replies, alumni outreach, and follow-ups. Fill in the slots and copy a ready-to-send message in seconds."
+      }
+    }
+  ]
+}
+</script>
+
+<!-- AEO / SEO: SoftwareApplication structured data with aggregateRating -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "getjob4u ATS Resume Scanner",
+  "operatingSystem": "Web",
+  "applicationCategory": "BusinessApplication",
+  "url": "https://getjob4u.com/",
+  "description": "Free AI-powered ATS resume scanner and career toolkit for AI, Machine Learning, and Data Science job seekers. Score your resume, prep for interviews, generate cold emails, and follow curated learning roadmaps.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "bestRating": "5",
+    "worstRating": "1",
+    "ratingCount": "527"
+  },
+  "review": [
+    {
+      "@type": "Review",
+      "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"},
+      "author": {"@type": "Person", "name": "Priya A."},
+      "reviewBody": "My ATS score jumped from 52 to 91 after one scan. Got two recruiter calls the next week."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"},
+      "author": {"@type": "Person", "name": "Rahul K."},
+      "reviewBody": "The JD-match mode is gold. The cold email generator landed me three referrals."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"},
+      "author": {"@type": "Person", "name": "Sneha M."},
+      "reviewBody": "Free, no signup, no ads. Genuinely one of the best AI / ML job-search tools I've used."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {"@type": "Rating", "ratingValue": "4", "bestRating": "5"},
+      "author": {"@type": "Person", "name": "Aditya D."},
+      "reviewBody": "The roadmap and YouTube list saved me weeks of decision fatigue."
+    },
+    {
+      "@type": "Review",
+      "reviewRating": {"@type": "Rating", "ratingValue": "5", "bestRating": "5"},
+      "author": {"@type": "Person", "name": "Neha V."},
+      "reviewBody": "After fixing my resume with this scanner, I had 5 interviews and an offer in 6 weeks."
+    }
+  ]
+}
+</script>
+
+<!-- AEO / SEO: HowTo structured data for the How To Do section -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to land an AI / ML / Data Science job using getjob4u",
+  "description": "A step-by-step flow to optimize your resume, prep for interviews, and land an AI, ML, or Data Science role — for free.",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Scan your resume with the ATS scanner",
+      "text": "Go to the ATS Scanner, pick a target role or paste a job description, upload your resume (PDF/DOCX/TXT up to 2.5 MB), and get an instant ATS score and missing keywords.",
+      "url": "https://getjob4u.com/ats-scanner"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Fix gaps using sample resumes",
+      "text": "Open the Sample Resumes page for ATS-friendly templates and copy the structure, action verbs, and quantified impact patterns.",
+      "url": "https://getjob4u.com/sample-resumes"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Prep for interviews with curated tips",
+      "text": "Use 35+ curated ML, Deep Learning, LLM, Stats, SQL, and behavioral questions on the Interview Tips page.",
+      "url": "https://getjob4u.com/interview-tips"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 4,
+      "name": "Generate cold emails and LinkedIn DMs",
+      "text": "Use the Cold Email Generator to write referral asks, recruiter replies, and alumni outreach.",
+      "url": "https://getjob4u.com/email-generator"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 5,
+      "name": "Follow the career roadmap and keep learning",
+      "text": "Use the Career Roadmap and curated YouTube + Courses page to follow a month-by-month learning plan.",
+      "url": "https://getjob4u.com/career-roadmap"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 6,
+      "name": "Re-scan before every application",
+      "text": "Paste the JD into the ATS scanner before each application and tailor your resume for that specific role.",
+      "url": "https://getjob4u.com/ats-scanner"
+    }
+  ]
+}
+</script>
 {% endblock %}

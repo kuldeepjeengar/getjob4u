@@ -108,6 +108,7 @@ def home(request: Request):
             "page_description": "Free career toolkit for AI, ML, and Data Science job seekers. Score your resume, prep for interviews, and land your dream job.",
             "og_url": "/",
             "canonical_url": "/",
+            "page_category": "home",
         },
     )
 
@@ -124,6 +125,11 @@ def ats_scanner_page(request: Request):
             "keywords": "ATS scanner, resume optimizer, resume checker, ATS friendly resume, keywords optimizer, job description matcher",
             "og_url": "/ats-scanner",
             "canonical_url": "/ats-scanner",
+            "page_category": "ats_scanner",
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "ATS Scanner", "url": "/ats-scanner"},
+            ],
         },
     )
 
@@ -141,6 +147,11 @@ def interview_tips_page(request: Request):
             "keywords": "interview questions, behavioral interview, technical interview, data science interview, ML interview, AI interview",
             "og_url": "/interview-tips",
             "canonical_url": "/interview-tips",
+            "page_category": "interview_tips",
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Interview Tips", "url": "/interview-tips"},
+            ],
         },
     )
 
@@ -159,6 +170,11 @@ def youtube_page(request: Request):
             "keywords": "free courses, YouTube channels, machine learning courses, data science courses, AI learning",
             "og_url": "/youtube-resources",
             "canonical_url": "/youtube-resources",
+            "page_category": "youtube_resources",
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Learning Resources", "url": "/youtube-resources"},
+            ],
         },
     )
 
@@ -177,6 +193,11 @@ def blogs_page(request: Request):
             "keywords": "AI blogs, ML blogs, data science blogs, Medium AI, Towards Data Science, deep learning blogs, MLOps blogs",
             "og_url": "/blogs",
             "canonical_url": "/blogs",
+            "page_category": "blogs",
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Blogs", "url": "/blogs"},
+            ],
         },
     )
 
@@ -193,6 +214,11 @@ def email_generator_page(request: Request):
             "keywords": "cold email templates, LinkedIn templates, networking messages, job search templates",
             "og_url": "/email-generator",
             "canonical_url": "/email-generator",
+            "page_category": "email_generator",
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Cold Email Generator", "url": "/email-generator"},
+            ],
         },
     )
 
@@ -211,6 +237,11 @@ def sample_resumes_page(request: Request):
             "keywords": "resume templates, sample resumes, data science resume, ML engineer resume",
             "og_url": "/sample-resumes",
             "canonical_url": "/sample-resumes",
+            "page_category": "sample_resumes",
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Sample Resumes", "url": "/sample-resumes"},
+            ],
         },
     )
 
@@ -228,6 +259,34 @@ def roadmap_page(request: Request):
             "keywords": "career roadmap, learning path, data science skills, machine learning career",
             "og_url": "/career-roadmap",
             "canonical_url": "/career-roadmap",
+            "page_category": "career_roadmap",
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Career Roadmap", "url": "/career-roadmap"},
+            ],
+        },
+    )
+
+
+@app.get("/python-questions", response_class=HTMLResponse)
+def python_questions_page(request: Request):
+    data = _load_json("python_questions.json")
+    return templates.TemplateResponse(
+        request,
+        "python_questions.html",
+        {
+            "questions": data["questions"],
+            "categories": data["categories"],
+            "page_title": "100 Most Asked Python Coding Interview Questions (FAANG) - getjob4u",
+            "page_description": "Top 100 Python coding interview questions asked at FAANG companies — Google, Amazon, Meta, Apple, Microsoft, Netflix. Each with a worked Python solution you can reveal, copy, and study. Free, no signup.",
+            "keywords": "Python coding interview questions, FAANG Python questions, Python LeetCode, Blind 75 Python, NeetCode 150 Python, Google Python interview, Amazon Python interview, Meta Python interview",
+            "og_url": "/python-questions",
+            "canonical_url": "/python-questions",
+            "page_category": "python_questions",
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Python Coding Questions", "url": "/python-questions"},
+            ],
         },
     )
 
@@ -242,6 +301,11 @@ def feedback_page(request: Request):
             "page_description": "Help us improve getjob4u. Share your feedback, suggestions, and feature requests.",
             "og_url": "/feedback",
             "canonical_url": "/feedback",
+            "page_category": "feedback",
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Feedback", "url": "/feedback"},
+            ],
         },
     )
 
@@ -267,6 +331,7 @@ def admin_login_page(request: Request, session_token: str | None = Cookie(defaul
             "page_description": "Sign in to the getjob4u admin dashboard.",
             "canonical_url": "/admin/login",
             "og_url": "/admin/login",
+            "page_category": "admin_login",
             "error": None,
         },
     )
@@ -288,6 +353,7 @@ def admin_login_submit(
                 "page_title": "Admin Login — getjob4u",
                 "canonical_url": "/admin/login",
                 "og_url": "/admin/login",
+                "page_category": "admin_login",
                 "error": "Invalid name or password.",
             },
             status_code=401,
@@ -344,6 +410,7 @@ def admin_dashboard(
             "page_description": "Internal admin dashboard.",
             "canonical_url": "/admin/dashboard",
             "og_url": "/admin/dashboard",
+            "page_category": "admin_dashboard",
             "admin_name": sess["username"],
             "scans": scans,
             "feedback": feedback,
@@ -398,8 +465,8 @@ async def api_ats_scan(
     if not file.filename:
         raise HTTPException(400, "No file provided.")
     contents = await file.read()
-    if len(contents) > 5 * 1024 * 1024:
-        raise HTTPException(400, "File too large (5MB max).")
+    if len(contents) > int(2.5 * 1024 * 1024):
+        raise HTTPException(400, "File too large (2.5MB max).")
     try:
         result = ats_scorer.score_resume(file.filename, contents, target_role)
     except ValueError as e:
@@ -431,8 +498,8 @@ async def api_ats_scan_jd(
     if not file.filename:
         raise HTTPException(400, "No file provided.")
     contents = await file.read()
-    if len(contents) > 5 * 1024 * 1024:
-        raise HTTPException(400, "File too large (5MB max).")
+    if len(contents) > int(2.5 * 1024 * 1024):
+        raise HTTPException(400, "File too large (2.5MB max).")
     if len(jd_text) > 20000:
         raise HTTPException(400, "Job description too long (20k chars max).")
     try:
@@ -520,41 +587,64 @@ def health():
 
 # ---------------------------------------------------------------- SEO
 
-@app.get("/sitemap.xml", response_class=PlainTextResponse)
+@app.get("/sitemap.xml")
 def sitemap():
     """XML sitemap for search engines."""
+    today = datetime.utcnow().strftime("%Y-%m-%d")
     urls = [
-        ("/", "weekly", "1.0"),
-        ("/ats-scanner", "weekly", "0.9"),
-        ("/interview-tips", "weekly", "0.9"),
+        ("/",                  "weekly",  "1.0"),
+        ("/ats-scanner",       "weekly",  "0.9"),
+        ("/interview-tips",    "weekly",  "0.9"),
         ("/youtube-resources", "monthly", "0.8"),
-        ("/blogs", "weekly", "0.8"),
-        ("/email-generator", "weekly", "0.9"),
-        ("/sample-resumes", "monthly", "0.8"),
-        ("/career-roadmap", "monthly", "0.8"),
-        ("/feedback", "monthly", "0.7"),
+        ("/blogs",             "weekly",  "0.8"),
+        ("/email-generator",   "weekly",  "0.9"),
+        ("/sample-resumes",    "monthly", "0.8"),
+        ("/career-roadmap",    "monthly", "0.8"),
+        ("/python-questions",  "weekly",  "0.9"),
+        ("/feedback",          "monthly", "0.7"),
     ]
 
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
     xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
 
     for url, changefreq, priority in urls:
-        xml += f'  <url>\n'
+        xml += '  <url>\n'
         xml += f'    <loc>https://getjob4u.com{url}</loc>\n'
+        xml += f'    <lastmod>{today}</lastmod>\n'
         xml += f'    <changefreq>{changefreq}</changefreq>\n'
         xml += f'    <priority>{priority}</priority>\n'
-        xml += f'  </url>\n'
+        xml += '  </url>\n'
 
     xml += '</urlset>'
-    return xml
+    return Response(content=xml, media_type="application/xml")
 
 
 @app.get("/robots.txt", response_class=PlainTextResponse)
 def robots():
     """Robots.txt for search engines."""
     return """User-agent: *
+Allow: /
 Disallow: /api/
 Disallow: /admin/
+
+# AI / answer-engine crawlers — allow indexing for AEO reach.
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
 
 Sitemap: https://getjob4u.com/sitemap.xml
 

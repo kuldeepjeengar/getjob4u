@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% block title %}100 Most Asked Python Coding Interview Questions (FAANG) — getjob4u{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="pill">100 questions · FAANG curated · With solutions</span>
+    <h1>Top 100 Python Coding Interview Questions</h1>
+    <p class="lead">The most-asked Python interview problems at Google, Amazon, Meta, Apple, Microsoft, and Netflix — mapped against the canonical <a href="https://neetcode.io/practice/practice/blind75" rel="noopener" target="_blank" data-gtag="external_link" data-gtag-label="blind 75">Blind 75</a> / <a href="https://neetcode.io/practice/practice/neetcode150" rel="noopener" target="_blank" data-gtag="external_link" data-gtag-label="neetcode 150">NeetCode 150</a> + the <a href="https://github.com/ombharatiya/FAANG-Coding-Interview-Questions" rel="noopener" target="_blank" data-gtag="external_link" data-gtag-label="faang repo">FAANG-Coding-Interview-Questions</a> repo. Click <em>Show solution</em> on any card for the Python answer.</p>
+
+    <div class="pyq-stats">
+      <div><strong>{{ questions | length }}</strong><span>Total</span></div>
+      <div><strong>{{ questions | selectattr('difficulty', 'equalto', 'Easy') | list | length }}</strong><span>Easy</span></div>
+      <div><strong>{{ questions | selectattr('difficulty', 'equalto', 'Medium') | list | length }}</strong><span>Medium</span></div>
+      <div><strong>{{ questions | selectattr('difficulty', 'equalto', 'Hard') | list | length }}</strong><span>Hard</span></div>
+      <div><strong>{{ categories | length }}</strong><span>Patterns</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="container pyq-page">
+  <!-- Filter / search bar -->
+  <div class="pyq-filters card">
+    <div class="pyq-filter-group">
+      <span class="pyq-filter-label">Difficulty</span>
+      <div class="filter-chips" data-filter="difficulty">
+        <button type="button" class="filter-chip is-active" data-value="all" data-gtag="pyq_filter" data-gtag-label="all-difficulty">All</button>
+        <button type="button" class="filter-chip" data-value="Easy"   data-gtag="pyq_filter" data-gtag-label="Easy">Easy</button>
+        <button type="button" class="filter-chip" data-value="Medium" data-gtag="pyq_filter" data-gtag-label="Medium">Medium</button>
+        <button type="button" class="filter-chip" data-value="Hard"   data-gtag="pyq_filter" data-gtag-label="Hard">Hard</button>
+      </div>
+    </div>
+
+    <div class="pyq-filter-group">
+      <span class="pyq-filter-label">Pattern</span>
+      <div class="filter-chips" data-filter="category">
+        <button type="button" class="filter-chip is-active" data-value="all" data-gtag="pyq_filter" data-gtag-label="all-pattern">All</button>
+        {% for cat in categories %}
+        <button type="button" class="filter-chip" data-value="{{ cat }}" data-gtag="pyq_filter" data-gtag-label="{{ cat }}">{{ cat }}</button>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="pyq-search-wrap">
+      <input type="search" class="pyq-search" id="pyqSearch" placeholder="Search by title, pattern, or company…" aria-label="Search Python questions" />
+      <span class="pyq-count" id="pyqCount">{{ questions | length }} questions</span>
+    </div>
+  </div>
+
+  <!-- Question cards -->
+  <ol class="pyq-list" id="pyqList">
+    {% for q in questions %}
+    <li class="pyq-card"
+        data-difficulty="{{ q.difficulty }}"
+        data-category="{{ q.category }}"
+        data-search="{{ q.title | lower }} {{ q.category | lower }} {{ q.companies | join(' ') | lower }}">
+      <div class="pyq-head">
+        <span class="pyq-num">#{{ q.id }}</span>
+        <h3 class="pyq-title">{{ q.title }}</h3>
+        <span class="pyq-diff pyq-diff-{{ q.difficulty | lower }}">{{ q.difficulty }}</span>
+      </div>
+      <div class="pyq-meta">
+        <span class="pyq-cat">{{ q.category }}</span>
+        <span class="pyq-companies">
+          {% for c in q.companies %}<span class="pyq-co">{{ c }}</span>{% endfor %}
+        </span>
+      </div>
+      <p class="pyq-approach"><strong>Approach:</strong> {{ q.approach }}</p>
+
+      <details class="pyq-reveal">
+        <summary class="pyq-reveal-btn" data-gtag="solution_reveal" data-gtag-label="{{ q.title }}">
+          <span class="pyq-reveal-show">▼ Show solution</span>
+          <span class="pyq-reveal-hide">▲ Hide solution</span>
+        </summary>
+        <div class="pyq-solution">
+          <div class="pyq-code-head">
+            <span class="pyq-code-lang">python</span>
+            <button type="button" class="pyq-copy-btn" data-gtag="solution_copy" data-gtag-label="{{ q.title }}">Copy</button>
+          </div>
+          <pre class="pyq-code"><code>{{ q.code }}</code></pre>
+          <div class="pyq-complexity">⏱ {{ q.complexity }}</div>
+          {% if q.url %}
+          <a class="pyq-leetcode" href="{{ q.url }}" target="_blank" rel="noopener"
+             data-gtag="leetcode_link" data-gtag-label="{{ q.title }}">
+            Open on LeetCode ↗
+          </a>
+          {% endif %}
+        </div>
+      </details>
+    </li>
+    {% endfor %}
+  </ol>
+
+  <div class="pyq-empty" id="pyqEmpty" hidden>
+    <p>No questions match those filters. Try clearing the search or changing difficulty.</p>
+  </div>
+</section>
+
+<!-- AEO / SEO: ItemList schema for the 100 questions -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "100 Most Asked Python Coding Interview Questions (FAANG)",
+  "description": "Curated list of the top 100 Python coding interview questions asked at FAANG companies (Google, Amazon, Meta, Apple, Microsoft, Netflix), each with a worked Python solution.",
+  "numberOfItems": {{ questions | length }},
+  "itemListElement": [
+    {% for q in questions[:25] %}
+    {
+      "@type": "ListItem",
+      "position": {{ q.id }},
+      "name": "{{ q.title }}",
+      "url": "{{ q.url }}"
+    }{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+
+<!-- AEO: FAQ schema for the category overview -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What Python coding questions does FAANG ask?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "FAANG interviewers focus on data-structure and algorithm patterns: arrays / hashing, two pointers, sliding window, binary search, linked lists, trees, tries, heaps, backtracking, graphs (BFS / DFS / Union-Find / topological sort), and dynamic programming. The 100 questions on this page cover every one of those patterns with worked Python solutions."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is Python good for FAANG coding interviews?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Python is one of the most-accepted interview languages at Google, Amazon, Meta, Apple, Microsoft, and Netflix. Its concise syntax, rich standard library (heapq, collections, bisect, itertools), and readability let you focus on the algorithm rather than boilerplate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How many LeetCode problems should I solve before a FAANG interview?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you have under 6 weeks, solve the Blind 75 (covered in this list). If you have 2–3 months, expand to NeetCode 150. The goal is pattern recognition, not problem count — 80–150 well-understood problems beat 400 surface-level solves."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='/js/python_questions.js') }}"></script>
+{% endblock %}
