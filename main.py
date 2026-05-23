@@ -592,16 +592,16 @@ def sitemap():
     """XML sitemap for search engines."""
     today = datetime.utcnow().strftime("%Y-%m-%d")
     urls = [
-        ("/",                  "weekly",  "1.0"),
-        ("/ats-scanner",       "weekly",  "0.9"),
-        ("/interview-tips",    "weekly",  "0.9"),
-        ("/youtube-resources", "monthly", "0.8"),
-        ("/blogs",             "weekly",  "0.8"),
-        ("/email-generator",   "weekly",  "0.9"),
-        ("/sample-resumes",    "monthly", "0.8"),
-        ("/career-roadmap",    "monthly", "0.8"),
-        ("/python-questions",  "weekly",  "0.9"),
-        ("/feedback",          "monthly", "0.7"),
+        ("/",                  "daily",   "1.0"),
+        ("/ats-scanner",       "weekly",  "0.95"),
+        ("/interview-tips",    "daily",   "0.95"),
+        ("/youtube-resources", "weekly",  "0.85"),
+        ("/blogs",             "weekly",  "0.90"),
+        ("/email-generator",   "weekly",  "0.90"),
+        ("/sample-resumes",    "monthly", "0.85"),
+        ("/career-roadmap",    "monthly", "0.85"),
+        ("/python-questions",  "weekly",  "0.90"),
+        ("/feedback",          "monthly", "0.70"),
     ]
 
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -615,6 +615,49 @@ def sitemap():
         xml += f'    <priority>{priority}</priority>\n'
         xml += '  </url>\n'
 
+    xml += '</urlset>'
+    return Response(content=xml, media_type="application/xml")
+
+
+@app.get("/blogs-sitemap.xml")
+def blogs_sitemap():
+    """Dedicated blog sitemap for blog entries and resources."""
+    today = datetime.utcnow().strftime("%Y-%m-%d")
+    try:
+        blogs_data = _load_json("blogs.json")
+        blog_urls = []
+        
+        # Add main blogs page
+        blog_urls.append(("/blogs", "weekly", "0.90"))
+        
+        # Add individual blog sources/categories if they exist
+        if "categories" in blogs_data:
+            for category in blogs_data.get("categories", []):
+                if "name" in category:
+                    slug = category["name"].lower().replace(" ", "-")
+                    blog_urls.append((f"/blogs?category={slug}", "weekly", "0.80"))
+        
+        # Add newsletter entries if they exist
+        if "newsletters" in blogs_data:
+            for newsletter in blogs_data.get("newsletters", []):
+                if "name" in newsletter:
+                    slug = newsletter["name"].lower().replace(" ", "-")
+                    blog_urls.append((f"/blogs?newsletter={slug}", "weekly", "0.75"))
+        
+    except Exception:
+        blog_urls = [("/blogs", "weekly", "0.90")]
+    
+    xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    
+    for url, changefreq, priority in blog_urls:
+        xml += '  <url>\n'
+        xml += f'    <loc>https://getjob4u.com{url}</loc>\n'
+        xml += f'    <lastmod>{today}</lastmod>\n'
+        xml += f'    <changefreq>{changefreq}</changefreq>\n'
+        xml += f'    <priority>{priority}</priority>\n'
+        xml += '  </url>\n'
+    
     xml += '</urlset>'
     return Response(content=xml, media_type="application/xml")
 
@@ -646,11 +689,13 @@ Allow: /
 User-agent: Applebot-Extended
 Allow: /
 
-Sitemap: https://getjob4u.com/sitemap.xml
-
+# Rate limiting for aggressive crawlers
 User-agent: AhrefsBot
 Crawl-delay: 10
 
 User-agent: SemrushBot
 Crawl-delay: 10
+
+Sitemap: https://getjob4u.com/sitemap.xml
+Sitemap: https://getjob4u.com/blogs-sitemap.xml
 """

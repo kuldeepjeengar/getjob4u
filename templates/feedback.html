@@ -2,6 +2,30 @@
 {% block title %}Share Feedback — getjob4u{% endblock %}
 
 {% block content %}
+<!-- JSON-LD Review Schema with proper itemReviewed and author -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Review",
+  "itemReviewed": {
+    "@type": "SoftwareApplication",
+    "name": "getjob4u",
+    "url": "https://getjob4u.com",
+    "description": "Free career toolkit for AI, ML, and Data Science job seekers"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "getjob4u User"
+  },
+  "reviewRating": {
+    "@type": "Rating",
+    "ratingValue": "5",
+    "bestRating": "5",
+    "worstRating": "1"
+  },
+  "reviewBody": "Helpful career resources for job seekers"
+}
+</script>
 <section class="page-hero">
   <div class="container">
     <span class="pill">3-min form · We read every response</span>
