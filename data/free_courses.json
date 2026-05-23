@@ -1,0 +1,75 @@
+{
+  "intro": "100% free courses where you can earn a certificate without paying. We flag which ones give a downloadable certificate vs. a digital badge vs. honor-system completion. All links open the official course platform.",
+  "platforms": [
+    {
+      "title": "🏆 Platforms with Truly Free Certificates",
+      "subtitle": "These platforms issue a free, downloadable certificate the moment you finish the course — no hidden fees.",
+      "courses": [
+        {"name": "IBM Cognitive Class", "url": "https://cognitiveclass.ai", "description": "Free badges from IBM in Data Science, Python, Big Data, Deep Learning, AI Ethics.", "cert": "Free badge"},
+        {"name": "Great Learning Academy", "url": "https://www.mygreatlearning.com/academy", "description": "Hundreds of free courses in ML, AI, Data Science, GenAI — each with a free certificate.", "cert": "Free certificate"},
+        {"name": "Simplilearn SkillUp", "url": "https://www.simplilearn.com/skillup-free-online-courses", "description": "Free courses on Data Science, AI, ML, Generative AI with shareable certificates.", "cert": "Free certificate"},
+        {"name": "HP LIFE", "url": "https://www.life-global.org", "description": "Free business + tech courses from HP Foundation, including AI for Business.", "cert": "Free certificate"},
+        {"name": "Microsoft Learn", "url": "https://learn.microsoft.com/training/", "description": "Free learning paths for Azure AI, Copilot, ML on Azure, Power BI — earn free badges.", "cert": "Free badges"},
+        {"name": "Saylor Academy", "url": "https://www.saylor.org", "description": "Free college-level courses. Free certificates after a proctored final exam.", "cert": "Free certificate"},
+        {"name": "Alison", "url": "https://alison.com", "description": "Thousands of free courses. Digital certificate is free to view; paper costs extra.", "cert": "Free digital certificate"},
+        {"name": "AWS Skill Builder", "url": "https://explore.skillbuilder.aws", "description": "Free AWS learning paths including Generative AI Essentials and AI Practitioner prep.", "cert": "Free badges"}
+      ]
+    },
+    {
+      "title": "🎓 World-Class Courses (Audit Free)",
+      "subtitle": "Top universities and AI labs. Course content is free to audit; paid certificate is optional. Often you can apply for full financial aid → free certificate.",
+      "courses": [
+        {"name": "Coursera (Audit Mode)", "url": "https://www.coursera.org/courses?query=machine%20learning", "description": "Audit thousands of ML / AI / DS courses for free. Apply for financial aid for a free verified certificate.", "cert": "Free audit · Cert via financial aid"},
+        {"name": "DeepLearning.AI Short Courses", "url": "https://www.deeplearning.ai/short-courses/", "description": "Andrew Ng's free 1-hour courses on GenAI, RAG, agents, LangChain — completion certificates included.", "cert": "Free certificate"},
+        {"name": "Google AI Essentials", "url": "https://grow.google/ai-essentials/", "description": "Google's free intro to AI for everyone. Audit free on Coursera.", "cert": "Audit free"},
+        {"name": "Google Digital Garage", "url": "https://learndigital.withgoogle.com/digitalgarage", "description": "Free certificate courses on data, marketing, career skills.", "cert": "Free certificate"},
+        {"name": "Stanford Online CS229 (ML)", "url": "https://cs229.stanford.edu", "description": "The legendary Stanford ML lecture series. Free notes + videos.", "cert": "No certificate"},
+        {"name": "MIT OpenCourseWare", "url": "https://ocw.mit.edu/search/?t=Machine%20Learning", "description": "Free MIT lecture notes, problem sets, exams — including 6.034 AI and 6.036 ML.", "cert": "No certificate"},
+        {"name": "edX Audit", "url": "https://www.edx.org/learn/artificial-intelligence", "description": "Audit MIT, Harvard, Berkeley AI/ML courses for free. Cert is paid.", "cert": "Free audit"},
+        {"name": "Harvard CS50 AI (edX)", "url": "https://cs50.harvard.edu/ai/", "description": "Harvard's free AI with Python course. Free certificate via CS50 site.", "cert": "Free certificate"}
+      ]
+    },
+    {
+      "title": "⚡ Practical Hands-On Courses",
+      "subtitle": "Build-something-real courses with strong free tracks, perfect for AI/ML/DS/GenAI portfolio projects.",
+      "courses": [
+        {"name": "Kaggle Learn", "url": "https://www.kaggle.com/learn", "description": "Free bite-sized micro-courses on Python, Pandas, ML, Deep Learning, Computer Vision — each with a certificate.", "cert": "Free certificate"},
+        {"name": "Hugging Face Learn", "url": "https://huggingface.co/learn", "description": "Free courses on NLP, LLMs, Audio, Diffusion, Reinforcement Learning, AI Agents — community certificates.", "cert": "Free certificate"},
+        {"name": "fast.ai", "url": "https://www.fast.ai", "description": "Practical Deep Learning for Coders. Top-tier free course by Jeremy Howard.", "cert": "No certificate"},
+        {"name": "freeCodeCamp", "url": "https://www.freecodecamp.org/learn", "description": "Free certifications in Machine Learning with Python and Data Analysis with Python.", "cert": "Free certificate"},
+        {"name": "Microsoft AI Skills Navigator", "url": "https://aiskillsnavigator.microsoft.com/", "description": "Curated free Microsoft Learn paths on Generative AI + Copilot — free badges.", "cert": "Free badges"},
+        {"name": "Google Cloud Skills Boost", "url": "https://www.cloudskillsboost.google", "description": "Free intro courses on Generative AI on Google Cloud. Earn free skill badges.", "cert": "Free badges"},
+        {"name": "NVIDIA Deep Learning Institute (DLI)", "url": "https://www.nvidia.com/en-us/training/", "description": "Several free DLI courses with completion certificates (look for $0 ones).", "cert": "Free certificate (select)"},
+        {"name": "Intel AI for Future Workforce", "url": "https://www.intel.com/content/www/us/en/learn/intel-skills-for-innovation.html", "description": "Free Intel AI Academy courses on ML basics.", "cert": "Free certificate"}
+      ]
+    },
+    {
+      "title": "🎥 Free Courses on Udemy & Beyond",
+      "subtitle": "Udemy's free courses (the ones with $0 price) don't issue certificates by default, but they're excellent learning material. Look for these high-quality free options.",
+      "courses": [
+        {"name": "Udemy — Free Courses (Filter $0)", "url": "https://www.udemy.com/courses/free/", "description": "Full Udemy free catalog. Search 'Machine Learning', 'Python', 'AI' — no cert for free courses.", "cert": "No certificate (free tier)"},
+        {"name": "Real Discount (Udemy Coupons)", "url": "https://www.real.discount", "description": "Time-limited 100%-off coupons for paid Udemy courses — completion certificate included once enrolled free.", "cert": "Free certificate (via coupon)"},
+        {"name": "Discudemy", "url": "https://www.discudemy.com", "description": "Daily list of Udemy courses temporarily free with coupon — same certificate as paid.", "cert": "Free certificate (via coupon)"},
+        {"name": "Coursera For Free / Class Central", "url": "https://www.classcentral.com/collection/free-machine-learning-courses", "description": "Curated index of every free ML/AI course across all platforms.", "cert": "Varies"},
+        {"name": "Codecademy (Free Tier)", "url": "https://www.codecademy.com/catalog/subject/data-science", "description": "Free interactive lessons in Python, SQL, ML. Certificate requires Pro.", "cert": "No certificate (free tier)"},
+        {"name": "DataCamp (Free Day Tracks)", "url": "https://www.datacamp.com/tracks/free-introduction-tracks", "description": "Free intro tracks for Python, SQL, Power BI, AI.", "cert": "No certificate (free tier)"},
+        {"name": "Khan Academy", "url": "https://www.khanacademy.org/computing", "description": "Free foundational courses in statistics, linear algebra, calculus — essential for ML.", "cert": "Free badges"},
+        {"name": "MIT 6.S191 — Intro to Deep Learning", "url": "https://introtodeeplearning.com", "description": "MIT's free annual deep learning bootcamp. Lectures, labs, projects.", "cert": "No certificate"}
+      ]
+    },
+    {
+      "title": "🚀 Specialized: Gen AI, LLMs & Agents",
+      "subtitle": "Free, current courses on the latest GenAI, LLMs, RAG, agents.",
+      "courses": [
+        {"name": "DeepLearning.AI — LangChain for LLM Apps", "url": "https://www.deeplearning.ai/short-courses/langchain-for-llm-application-development/", "description": "Free short course by Andrew Ng + Harrison Chase. Free completion cert.", "cert": "Free certificate"},
+        {"name": "DeepLearning.AI — Building & Evaluating RAG", "url": "https://www.deeplearning.ai/short-courses/building-evaluating-advanced-rag/", "description": "Free RAG pipelines course.", "cert": "Free certificate"},
+        {"name": "Hugging Face — AI Agents Course", "url": "https://huggingface.co/learn/agents-course/unit0/introduction", "description": "Free comprehensive course on building AI agents.", "cert": "Free certificate"},
+        {"name": "Hugging Face — LLM Course", "url": "https://huggingface.co/learn/llm-course", "description": "Free transformers + LLM fine-tuning course.", "cert": "Free certificate"},
+        {"name": "Anthropic — Prompt Engineering Tutorial", "url": "https://docs.anthropic.com/en/resources/prompt-engineering-interactive-tutorial", "description": "Free official Claude prompt engineering interactive tutorial.", "cert": "No certificate"},
+        {"name": "OpenAI Academy", "url": "https://academy.openai.com", "description": "Free OpenAI Academy courses on prompt engineering + ChatGPT for work.", "cert": "Free (varies)"},
+        {"name": "Activeloop — GenAI 360", "url": "https://learn.activeloop.ai", "description": "Free LangChain, LlamaIndex, RAG, fine-tuning courses with certificates.", "cert": "Free certificate"},
+        {"name": "Google — Generative AI Learning Path", "url": "https://www.cloudskillsboost.google/paths/118", "description": "Free 7-course intro to Generative AI on Google Cloud — earn skill badges.", "cert": "Free badges"}
+      ]
+    }
+  ]
+}

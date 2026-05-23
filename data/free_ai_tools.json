@@ -1,0 +1,129 @@
+{
+  "intro": "Hand-picked free AI tools. Every link below is verified to work and has a meaningful free tier or is 100% free. No signup walls on the listing — but some tools require an account to use.",
+  "categories": [
+    {
+      "title": "💬 Chat & Writing Assistants",
+      "icon": "💬",
+      "tools": [
+        {"name": "ChatGPT", "url": "https://chat.openai.com", "description": "OpenAI's flagship chatbot. Free tier with GPT-4o-mini + limited GPT-4o."},
+        {"name": "Claude", "url": "https://claude.ai", "description": "Anthropic's Claude. Free tier with the latest Sonnet model."},
+        {"name": "Google Gemini", "url": "https://gemini.google.com", "description": "Google's multimodal chatbot. Free 2.5 Flash + Pro previews."},
+        {"name": "Perplexity", "url": "https://www.perplexity.ai", "description": "AI search engine with cited sources. Free unlimited basic search."},
+        {"name": "Mistral Le Chat", "url": "https://chat.mistral.ai", "description": "Fast European LLM. Free with image gen + web search."},
+        {"name": "Microsoft Copilot", "url": "https://copilot.microsoft.com", "description": "Free GPT-4 + image generation through Microsoft."},
+        {"name": "DeepSeek Chat", "url": "https://chat.deepseek.com", "description": "Free access to DeepSeek's powerful reasoning models."},
+        {"name": "Grok (xAI)", "url": "https://grok.com", "description": "xAI's Grok chatbot. Free tier available."}
+      ]
+    },
+    {
+      "title": "🎨 Image Generation",
+      "icon": "🎨",
+      "tools": [
+        {"name": "Microsoft Designer / Bing Image Creator", "url": "https://designer.microsoft.com/image-creator", "description": "Free DALL-E 3 image generation. 15 daily boosts."},
+        {"name": "Leonardo.AI", "url": "https://leonardo.ai", "description": "150 free tokens daily. SDXL, Flux, custom models."},
+        {"name": "Ideogram", "url": "https://ideogram.ai", "description": "Best AI for typography in images. Free daily generations."},
+        {"name": "Playground AI", "url": "https://playground.com", "description": "500 free images per day. Stable Diffusion + Playground v3."},
+        {"name": "Lexica", "url": "https://lexica.art", "description": "Free image generation + searchable Stable Diffusion gallery."},
+        {"name": "Krea AI", "url": "https://www.krea.ai", "description": "Real-time AI image + video generation. Free tier."},
+        {"name": "NightCafe", "url": "https://creator.nightcafe.studio", "description": "Multi-model image generator. Free credits daily."}
+      ]
+    },
+    {
+      "title": "🎬 Video Generation",
+      "icon": "🎬",
+      "tools": [
+        {"name": "Runway", "url": "https://runwayml.com", "description": "Industry-standard Gen-3 video generation. Free trial credits."},
+        {"name": "Pika", "url": "https://pika.art", "description": "Text-to-video + image-to-video. Free monthly generations."},
+        {"name": "Kling AI", "url": "https://klingai.com", "description": "High-quality video gen from Kuaishou. Free daily credits."},
+        {"name": "Hailuo AI", "url": "https://hailuoai.video", "description": "MiniMax's text-to-video. Generous free tier."},
+        {"name": "Luma Dream Machine", "url": "https://lumalabs.ai/dream-machine", "description": "Fast cinematic video from text or image. Free tier."},
+        {"name": "InVideo AI", "url": "https://invideo.io/ai", "description": "AI video editor with stock footage. 10 min/week free."},
+        {"name": "CapCut", "url": "https://www.capcut.com", "description": "Free AI video editor with auto-captions and effects."}
+      ]
+    },
+    {
+      "title": "📄 PDF & Document Tools",
+      "icon": "📄",
+      "tools": [
+        {"name": "PDF24 Tools", "url": "https://tools.pdf24.org", "description": "100% free, 30+ PDF tools. Merge, split, OCR, convert."},
+        {"name": "iLovePDF", "url": "https://www.ilovepdf.com", "description": "Free PDF compress, merge, split, convert, e-sign."},
+        {"name": "Smallpdf", "url": "https://smallpdf.com", "description": "Clean PDF toolkit. 2 free tasks per day."},
+        {"name": "ChatPDF", "url": "https://www.chatpdf.com", "description": "Chat with any PDF. Free tier handles small documents."},
+        {"name": "AskYourPDF", "url": "https://askyourpdf.com", "description": "AI-powered PDF Q&A. Free monthly credits."},
+        {"name": "Adobe Acrobat Online", "url": "https://www.adobe.com/acrobat/online.html", "description": "Free PDF convert, compress, merge, sign — by Adobe."},
+        {"name": "PDFgear", "url": "https://www.pdfgear.com", "description": "Completely free desktop + web PDF editor with AI chat."}
+      ]
+    },
+    {
+      "title": "🎵 Audio & Voice",
+      "icon": "🎵",
+      "tools": [
+        {"name": "ElevenLabs", "url": "https://elevenlabs.io", "description": "Best-in-class AI voices. 10 min/month free."},
+        {"name": "Suno", "url": "https://suno.com", "description": "AI music generator with vocals. 10 songs free daily."},
+        {"name": "Udio", "url": "https://www.udio.com", "description": "High-quality AI song generator. Free monthly credits."},
+        {"name": "Murf AI", "url": "https://murf.ai", "description": "Studio-grade voiceovers. Free 10 min preview."},
+        {"name": "PlayHT", "url": "https://play.ht", "description": "Realistic AI voice generator. Free 5,000 chars/month."},
+        {"name": "AudioPen", "url": "https://audiopen.ai", "description": "Voice notes → tidy text. Free tier available."},
+        {"name": "Adobe Podcast Enhance", "url": "https://podcast.adobe.com/enhance", "description": "Free studio-quality audio cleanup. No signup."}
+      ]
+    },
+    {
+      "title": "🖼️ Image Editing & Enhancement",
+      "icon": "🖼️",
+      "tools": [
+        {"name": "Cleanup.pictures", "url": "https://cleanup.pictures", "description": "Free object/text removal from images. No signup."},
+        {"name": "Remove.bg", "url": "https://www.remove.bg", "description": "One-click background removal. Free for low-res."},
+        {"name": "Upscale.media", "url": "https://www.upscale.media", "description": "Free AI image upscaler. No signup needed."},
+        {"name": "Photopea", "url": "https://www.photopea.com", "description": "Free Photoshop-style editor in your browser."},
+        {"name": "Pixlr", "url": "https://pixlr.com", "description": "Free AI photo editor with generative fill + remove."},
+        {"name": "Adobe Firefly", "url": "https://firefly.adobe.com", "description": "Generative fill, text effects, recolor. Free credits."}
+      ]
+    },
+    {
+      "title": "📊 Presentations & Slides",
+      "icon": "📊",
+      "tools": [
+        {"name": "Gamma", "url": "https://gamma.app", "description": "AI generates whole decks from a prompt. 400 free credits."},
+        {"name": "Tome", "url": "https://tome.app", "description": "AI storytelling decks. Free starter plan."},
+        {"name": "SlidesGPT", "url": "https://slidesgpt.com", "description": "Prompt → PowerPoint. Free preview + paid export."},
+        {"name": "Beautiful.ai", "url": "https://www.beautiful.ai", "description": "AI-designed slides. Free 14-day trial."},
+        {"name": "Canva Magic Design", "url": "https://www.canva.com/magic-design", "description": "AI-generated decks + posts. Generous free tier."}
+      ]
+    },
+    {
+      "title": "💻 Code & Developer Tools",
+      "icon": "💻",
+      "tools": [
+        {"name": "GitHub Copilot", "url": "https://github.com/features/copilot", "description": "Free for verified students + open-source maintainers."},
+        {"name": "Cursor", "url": "https://www.cursor.com", "description": "AI-first code editor. Generous free Hobby tier."},
+        {"name": "Codeium / Windsurf", "url": "https://codeium.com", "description": "100% free AI code completion + chat for individuals."},
+        {"name": "Continue.dev", "url": "https://www.continue.dev", "description": "Open-source AI IDE plugin. Bring your own free model."},
+        {"name": "v0 by Vercel", "url": "https://v0.dev", "description": "Prompt → React + Tailwind UI. Free monthly credits."},
+        {"name": "bolt.new", "url": "https://bolt.new", "description": "Prompt → full-stack web app. Free daily tokens."},
+        {"name": "Replit AI", "url": "https://replit.com", "description": "Cloud IDE with AI assistant. Free starter tier."},
+        {"name": "Google AI Studio", "url": "https://aistudio.google.com", "description": "Free Gemini API playground + free generous quota."}
+      ]
+    },
+    {
+      "title": "🧠 Productivity & Meetings",
+      "icon": "🧠",
+      "tools": [
+        {"name": "Notion AI", "url": "https://www.notion.so", "description": "AI writing + Q&A inside Notion. Limited free uses."},
+        {"name": "Fireflies", "url": "https://fireflies.ai", "description": "Auto-records & summarizes meetings. Free unlimited transcripts."},
+        {"name": "Otter.ai", "url": "https://otter.ai", "description": "Real-time transcription. 300 free minutes/month."},
+        {"name": "tl;dv", "url": "https://tldv.io", "description": "Free meeting recorder + AI summary for Zoom/Meet."}
+      ]
+    },
+    {
+      "title": "💼 Resume, Career & Job Hunt",
+      "icon": "💼",
+      "tools": [
+        {"name": "getjob4u ATS Scanner", "url": "/ats-scanner", "description": "Our free ATS scanner for AI/ML/DS resumes. No signup."},
+        {"name": "Rezi", "url": "https://www.rezi.ai", "description": "ATS-friendly AI resume builder. Free starter plan."},
+        {"name": "Teal", "url": "https://www.tealhq.com", "description": "Free job tracker + AI resume tailoring."},
+        {"name": "Kickresume", "url": "https://www.kickresume.com", "description": "AI resume + cover letter. Free with basic templates."},
+        {"name": "Enhancv Free Tools", "url": "https://enhancv.com/resources/resume-examples/", "description": "Free resume examples and AI checker."}
+      ]
+    }
+  ]
+}

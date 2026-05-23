@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="pill">50+ hand-picked tools · All free tier · No fluff</span>
+    <h1>Free <span class="grad-text">AI Tools</span> for builders & job seekers</h1>
+    <p class="lead">{{ intro }}</p>
+  </div>
+</section>
+
+<section class="container">
+  {% for cat in categories %}
+  <div class="resource-section">
+    <div class="resource-section-head">
+      <h2>{{ cat.title }}</h2>
+      <span class="muted small">{{ cat.tools | length }} tools</span>
+    </div>
+    <div class="tool-grid">
+      {% for t in cat.tools %}
+      <a class="tool-card"
+         href="{{ t.url }}"
+         {% if t.url.startswith('http') %}target="_blank" rel="noopener noreferrer"{% endif %}
+         data-gtag="ai_tool_click"
+         data-gtag-label="{{ t.name }}">
+        <div class="tool-card-top">
+          <div class="tool-icon">{{ cat.icon }}</div>
+          <h3>{{ t.name }}</h3>
+        </div>
+        <p>{{ t.description }}</p>
+        <span class="link-arrow">Open →</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+
+  <p class="ul-footnote">Know a free AI tool we're missing? <a href="/feedback" data-gtag="ai_tool_suggest">Suggest a tool →</a></p>
+
+  <!-- Related resources (internal linking) -->
+  <div class="related-block">
+    <h2>Keep going with these free resources</h2>
+    <div class="related-grid">
+      <a class="related-card" href="/free-courses"><strong>Free Courses with Certificates →</strong><span>IBM, Google, Hugging Face, freeCodeCamp & more</span></a>
+      <a class="related-card" href="/career-roadmap"><strong>Visual Career Roadmaps →</strong><span>DS, AI/ML Eng, Data Analyst, Gen AI Eng</span></a>
+      <a class="related-card" href="/ats-scanner"><strong>Free ATS Resume Scanner →</strong><span>Score your resume in 5 seconds</span></a>
+      <a class="related-card" href="/python-questions"><strong>100 FAANG Python Questions →</strong><span>With worked solutions you can copy</span></a>
+      <a class="related-card" href="/email-generator"><strong>Cold Email & LinkedIn DMs →</strong><span>Templates that get replies</span></a>
+      <a class="related-card" href="/blogs"><strong>Best AI/ML/DS Blogs →</strong><span>Hand-picked reading list</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- JSON-LD: ItemList of free AI tools — eligible for Google rich results -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "50+ Free AI Tools for Builders and Job Seekers",
+  "description": "Curated list of verified free AI tools across video generation, PDF, image, voice, code, presentations, productivity, and resume building.",
+  "url": "https://getjob4u.com/free-ai-tools",
+  "isPartOf": { "@type": "WebSite", "name": "getjob4u", "url": "https://getjob4u.com" },
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "Free AI Tools — Categorized",
+    "numberOfItems": {{ categories | map(attribute='tools') | map('length') | sum }},
+    "itemListElement": [
+      {% set ns = namespace(idx=0) %}
+      {% for cat in categories %}{% for t in cat.tools %}{% set ns.idx = ns.idx + 1 %}
+      {
+        "@type": "ListItem",
+        "position": {{ ns.idx }},
+        "item": {
+          "@type": "SoftwareApplication",
+          "name": {{ t.name | tojson }},
+          "url": {{ t.url | tojson }},
+          "description": {{ t.description | tojson }},
+          "applicationCategory": {{ cat.title | tojson }},
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+        }
+      }{% if not (loop.last and ns.idx == (categories | map(attribute='tools') | map('length') | sum)) %},{% endif %}
+      {% endfor %}{% endfor %}
+    ]
+  }
+}
+</script>
+{% endblock %}

@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="pill">About · Built solo · Built for you</span>
+    <h1>About <span class="grad-text">getjob4u</span></h1>
+    <p class="lead">getjob4u is a free career toolkit for AI, ML, and Data Science aspirants — built by one engineer who got tired of seeing job seekers waste money on paid tools that don't actually help.</p>
+  </div>
+</section>
+
+<section class="container">
+  <div class="about-grid">
+    <div class="about-photo-wrap">
+      <img class="about-photo"
+           src="{{ url_for('static', path='/images/founder.jpg') }}"
+           alt="Kuldeep Jeengar — Founder of getjob4u"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';" />
+      <div class="about-photo-fallback" style="display:none;">KJ</div>
+      <div class="about-photo-glow" aria-hidden="true"></div>
+    </div>
+
+    <div class="about-text">
+      <h2>Hi, I'm Kuldeep 👋</h2>
+      <p>I'm an engineer who's lived the AI / ML / Data Science job-hunt firsthand — the silent ATS rejections, the LinkedIn cold outreach grind, the resume rewrites at 2 AM the night before a deadline. I built getjob4u to give job seekers the tools I wish I had: an honest ATS scanner, real interview prep, working email templates, and curated learning resources — completely free, no signup, no ads.</p>
+
+      <p>If this site saves you even one hour, it was worth building.</p>
+
+      <div class="about-links">
+        <a class="btn btn-primary" href="https://www.linkedin.com/in/kuldeep-jeengar/" target="_blank" rel="noopener" data-gtag="about_click" data-gtag-label="LinkedIn">
+          <span>💼</span> Connect on LinkedIn
+        </a>
+        <a class="btn btn-ghost" href="mailto:kuldeepjeengar50@gmail.com" data-gtag="about_click" data-gtag-label="Personal Email">
+          <span>✉️</span> kuldeepjeengar50@gmail.com
+        </a>
+      </div>
+
+      <ul class="about-meta-list">
+        <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/kuldeep-jeengar/" target="_blank" rel="noopener">linkedin.com/in/kuldeep-jeengar</a></li>
+        <li><strong>Personal email:</strong> <a href="mailto:kuldeepjeengar50@gmail.com">kuldeepjeengar50@gmail.com</a></li>
+        <li><strong>Project email (launching soon):</strong> <a href="mailto:getjob4u@gmail.com">getjob4u@gmail.com</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="about-mission">
+    <div class="mission-card">
+      <h3>🎯 Mission</h3>
+      <p>Make the AI / ML / DS job hunt fair. Free tools, honest advice, zero gatekeeping.</p>
+    </div>
+    <div class="mission-card">
+      <h3>💸 Pricing</h3>
+      <p>Free forever. No signups, no credit cards, no upsells, no ads. Funded by my own time.</p>
+    </div>
+    <div class="mission-card">
+      <h3>🛠️ Built with</h3>
+      <p>FastAPI, vanilla JS, SQLite — and a lot of weekends.</p>
+    </div>
+  </div>
+
+  <div class="cta-band-inner about-cta">
+    <div>
+      <h2>Got an idea? A bug? A pep talk?</h2>
+      <p>I read every message.</p>
+    </div>
+    <a class="btn btn-primary" href="/contact" data-gtag="about_cta">Get in touch →</a>
+  </div>
+
+  <!-- Related resources (internal linking) -->
+  <div class="related-block">
+    <h2>Explore the toolkit</h2>
+    <div class="related-grid">
+      <a class="related-card" href="/ats-scanner"><strong>ATS Resume Scanner →</strong><span>The flagship free tool</span></a>
+      <a class="related-card" href="/career-roadmap"><strong>Career Roadmaps →</strong><span>Visual flowcharts for 4 paths</span></a>
+      <a class="related-card" href="/free-ai-tools"><strong>50+ Free AI Tools →</strong><span>Verified working free tier</span></a>
+      <a class="related-card" href="/free-courses"><strong>Free Certified Courses →</strong><span>From IBM, Google, freeCodeCamp & more</span></a>
+      <a class="related-card" href="/python-questions"><strong>100 Python FAANG Q&apos;s →</strong><span>With worked solutions</span></a>
+      <a class="related-card" href="/feedback"><strong>Share Feedback →</strong><span>Tell me what to build next</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- JSON-LD: AboutPage + Person — boosts Knowledge Graph linkage for the founder -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "url": "https://getjob4u.com/about",
+  "name": "About getjob4u",
+  "description": "About getjob4u — a free career toolkit for AI, ML, and Data Science job seekers, built solo by Kuldeep Jeengar.",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Kuldeep Jeengar",
+    "alternateName": "kuldeepjeengar",
+    "url": "https://getjob4u.com/about",
+    "image": "https://getjob4u.com/static/images/founder.jpg",
+    "jobTitle": "Founder & Engineer",
+    "email": "mailto:kuldeepjeengar50@gmail.com",
+    "sameAs": [
+      "https://www.linkedin.com/in/kuldeep-jeengar/",
+      "https://github.com/kuldeepjeengar"
+    ],
+    "worksFor": {
+      "@type": "Organization",
+      "name": "getjob4u",
+      "url": "https://getjob4u.com"
+    },
+    "knowsAbout": [
+      "Artificial Intelligence",
+      "Machine Learning",
+      "Data Science",
+      "Generative AI",
+      "Python",
+      "Career Coaching",
+      "Resume Optimization",
+      "ATS Systems"
+    ]
+  }
+}
+</script>
+{% endblock %}

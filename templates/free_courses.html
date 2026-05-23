@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="pill">Free · AI / ML / Data · Certificates clearly marked</span>
+    <h1>Free Courses with <span class="grad-text">Certificates</span></h1>
+    <p class="lead">{{ intro }}</p>
+  </div>
+</section>
+
+<section class="container">
+  {% for p in platforms %}
+  <div class="resource-section">
+    <div class="resource-section-head">
+      <h2>{{ p.title }}</h2>
+    </div>
+    {% if p.subtitle %}<p class="muted">{{ p.subtitle }}</p>{% endif %}
+    <div class="course-grid-rich">
+      {% for c in p.courses %}
+      <a class="course-card-rich"
+         href="{{ c.url }}"
+         {% if c.url.startswith('http') %}target="_blank" rel="noopener noreferrer"{% endif %}
+         data-gtag="free_course_click"
+         data-gtag-label="{{ c.name }}">
+        <div class="cc-head">
+          <h3>{{ c.name }}</h3>
+          <span class="cert-badge {% if 'Free certificate' in c.cert %}cb-strong{% elif 'badge' in c.cert | lower %}cb-mid{% elif 'No certificate' in c.cert %}cb-none{% else %}cb-soft{% endif %}">
+            {{ c.cert }}
+          </span>
+        </div>
+        <p>{{ c.description }}</p>
+        <span class="link-arrow">Open course →</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+
+  <p class="ul-footnote">Found a great free course with a certificate? <a href="/feedback" data-gtag="free_course_suggest">Tell us about it →</a></p>
+
+  <!-- Related resources (internal linking) -->
+  <div class="related-block">
+    <h2>Pair courses with these free tools</h2>
+    <div class="related-grid">
+      <a class="related-card" href="/career-roadmap"><strong>Visual Career Roadmaps →</strong><span>Pick a path. See the full learning order.</span></a>
+      <a class="related-card" href="/free-ai-tools"><strong>50+ Free AI Tools →</strong><span>Build projects with no credit card</span></a>
+      <a class="related-card" href="/ats-scanner"><strong>Free ATS Resume Scanner →</strong><span>Make your new skills land you interviews</span></a>
+      <a class="related-card" href="/python-questions"><strong>100 FAANG Python Questions →</strong><span>Practice what you learn</span></a>
+      <a class="related-card" href="/youtube-resources"><strong>YouTube + Courses Hub →</strong><span>Curated channels for every topic</span></a>
+      <a class="related-card" href="/interview-tips"><strong>AI/ML Interview Tips →</strong><span>35+ curated questions</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- JSON-LD: ItemList of free courses -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Free AI / ML / Data Science Courses with Certificates",
+  "description": "Verified free online courses with certificates in AI, Machine Learning, Data Science, Data Analytics, and Generative AI — from IBM, Google, Microsoft, Coursera, freeCodeCamp, Kaggle, Hugging Face and more.",
+  "url": "https://getjob4u.com/free-courses",
+  "isPartOf": { "@type": "WebSite", "name": "getjob4u", "url": "https://getjob4u.com" },
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "Free Courses with Certificates",
+    "numberOfItems": {{ platforms | map(attribute='courses') | map('length') | sum }},
+    "itemListElement": [
+      {% set ns = namespace(idx=0) %}
+      {% for p in platforms %}{% for c in p.courses %}{% set ns.idx = ns.idx + 1 %}
+      {
+        "@type": "ListItem",
+        "position": {{ ns.idx }},
+        "item": {
+          "@type": "Course",
+          "name": {{ c.name | tojson }},
+          "description": {{ c.description | tojson }},
+          "url": {{ (c.url if c.url.startswith('http') else 'https://getjob4u.com' + c.url) | tojson }},
+          "provider": { "@type": "Organization", "name": {{ c.name | tojson }} },
+          "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "category": "Free" }
+        }
+      }{% if not (loop.last and ns.idx == (platforms | map(attribute='courses') | map('length') | sum)) %},{% endif %}
+      {% endfor %}{% endfor %}
+    ]
+  }
+}
+</script>
+{% endblock %}

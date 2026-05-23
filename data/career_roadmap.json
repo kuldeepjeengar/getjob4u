@@ -3,7 +3,9 @@
     {
       "id": "data_scientist",
       "title": "Data Scientist Roadmap",
+      "icon": "📊",
       "duration": "9-12 months from scratch",
+      "tagline": "Build models that drive business decisions",
       "stages": [
         {"stage": "1. Foundations (Month 1-2)", "items": ["Python (variables, data structures, OOP)", "Statistics basics (mean, median, std, distributions)", "Linear algebra (vectors, matrices, dot product)", "Probability (Bayes, conditional, distributions)", "SQL (joins, group by, window functions)"]},
         {"stage": "2. Data Handling (Month 3)", "items": ["pandas (loading, cleaning, merging)", "NumPy (vectorized operations)", "Matplotlib + Seaborn (EDA)", "Real-world dataset cleaning project on Kaggle"]},
@@ -15,8 +17,10 @@
     },
     {
       "id": "ml_engineer",
-      "title": "ML Engineer Roadmap",
+      "title": "AI / ML Engineer Roadmap",
+      "icon": "🤖",
       "duration": "12-15 months from coding background",
+      "tagline": "Ship production ML systems at scale",
       "stages": [
         {"stage": "1. Strong CS Fundamentals", "items": ["Data structures + algorithms", "System design basics", "Distributed systems intro", "Linux + Bash + Git mastery"]},
         {"stage": "2. ML Foundations", "items": ["Classical ML (same as DS)", "Deep learning theory + practice", "Math: linear algebra, calculus, prob"]},
@@ -27,9 +31,26 @@
       ]
     },
     {
+      "id": "data_analyst",
+      "title": "Data Analyst Roadmap",
+      "icon": "📈",
+      "duration": "4-6 months from scratch",
+      "tagline": "Turn data into decisions with SQL, dashboards & storytelling",
+      "stages": [
+        {"stage": "1. Excel + Stats (Month 1)", "items": ["Excel: pivots, lookups, charts", "Descriptive stats (mean, median, variance)", "Probability basics", "Hypothesis testing (t-test, chi-square)", "Sampling + bias"]},
+        {"stage": "2. SQL Mastery (Month 2)", "items": ["SELECT, joins, aggregations", "Window functions (RANK, LAG, ROW_NUMBER)", "CTEs + subqueries", "Query optimization", "100 SQL questions on LeetCode / DataLemur"]},
+        {"stage": "3. Python for Analytics (Month 3)", "items": ["pandas (groupby, merge, pivot)", "NumPy basics", "Matplotlib + Seaborn for EDA", "Jupyter notebooks workflow", "Cleaning a messy real-world dataset"]},
+        {"stage": "4. BI Dashboards (Month 4)", "items": ["Tableau OR Power BI (pick one)", "DAX (for Power BI) / calculated fields", "Storytelling with dashboards", "Build 2 portfolio dashboards", "Publish to Tableau Public / Power BI Service"]},
+        {"stage": "5. Business + Domain (Month 5)", "items": ["KPI design (DAU, retention, conversion)", "A/B testing fundamentals", "Cohort + funnel analysis", "Stakeholder communication", "Case study practice (Lewis Lin, Stratascratch)"]},
+        {"stage": "6. Job-Ready (Month 6)", "items": ["3 portfolio projects (SQL + dashboard + writeup)", "Resume + LinkedIn polished", "Mock interviews (SQL, case studies, behavioral)", "Cold outreach + apply", "Niche: marketing / product / finance analytics"]}
+      ]
+    },
+    {
       "id": "ai_engineer",
-      "title": "AI Engineer (LLM/GenAI) Roadmap",
+      "title": "Gen AI Engineer Roadmap",
+      "icon": "🧬",
       "duration": "6-9 months from Python background",
+      "tagline": "Build LLM apps, RAG systems & AI agents",
       "stages": [
         {"stage": "1. LLM Fundamentals", "items": ["Transformer architecture (read Andrej Karpathy's series)", "Tokenization, embeddings, attention", "Prompt engineering basics", "OpenAI / Anthropic API"]},
         {"stage": "2. RAG Systems", "items": ["LangChain or LlamaIndex", "Vector DBs (Pinecone, Chroma, pgvector)", "Chunking strategies", "Hybrid search (BM25 + embeddings)", "Citations and grounding"]},

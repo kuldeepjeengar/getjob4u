@@ -310,6 +310,90 @@ def feedback_page(request: Request):
     )
 
 
+@app.get("/free-ai-tools", response_class=HTMLResponse)
+def free_ai_tools_page(request: Request):
+    data = _load_json("free_ai_tools.json")
+    return templates.TemplateResponse(
+        request,
+        "free_ai_tools.html",
+        {
+            "categories": data["categories"],
+            "intro": data.get("intro", ""),
+            "page_title": "50+ Free AI Tools (Video, PDF, Image, Code, Voice) - getjob4u",
+            "page_description": "Hand-picked free AI tools across video generation, PDF tools, image gen, voice, code, presentations and more. All links verified, every tool has a real free tier.",
+            "keywords": "free AI tools, free video generation AI, free PDF AI tools, free image generation, free AI coding tools, free AI voice generator, free chatbot",
+            "og_url": "/free-ai-tools",
+            "canonical_url": "/free-ai-tools",
+            "page_category": "free_ai_tools",
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Free AI Tools", "url": "/free-ai-tools"},
+            ],
+        },
+    )
+
+
+@app.get("/free-courses", response_class=HTMLResponse)
+def free_courses_page(request: Request):
+    data = _load_json("free_courses.json")
+    return templates.TemplateResponse(
+        request,
+        "free_courses.html",
+        {
+            "platforms": data["platforms"],
+            "intro": data.get("intro", ""),
+            "page_title": "Free AI/ML/Data Science Courses with Certificates - getjob4u",
+            "page_description": "Free online courses with certificates in AI, ML, Data Science, Data Analytics, and Generative AI from IBM, Google, Microsoft, Coursera, Udemy, freeCodeCamp, Kaggle, Hugging Face and more.",
+            "keywords": "free AI courses with certificate, free ML courses, free data science certificate, free Udemy courses, free Coursera, IBM Cognitive Class, Great Learning Academy, Simplilearn SkillUp",
+            "og_url": "/free-courses",
+            "canonical_url": "/free-courses",
+            "page_category": "free_courses",
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Free Courses", "url": "/free-courses"},
+            ],
+        },
+    )
+
+
+@app.get("/about", response_class=HTMLResponse)
+def about_page(request: Request):
+    return templates.TemplateResponse(
+        request,
+        "about.html",
+        {
+            "page_title": "About getjob4u - Built solo by Kuldeep Jeengar",
+            "page_description": "About getjob4u - a free career toolkit for AI, ML and Data Science job seekers. Built solo by Kuldeep Jeengar to make the AI/ML job hunt fair for everyone.",
+            "og_url": "/about",
+            "canonical_url": "/about",
+            "page_category": "about",
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "About", "url": "/about"},
+            ],
+        },
+    )
+
+
+@app.get("/contact", response_class=HTMLResponse)
+def contact_page(request: Request):
+    return templates.TemplateResponse(
+        request,
+        "contact.html",
+        {
+            "page_title": "Contact getjob4u",
+            "page_description": "Get in touch with getjob4u. Email getjob4u@gmail.com (launching soon), reach out to founder Kuldeep Jeengar on LinkedIn, or use our feedback form.",
+            "og_url": "/contact",
+            "canonical_url": "/contact",
+            "page_category": "contact",
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Contact", "url": "/contact"},
+            ],
+        },
+    )
+
+
 # ---------------------------------------------------------------- Admin
 
 @app.get("/admin", response_class=HTMLResponse)
@@ -592,20 +676,25 @@ def sitemap():
     """XML sitemap for search engines."""
     today = datetime.utcnow().strftime("%Y-%m-%d")
     urls = [
-        ("/",                  "daily",   "1.0"),
+        ("/",                  "daily",   "1.00"),
         ("/ats-scanner",       "weekly",  "0.95"),
-        ("/interview-tips",    "daily",   "0.95"),
-        ("/youtube-resources", "weekly",  "0.85"),
-        ("/blogs",             "weekly",  "0.90"),
+        ("/python-questions",  "weekly",  "0.95"),
+        ("/career-roadmap",    "weekly",  "0.95"),
+        ("/free-ai-tools",     "weekly",  "0.95"),
+        ("/free-courses",      "weekly",  "0.95"),
+        ("/interview-tips",    "daily",   "0.90"),
         ("/email-generator",   "weekly",  "0.90"),
-        ("/sample-resumes",    "monthly", "0.85"),
-        ("/career-roadmap",    "monthly", "0.85"),
-        ("/python-questions",  "weekly",  "0.90"),
-        ("/feedback",          "monthly", "0.70"),
+        ("/blogs",             "weekly",  "0.85"),
+        ("/youtube-resources", "weekly",  "0.85"),
+        ("/sample-resumes",    "monthly", "0.80"),
+        ("/about",             "monthly", "0.75"),
+        ("/contact",           "monthly", "0.70"),
+        ("/feedback",          "monthly", "0.65"),
     ]
 
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
-    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
+    xml += 'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n'
 
     for url, changefreq, priority in urls:
         xml += '  <url>\n'
@@ -613,6 +702,10 @@ def sitemap():
         xml += f'    <lastmod>{today}</lastmod>\n'
         xml += f'    <changefreq>{changefreq}</changefreq>\n'
         xml += f'    <priority>{priority}</priority>\n'
+        xml += '    <image:image>\n'
+        xml += '      <image:loc>https://getjob4u.com/static/images/og-default.jpg</image:loc>\n'
+        xml += '      <image:title>getjob4u — Free AI/ML/DS career toolkit</image:title>\n'
+        xml += '    </image:image>\n'
         xml += '  </url>\n'
 
     xml += '</urlset>'

@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="pill">Contact · We read every message</span>
+    <h1>Get in <span class="grad-text">touch</span></h1>
+    <p class="lead">Have a question, idea, or just want to say hi? Pick whichever channel works best — or drop a note via the feedback form below.</p>
+  </div>
+</section>
+
+<section class="container">
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="contact-icon">📧</div>
+      <h3>Project email</h3>
+      <p class="muted small">Launching soon · in the meantime, please use the feedback form below</p>
+      <a class="contact-link disabled-link" href="mailto:getjob4u@gmail.com">getjob4u@gmail.com</a>
+      <span class="contact-tag">Coming soon</span>
+    </div>
+
+    <div class="contact-card contact-card--founder">
+      <div class="contact-founder-row">
+        <div class="contact-founder-photo">
+          <img src="{{ url_for('static', path='/images/founder.jpg') }}"
+               alt="Kuldeep Jeengar, founder of getjob4u"
+               loading="lazy"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';" />
+          <div class="contact-founder-fallback" style="display:none;">KJ</div>
+        </div>
+        <div>
+          <h3>Direct to the founder</h3>
+          <p class="muted small" style="margin:0;">Kuldeep Jeengar · Founder &amp; Engineer</p>
+        </div>
+      </div>
+      <a class="contact-link" href="mailto:kuldeepjeengar50@gmail.com">kuldeepjeengar50@gmail.com</a>
+      <a class="contact-link" href="https://www.linkedin.com/in/kuldeep-jeengar/" target="_blank" rel="noopener">linkedin.com/in/kuldeep-jeengar</a>
+      <span class="contact-tag contact-tag--live">Active</span>
+    </div>
+
+    <div class="contact-card">
+      <div class="contact-icon">💼</div>
+      <h3>LinkedIn</h3>
+      <p class="muted small">Connect, message, or just follow along</p>
+      <a class="contact-link" href="https://www.linkedin.com/in/kuldeep-jeengar/" target="_blank" rel="noopener">linkedin.com/in/kuldeep-jeengar</a>
+      <span class="contact-tag contact-tag--live">Active</span>
+    </div>
+
+    <div class="contact-card contact-card--cta">
+      <div class="contact-icon">📝</div>
+      <h3>Feedback form</h3>
+      <p class="muted small">Suggestion, bug, feature request? Drop it here — we read every one.</p>
+      <a class="btn btn-primary contact-btn" href="/feedback" data-gtag="contact_to_feedback">Open feedback form →</a>
+    </div>
+  </div>
+
+  <div class="contact-banner">
+    <strong>Heads up:</strong> getjob4u@gmail.com is launching soon. Until then, please send suggestions through the
+    <a href="/feedback">feedback form</a> or directly to <a href="mailto:kuldeepjeengar50@gmail.com">kuldeepjeengar50@gmail.com</a>.
+  </div>
+
+  <!-- Related resources (internal linking) -->
+  <div class="related-block">
+    <h2>While you're here</h2>
+    <div class="related-grid">
+      <a class="related-card" href="/about"><strong>About getjob4u →</strong><span>Why I built this — and who I am</span></a>
+      <a class="related-card" href="/ats-scanner"><strong>ATS Resume Scanner →</strong><span>Score your resume in 5 seconds</span></a>
+      <a class="related-card" href="/career-roadmap"><strong>Career Roadmaps →</strong><span>Visual paths for 4 AI/ML roles</span></a>
+      <a class="related-card" href="/free-ai-tools"><strong>50+ Free AI Tools →</strong><span>Hand-picked, verified working</span></a>
+      <a class="related-card" href="/free-courses"><strong>Free Certified Courses →</strong><span>IBM, Google, freeCodeCamp & more</span></a>
+      <a class="related-card" href="/feedback"><strong>Send Feedback →</strong><span>Suggestion, bug, feature request?</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- JSON-LD: ContactPage + Organization with ContactPoint -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ContactPage",
+  "url": "https://getjob4u.com/contact",
+  "name": "Contact getjob4u",
+  "description": "Get in touch with getjob4u. Email getjob4u@gmail.com (launching soon), reach out to founder Kuldeep Jeengar on LinkedIn, or use the feedback form.",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "getjob4u",
+    "url": "https://getjob4u.com",
+    "logo": "https://getjob4u.com/static/images/favicon.svg",
+    "founder": {
+      "@type": "Person",
+      "name": "Kuldeep Jeengar",
+      "url": "https://www.linkedin.com/in/kuldeep-jeengar/"
+    },
+    "contactPoint": [
+      {
+        "@type": "ContactPoint",
+        "contactType": "customer support",
+        "email": "kuldeepjeengar50@gmail.com",
+        "availableLanguage": ["English", "Hindi"]
+      },
+      {
+        "@type": "ContactPoint",
+        "contactType": "feedback",
+        "url": "https://getjob4u.com/feedback",
+        "availableLanguage": ["English"]
+      }
+    ],
+    "sameAs": [
+      "https://www.linkedin.com/in/kuldeep-jeengar/",
+      "https://github.com/kuldeepjeengar/getjob4u",
+      "https://twitter.com/getjob4u"
+    ]
+  }
+}
+</script>
+{% endblock %}

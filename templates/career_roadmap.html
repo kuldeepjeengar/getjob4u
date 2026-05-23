@@ -4,40 +4,143 @@
 {% block content %}
 <section class="page-hero">
   <div class="container">
-    <span class="pill">Month-by-month · 3 career paths · Curated learning order</span>
-    <h1>Career Roadmap</h1>
-    <p class="lead">Month-by-month plans for Data Scientist, ML Engineer, and AI Engineer. Pick a path, follow the stages, build projects.</p>
+    <span class="pill">Visual flowchart · 4 career paths · Stage-by-stage milestones</span>
+    <h1>Career <span class="grad-text">Roadmaps</span></h1>
+    <p class="lead">Pick a path. Follow the flow. Build projects. Visual, stage-by-stage plans for Data Scientist, AI/ML Engineer, Data Analyst, and Gen AI Engineer.</p>
   </div>
 </section>
 
 <section class="container">
   <div class="tab-bar" id="roadmapTabs">
     {% for r in roadmaps %}
-      <button class="tab {% if loop.first %}active{% endif %}" data-tab="{{ r.id }}">{{ r.title }}</button>
+      <button class="tab roadmap-tab {% if loop.first %}active{% endif %}" data-tab="{{ r.id }}">
+        <span class="rt-icon">{{ r.icon | default('🗺️') }}</span>
+        <span>{{ r.title }}</span>
+      </button>
     {% endfor %}
   </div>
 
   <div class="tip-panels">
     {% for r in roadmaps %}
     <div class="tip-panel {% if loop.first %}active{% endif %}" id="tab-{{ r.id }}">
-      <div class="roadmap-head">
-        <h2>{{ r.title }}</h2>
-        <span class="pill">{{ r.duration }}</span>
+      <div class="roadmap-hero">
+        <div class="rh-icon">{{ r.icon | default('🗺️') }}</div>
+        <div class="rh-meta">
+          <h2>{{ r.title }}</h2>
+          <p class="rh-tagline">{{ r.tagline | default('') }}</p>
+          <div class="rh-pills">
+            <span class="pill">⏱ {{ r.duration }}</span>
+            <span class="pill">{{ r.stages | length }} stages</span>
+          </div>
+        </div>
       </div>
-      <ol class="roadmap-list">
+
+      <!-- Visual flowchart -->
+      <div class="flowchart" aria-label="{{ r.title }} learning flow">
         {% for s in r.stages %}
-        <li class="roadmap-stage">
-          <h3>{{ s.stage }}</h3>
-          <ul>
-            {% for i in s["items"] %}<li>{{ i }}</li>{% endfor %}
-          </ul>
-        </li>
+        <div class="flow-node {% if loop.last %}flow-node--final{% endif %}" data-step="{{ loop.index }}">
+          <div class="flow-node-badge">
+            <span class="fn-num">{{ loop.index }}</span>
+          </div>
+          <div class="flow-node-card">
+            <h3>{{ s.stage }}</h3>
+            <ul>
+              {% for i in s["items"] %}<li>{{ i }}</li>{% endfor %}
+            </ul>
+          </div>
+          {% if not loop.last %}
+          <div class="flow-arrow" aria-hidden="true">
+            <svg viewBox="0 0 40 80" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="flow-grad-{{ r.id }}-{{ loop.index }}" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#7c5cff"/>
+                  <stop offset="100%" stop-color="#00d4b4"/>
+                </linearGradient>
+              </defs>
+              <line x1="20" y1="0" x2="20" y2="60" stroke="url(#flow-grad-{{ r.id }}-{{ loop.index }})" stroke-width="3" stroke-linecap="round"/>
+              <polygon points="20,78 12,62 28,62" fill="#00d4b4"/>
+            </svg>
+          </div>
+          {% endif %}
+        </div>
         {% endfor %}
-      </ol>
+
+        <div class="flow-node flow-node--goal">
+          <div class="flow-node-badge flow-node-badge--goal">🎯</div>
+          <div class="flow-node-card flow-node-card--goal">
+            <h3>Land the job</h3>
+            <p>Apply, ace the interviews, negotiate, and ship. Re-scan your resume on <a href="/ats-scanner">ATS Scanner</a> before every application.</p>
+          </div>
+        </div>
+      </div>
     </div>
     {% endfor %}
   </div>
+
+  <div class="roadmap-cta">
+    <a class="btn btn-primary" href="/free-courses">Find free certified courses →</a>
+    <a class="btn btn-ghost" href="/free-ai-tools">Explore free AI tools →</a>
+  </div>
+
+  <!-- Related resources (internal linking) -->
+  <div class="related-block">
+    <h2>Build your way through the roadmap</h2>
+    <div class="related-grid">
+      <a class="related-card" href="/free-courses"><strong>Free Certified Courses →</strong><span>IBM, Google, Hugging Face, freeCodeCamp & more</span></a>
+      <a class="related-card" href="/free-ai-tools"><strong>50+ Free AI Tools →</strong><span>Ship projects without paying</span></a>
+      <a class="related-card" href="/ats-scanner"><strong>ATS Resume Scanner →</strong><span>Optimize before every application</span></a>
+      <a class="related-card" href="/sample-resumes"><strong>Sample Resumes →</strong><span>ATS-friendly templates for each role</span></a>
+      <a class="related-card" href="/python-questions"><strong>100 Python Coding Questions →</strong><span>FAANG-style problems with solutions</span></a>
+      <a class="related-card" href="/interview-tips"><strong>Interview Tips →</strong><span>ML, DL, LLMs, SQL, behavioral</span></a>
+    </div>
+  </div>
 </section>
+
+<!-- JSON-LD: ItemList of roadmaps + HowTo per path for rich results -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "AI / ML / Data Science / Data Analytics / Gen AI Career Roadmaps",
+  "description": "Visual stage-by-stage learning roadmaps for Data Scientist, AI/ML Engineer, Data Analyst, and Gen AI Engineer career paths.",
+  "url": "https://getjob4u.com/career-roadmap",
+  "isPartOf": { "@type": "WebSite", "name": "getjob4u", "url": "https://getjob4u.com" },
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "Career Roadmaps",
+    "numberOfItems": {{ roadmaps | length }},
+    "itemListElement": [
+      {% for r in roadmaps %}
+      {
+        "@type": "ListItem",
+        "position": {{ loop.index }},
+        "item": {
+          "@type": "HowTo",
+          "name": {{ r.title | tojson }},
+          "description": {{ (r.tagline | default(r.title)) | tojson }},
+          "totalTime": {{ r.duration | tojson }},
+          "url": "https://getjob4u.com/career-roadmap#{{ r.id }}",
+          "step": [
+            {% for s in r.stages %}
+            {
+              "@type": "HowToStep",
+              "position": {{ loop.index }},
+              "name": {{ s.stage | tojson }},
+              "itemListElement": [
+                {% for i in s["items"] %}
+                {"@type": "HowToDirection", "text": {{ i | tojson }}}{% if not loop.last %},{% endif %}
+                {% endfor %}
+              ]
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+          ]
+        }
+      }{% if not loop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }
+}
+</script>
 {% endblock %}
 
 {% block scripts %}

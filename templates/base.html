@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="getjob4u" />
   <meta name="keywords" content="{% block keywords %}{{ keywords | default('ATS scanner, resume optimizer, AI jobs, ML jobs, Data Science jobs, interview tips, cold email generator, career roadmap') }}{% endblock %}" />
@@ -106,6 +109,26 @@
   </script>
   {% endif %}
 
+  <!-- SiteNavigationElement schema — helps Google build sitelinks -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      { "@type": "SiteNavigationElement", "position": 1, "name": "ATS Scanner",   "url": "https://getjob4u.com/ats-scanner" },
+      { "@type": "SiteNavigationElement", "position": 2, "name": "Python Questions", "url": "https://getjob4u.com/python-questions" },
+      { "@type": "SiteNavigationElement", "position": 3, "name": "Interview Tips", "url": "https://getjob4u.com/interview-tips" },
+      { "@type": "SiteNavigationElement", "position": 4, "name": "Cold Email Generator", "url": "https://getjob4u.com/email-generator" },
+      { "@type": "SiteNavigationElement", "position": 5, "name": "Career Roadmap",  "url": "https://getjob4u.com/career-roadmap" },
+      { "@type": "SiteNavigationElement", "position": 6, "name": "Free AI Tools",  "url": "https://getjob4u.com/free-ai-tools" },
+      { "@type": "SiteNavigationElement", "position": 7, "name": "Free Courses",   "url": "https://getjob4u.com/free-courses" },
+      { "@type": "SiteNavigationElement", "position": 8, "name": "Sample Resumes", "url": "https://getjob4u.com/sample-resumes" },
+      { "@type": "SiteNavigationElement", "position": 9, "name": "Blogs",          "url": "https://getjob4u.com/blogs" },
+      { "@type": "SiteNavigationElement", "position": 10, "name": "About",         "url": "https://getjob4u.com/about" },
+      { "@type": "SiteNavigationElement", "position": 11, "name": "Contact",       "url": "https://getjob4u.com/contact" }
+    ]
+  }
+  </script>
+
   <!-- Google Analytics (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-EN17K7WRB1"></script>
   <script>
@@ -145,11 +168,11 @@
         <a href="/python-questions"  data-gtag="nav_click" data-gtag-label="Python Q">Python Q</a>
         <a href="/interview-tips"    data-gtag="nav_click" data-gtag-label="Interview Tips">Interview Tips</a>
         <a href="/email-generator"   data-gtag="nav_click" data-gtag-label="Cold Emails">Cold Emails</a>
-        <a href="/blogs"             data-gtag="nav_click" data-gtag-label="Blogs">Blogs</a>
-        <a href="/youtube-resources" data-gtag="nav_click" data-gtag-label="Learn">Learn</a>
-        <a href="/sample-resumes"    data-gtag="nav_click" data-gtag-label="Resumes">Resumes</a>
         <a href="/career-roadmap"    data-gtag="nav_click" data-gtag-label="Roadmap">Roadmap</a>
-        <a href="/feedback" class="nav-cta" data-gtag="nav_cta_click" data-gtag-label="Feedback">Feedback</a>
+        <a href="/free-ai-tools"     data-gtag="nav_click" data-gtag-label="AI Tools">AI Tools</a>
+        <a href="/free-courses"      data-gtag="nav_click" data-gtag-label="Free Courses">Free Courses</a>
+        <a href="/about"             data-gtag="nav_click" data-gtag-label="About">About</a>
+        <a href="/contact" class="nav-cta" data-gtag="nav_cta_click" data-gtag-label="Contact">Contact</a>
       </nav>
     </div>
   </header>
@@ -179,11 +202,15 @@
           <a href="/blogs"             data-gtag="footer_click" data-gtag-label="Blogs">Blogs</a>
           <a href="/youtube-resources" data-gtag="footer_click" data-gtag-label="YouTube + Courses">YouTube + Courses</a>
           <a href="/career-roadmap"    data-gtag="footer_click" data-gtag-label="Career Roadmap">Career Roadmap</a>
+          <a href="/free-courses"      data-gtag="footer_click" data-gtag-label="Free Courses">Free Certificate Courses</a>
+          <a href="/free-ai-tools"     data-gtag="footer_click" data-gtag-label="Free AI Tools">Free AI Tools</a>
         </div>
         <div>
           <h4>Connect</h4>
+          <a href="/about"      data-gtag="footer_click" data-gtag-label="About">About</a>
+          <a href="/contact"    data-gtag="footer_click" data-gtag-label="Contact">Contact</a>
           <a href="/feedback"   data-gtag="footer_click" data-gtag-label="Share Feedback">Share Feedback</a>
-          <a href="/api/health" data-gtag="footer_click" data-gtag-label="API Health">API Health</a>
+          <a href="https://www.linkedin.com/in/kuldeep-jeengar/" target="_blank" rel="noopener" data-gtag="footer_click" data-gtag-label="LinkedIn">LinkedIn</a>
           <a href="/admin/login" data-gtag="footer_click" data-gtag-label="Admin">Admin</a>
         </div>
       </div>

@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(.\\\\.venv\\\\Scripts\\\\python.exe -c \"import main; print\\('Routes:'\\); [print\\(' ', r.path\\) for r in main.app.routes if hasattr\\(r, 'path'\\) and not r.path.startswith\\('/static'\\) and not r.path.startswith\\('/api'\\) and not r.path.startswith\\('/admin'\\)]\")",
+      "Bash(.venv/Scripts/python.exe _validate_jsonld.py)"
+    ]
+  }
+}
