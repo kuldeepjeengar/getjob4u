@@ -1,0 +1,193 @@
+{
+  "posts": [
+    {
+      "slug": "pass-ats-resume-tips-ai-ml-data-2026",
+      "title": "How to Pass the ATS in 2026: 11 Resume Tweaks That Actually Work for AI/ML/Data Roles",
+      "description": "Eleven concrete, tested resume tweaks that lift your ATS score for AI, ML, and Data Science roles in 2026 — based on what modern ATS systems (Workday, Greenhouse, Lever, iCIMS) actually parse.",
+      "author": "Kuldeep Jeengar",
+      "published": "2026-05-22",
+      "updated": "2026-05-25",
+      "read_minutes": 9,
+      "tags": ["ATS", "Resume", "AI/ML Jobs"],
+      "category": "Resume",
+      "hero_pill": "Resume · 9 min read",
+      "summary": "If your resume keeps getting silently rejected without a single human reading it, you're losing to the ATS — not the hiring manager. These eleven specific tweaks are the difference between a 50/100 ATS score and a 90/100 for AI, ML, and Data Science roles.",
+      "sections": [
+        {
+          "heading": "Why ATS rejections feel mysterious",
+          "body_html": "<p>An Applicant Tracking System (ATS) is the recruiter software that ingests every resume, parses it into structured fields (name, contact, work, education, skills), and ranks you against the job description. Workday, Greenhouse, Lever, iCIMS, Taleo, and SmartRecruiters together cover most of the Fortune 500. If you've ever applied to 60 roles and gotten 2 callbacks, the ATS — not the recruiter — is usually the reason.</p><p>The misconception people repeat on LinkedIn is that ATS keyword-stuffing solves this. It doesn't. Modern ATS systems do <em>parse + match</em>, but the recruiter still sees your resume — so anything that helps the parser <em>and</em> still reads naturally to a human is what works. The eleven tweaks below are exactly that.</p>"
+        },
+        {
+          "heading": "1. Use a single-column layout, no tables",
+          "body_html": "<p>Two-column resumes with sidebars look great in Canva and parse terribly in Workday. The ATS reads left-to-right, top-to-bottom — when it hits a two-column layout, it often interleaves your skills section <em>into</em> your work history. Your Python skill ends up showing as a job title.</p><p>Use a single column. If you want visual interest, use bold headings, generous whitespace, and a clean serif/sans pair. Save the artistic flexing for your portfolio site.</p>"
+        },
+        {
+          "heading": "2. Export as PDF — but a real PDF, not a screenshot",
+          "body_html": "<p>Always export from Google Docs, Word, or LaTeX directly to PDF. Never \"Save as image\" or print-to-PDF a scanned document. If you can't select and copy text from your PDF with Ctrl+A → Ctrl+C, the ATS can't either.</p><p>DOCX is also fine, and sometimes parses slightly better in Workday. PDF is safer in the general case.</p>"
+        },
+        {
+          "heading": "3. Name your file like a human, not a draft",
+          "body_html": "<p><code>Final_resume_v7_FINAL_kuldeep.pdf</code> is a real file recruiters see daily. Use <code>Firstname-Lastname-Role.pdf</code>. Recruiters often save and search resumes by filename — a clean name puts you ahead.</p>"
+        },
+        {
+          "heading": "4. Put your contact info as plain text, not in the header",
+          "body_html": "<p>Word and Google Docs <em>headers/footers</em> are often skipped by ATS parsers. Put your name, email, phone, LinkedIn, and GitHub at the top of the body — not in the page header.</p><p>Include a clickable LinkedIn URL with your username, not the generic <code>linkedin.com/in/feed</code>. Add a GitHub link only if it has real projects; an empty GitHub hurts more than no GitHub.</p>"
+        },
+        {
+          "heading": "5. Match the JD keywords — but only where you have real experience",
+          "body_html": "<p>The single biggest ATS score lift comes from matching the exact phrasing of the job description's required skills. If the JD says \"large language models\", your resume should say \"large language models\" (LLMs in brackets is fine), not \"GPT-family transformers\". If it says \"A/B testing\", say \"A/B testing\", not \"experimental analysis\".</p><p>Tools like the <a href=\"/ats-scanner\">free ATS scanner on getjob4u</a> compare your resume against either a target role or a pasted JD and show you the top missing keywords in seconds. The goal is to surface keywords you <em>genuinely have experience with</em> — never invent skills, that backfires in the technical interview.</p>"
+        },
+        {
+          "heading": "6. Lead every bullet with a strong action verb",
+          "body_html": "<p>Most ATS systems do an action-verb scan as a signal of impact. Bullets that start with \"Responsible for\", \"Worked on\", or \"Helped with\" score lower than \"Built\", \"Shipped\", \"Reduced\", \"Designed\", \"Scaled\", \"Optimized\", \"Automated\".</p><p>Quick rule: if your bullet could describe an intern doing the same thing, rewrite it.</p>"
+        },
+        {
+          "heading": "7. Quantify every result with a number",
+          "body_html": "<p>\"Built a churn model\" → \"Built a churn model that reduced false positives by 32% and saved the team 12 hours per week of manual review.\"</p><p>The number doesn't have to be huge. It has to be <em>real</em>. Even \"improved test coverage from 41% to 76%\" beats \"improved code quality\". For AI/ML roles, quantify: model lift, dataset size, latency, throughput, cost savings, error reduction, accuracy delta, cluster size, training hours.</p>"
+        },
+        {
+          "heading": "8. List your tech stack as a flat skills section",
+          "body_html": "<p>A clean \"Skills\" section with grouped categories (Languages, ML/DL, Tools, Cloud) parses cleanly and gets you fast keyword matches. Avoid star-rating widgets or progress bars — ATS reads them as garbage.</p><p>Example: <code>Languages: Python, SQL, Bash · ML/DL: PyTorch, scikit-learn, XGBoost · LLMs: LangChain, RAG, OpenAI API, vector DBs · Cloud: AWS (S3, SageMaker, Lambda), GCP</code></p>"
+        },
+        {
+          "heading": "9. Keep it to one page until you have 5+ years experience",
+          "body_html": "<p>One page if you have under 5 years total professional experience. Two pages from 5–15 years. Three pages essentially never. A long resume signals \"I don't know what's important\" — and the ATS doesn't care about the recruiter's patience either; the parser still has to chew through 3 pages.</p>"
+        },
+        {
+          "heading": "10. Customize per application — even 5 minutes helps",
+          "body_html": "<p>The single highest-leverage thing you can do is paste each job description into an ATS scanner before applying, then add 5–10 of the missing keywords <em>where you actually have experience</em>. Five minutes per application beats sending 60 generic resumes.</p><p>This is exactly what the <a href=\"/ats-scanner\">JD-match mode in our scanner</a> is for — paste the JD, upload your resume, see what's missing for that specific role.</p>"
+        },
+        {
+          "heading": "11. Re-scan after every change",
+          "body_html": "<p>Most candidates change something, assume it helped, and move on. The right loop is: scan → edit → re-scan. You want to see the score climb on each iteration. If a tweak didn't move the score, it didn't help the ATS — keep it only if it helps a human reader.</p>"
+        },
+        {
+          "heading": "What to do next",
+          "body_html": "<ol><li>Run your current resume through the <a href=\"/ats-scanner\">free ATS scanner</a> and note your score.</li><li>Pick a real job description you'd apply for. Run it in JD-match mode.</li><li>Apply the top 5 missing-keyword fixes plus tweaks 6, 7, and 10 above.</li><li>Re-scan. If the score climbs by 15+ points, you're ready to apply.</li><li>Optionally, browse <a href=\"/sample-resumes\">our sample resumes</a> for the exact structure of a 90+ scoring AI/ML resume.</li></ol><p>Most candidates skip step 1. That single skip is why they spend months wondering why nobody replies.</p>"
+        }
+      ],
+      "related_tools": [
+        { "url": "/ats-scanner", "title": "Free ATS Resume Scanner", "label": "Score your resume now" },
+        { "url": "/sample-resumes", "title": "Sample AI/ML/DS Resumes", "label": "See what a 90+ resume looks like" },
+        { "url": "/email-generator", "title": "Cold Email Generator", "label": "Pair your resume with a great cold email" }
+      ]
+    },
+    {
+      "slug": "cold-email-templates-faang-referrals",
+      "title": "Cold Email Templates That Got Me Referrals at FAANG (Without Being Cringe)",
+      "description": "The exact cold-email and LinkedIn DM structures that get a 15-25% reply rate for referrals at Google, Amazon, Meta, Microsoft, and similar. Real templates, real reasons each line is there.",
+      "author": "Kuldeep Jeengar",
+      "published": "2026-05-18",
+      "updated": "2026-05-25",
+      "read_minutes": 8,
+      "tags": ["Cold Email", "LinkedIn", "Referrals"],
+      "category": "Networking",
+      "hero_pill": "Networking · 8 min read",
+      "summary": "Cold outreach for referrals works — but the templates floating around LinkedIn are mostly generic, mass-produced, and get ignored. Here are the exact structures that consistently get 15-25% reply rates, plus why each line is in there.",
+      "sections": [
+        {
+          "heading": "Why most cold messages get ignored",
+          "body_html": "<p>The default cold message you see on LinkedIn looks like this:</p><blockquote><p>\"Hi Alex, I'm a Data Scientist with 3 years of experience looking for opportunities at Google. I'd love to connect and learn more about your team. Please let me know if there are any openings.\"</p></blockquote><p>This gets 1-2% reply rates. The reason isn't that the recipient is mean — it's that the message could have been sent to literally any person at any company. There's zero signal that <em>you specifically</em> are reaching out to <em>them specifically</em>.</p><p>The fix is one sentence: a real, specific reference to something the recipient has done. Everything else flows from there.</p>"
+        },
+        {
+          "heading": "The 4-line cold email structure that actually works",
+          "body_html": "<p>Every high-reply-rate cold email I've ever sent or seen follows this structure:</p><ol><li><strong>The hook</strong> — one specific thing they shipped, wrote, or talked about. Not \"I follow your work.\" A real artifact.</li><li><strong>Your credibility line</strong> — your role plus one quantified achievement that maps to what their team cares about.</li><li><strong>The ask</strong> — one small, specific, easy-to-say-yes-to ask. Not \"can we hop on a call.\"</li><li><strong>The graceful exit</strong> — \"No worries if not a fit\" or similar. Removes pressure, ironically increases replies.</li></ol><p>That's it. Four lines, often under 100 words. Long cold emails do worse than short ones.</p>"
+        },
+        {
+          "heading": "Template 1: Cold email for a referral",
+          "body_html": "<blockquote><p>Subject: Loved your post on RAG eval at Acme — quick question</p><p>Hi Alex,</p><p>Your post on swapping faithfulness scoring into Acme's RAG eval pipeline was the clearest explanation I've read this year — I rebuilt our internal eval the same week using your hybrid retrieval approach.</p><p>I'm a Data Scientist at Beta Corp; I shipped an LLM-based intent classifier that cut support ticket misroutes by 41%, and I'm looking at the open ML Engineer role on your team.</p><p>Would you be open to forwarding my resume internally, or pointing me at the right hiring manager? Either is hugely appreciated, no pressure if it's not a fit.</p><p>Thanks,<br>Kuldeep</p></blockquote><p>Why each line is there:</p><ul><li><strong>Subject</strong> — specific to <em>their</em> work, not yours. Opens 70-80% of the time.</li><li><strong>Hook</strong> — names a concrete artifact (\"post on RAG eval\") plus a verifiable claim (\"I rebuilt our internal eval the same week\"). Burns 30 seconds of their attention on something that sounds like a real person.</li><li><strong>Credibility</strong> — role + one quantified result that maps directly to the role you're targeting. <em>Quantified</em> is the keyword.</li><li><strong>Ask</strong> — forward resume OR point to hiring manager. Two micro-asks, both 30-second favors.</li><li><strong>Exit</strong> — releases pressure. Counterintuitive but consistently lifts reply rate.</li></ul>"
+        },
+        {
+          "heading": "Template 2: Recruiter inbound reply (you got the InMail, this is your follow-up)",
+          "body_html": "<blockquote><p>Hi Sarah, thanks for reaching out about the ML Engineer role at Acme.</p><p>Short intro: I'm a Senior Data Scientist at Beta Corp; recently shipped a churn model that reduced false positives by 32% and a real-time recommendation pipeline serving 8M users at p99 < 80ms. Stack overlaps closely with what's in the JD — Python, PyTorch, Ray, AWS, dbt.</p><p>I'm available for a chat Tuesday or Thursday afternoon next week. What's the best email or calendar link?</p><p>Thanks,<br>Kuldeep</p></blockquote><p>Recruiter replies have a different bar: they already opened the conversation. Your job is to <em>match yourself to the JD in 60 seconds</em>. Lead with two quantified results that map to JD bullet points. Name the stack overlap. Propose a time. Done.</p>"
+        },
+        {
+          "heading": "Template 3: LinkedIn DM (use the 300-character limit on your side)",
+          "body_html": "<blockquote><p>Hi Alex, your RAG eval write-up was the clearest I've read this year — rebuilt ours after reading it. I'm a DS at Beta Corp (shipped LLM intent classifier, -41% misroutes). Eyeing the ML Engineer role on your team. Open to a quick referral conversation? No worries if not a fit.</p></blockquote><p>Same structure compressed. Under 300 characters fits the InMail preview window and shows up fully in the recipient's notification panel — they see the whole message before they decide to open.</p>"
+        },
+        {
+          "heading": "The 5 things that kill cold-message reply rate",
+          "body_html": "<ol><li><strong>Generic compliment</strong> — \"I love your work / your posts\" with no specific reference. Reads as bot output.</li><li><strong>Asking for time without giving them anything</strong> — \"Can we hop on a 30-minute call?\" is a huge ask for a stranger. Smaller asks (forward, point me, one-line question) convert 5x better.</li><li><strong>Long preamble</strong> — \"Hope you're doing well, I know you're busy, I'll keep this brief\" is the verbal equivalent of asking for permission to ask. Skip it.</li><li><strong>Pasting your resume into the message body</strong> — clutters the message and dilutes the ask. Attach it OR drop a link. Better: get the reply first, send resume in reply.</li><li><strong>Sending the same message to 50 people same day</strong> — LinkedIn flags it. So do humans when a friend forwards three identical messages.</li></ol>"
+        },
+        {
+          "heading": "Follow-up cadence",
+          "body_html": "<p>Send <em>one</em> follow-up 5-7 days after the original message. Keep it short:</p><blockquote><p>Hi Alex, bumping this in case it got buried — happy to leave you alone if not a fit, just didn't want to assume.</p></blockquote><p>That's the entire follow-up. Two lines. No new ask, no new context dump. If still no reply after the follow-up, move on. Two unanswered messages is plenty; three feels like nagging.</p>"
+        },
+        {
+          "heading": "Reply rates you should expect",
+          "body_html": "<ul><li><strong>Highly personalized, specific hook, small ask:</strong> 15-25% reply rate.</li><li><strong>Personalized but generic ask (\"can we chat\"):</strong> 5-10%.</li><li><strong>Slot-filled but generic hook (\"I follow your work\"):</strong> 1-3%.</li><li><strong>Pure spray-and-pray:</strong> &lt;1%, and usually LinkedIn-flagged.</li></ul><p>If your reply rate is below 5%, the hook is the problem 9 times out of 10. The fix is always more specificity — what exact post / project / talk / repo are you referencing?</p>"
+        },
+        {
+          "heading": "Generate your message in 30 seconds",
+          "body_html": "<p>If you'd rather skip the blank-page problem, the <a href=\"/email-generator\">free cold email + LinkedIn DM generator on getjob4u</a> uses this exact structure — referral asks, recruiter replies, alumni outreach, follow-ups. Fill in the slots and copy a working draft to personalize.</p><p>The single field that matters most is \"Their work\" — be specific (mention a paper, repo, talk, or shipped feature). That field is the difference between 2% and 20%.</p>"
+        }
+      ],
+      "related_tools": [
+        { "url": "/email-generator", "title": "Cold Email & LinkedIn DM Generator", "label": "Generate your message in 30 seconds" },
+        { "url": "/ats-scanner", "title": "ATS Resume Scanner", "label": "Make sure your resume backs up the email" },
+        { "url": "/sample-resumes", "title": "Sample Resumes", "label": "Pair the email with a strong resume" }
+      ]
+    },
+    {
+      "slug": "realistic-6-month-ml-roadmap-free-resources",
+      "title": "The Realistic 6-Month AI/ML Career Roadmap (Free Resources Only)",
+      "description": "An honest, week-by-week 6-month plan to break into AI / ML / Data Science using only free courses and resources — no $500 bootcamp, no $5000 master's required. Built around real hiring signals.",
+      "author": "Kuldeep Jeengar",
+      "published": "2026-05-14",
+      "updated": "2026-05-25",
+      "read_minutes": 11,
+      "tags": ["Roadmap", "Free Courses", "Career"],
+      "category": "Career",
+      "hero_pill": "Roadmap · 11 min read",
+      "summary": "Six months is enough to go from \"I know basic Python\" to a real entry-level AI/ML/Data role — if you spend it on the right things and skip the bootcamp marketing trap. Here's the week-by-week plan, all free.",
+      "sections": [
+        {
+          "heading": "Who this roadmap is for",
+          "body_html": "<p>If you already know Python at a fluent level (lists, dicts, list comprehensions, basic OOP, can read a stack trace) and want to move into AI / ML / Data Science roles within 6 months, this plan works. If you don't yet — spend 4 weeks on Python fundamentals first (the <a href=\"/free-courses\">free courses page</a> has good starting points).</p><p>This is a roadmap for the <em>actual signal hiring managers look for</em> — projects, fundamentals, problem-solving — not the bootcamp version optimized for course completion.</p>"
+        },
+        {
+          "heading": "The 80/20 of what gets you hired",
+          "body_html": "<p>Out of 100 entry-level ML rejections, the cause distribution is roughly:</p><ul><li>~35% — resume never reaches a human (ATS keywords, format)</li><li>~25% — no portfolio projects, or only Kaggle tutorials</li><li>~15% — can't explain ML fundamentals in interviews (bias-variance, regularization, evaluation metrics)</li><li>~15% — can't do basic Python coding (the LeetCode Easy/Medium tier)</li><li>~10% — soft skills, behavioral, communication</li></ul><p>So 6 months should be allocated roughly: 30% projects, 25% fundamentals, 25% coding/Python, 10% resume + applications, 10% behavioral prep. The plan below maps to that.</p>"
+        },
+        {
+          "heading": "Month 1: Math + ML fundamentals (no code-monkey trap)",
+          "body_html": "<p>The mistake: jumping straight into PyTorch tutorials without understanding linear algebra, calculus, or what a gradient actually is. You'll plateau in month 3.</p><p><strong>Week 1-2:</strong> 3Blue1Brown's Essence of Linear Algebra (free, YouTube). Watch all 16 videos. Then his Essence of Calculus. Don't take notes — just absorb the geometric intuition.</p><p><strong>Week 3:</strong> Andrew Ng's <em>Machine Learning Specialization</em> on Coursera (audit it for free). Course 1 only — supervised learning, linear/logistic regression, the math of gradient descent. Do every exercise by hand the first time.</p><p><strong>Week 4:</strong> Read the first 4 chapters of Hands-On Machine Learning by Aurélien Géron (the second edition is online in many libraries). Code along.</p>"
+        },
+        {
+          "heading": "Month 2: Practical ML + your first real project",
+          "body_html": "<p><strong>Week 5-6:</strong> Finish Andrew Ng's specialization (Courses 2 + 3). Cover neural networks, decision trees, unsupervised learning, recommender systems.</p><p><strong>Week 7-8:</strong> Build your first portfolio project — but not a Kaggle Titanic notebook. Pick a problem you actually care about. Real options that work:</p><ul><li>A model that predicts something about your daily life (commute time, sleep quality, food spend) from a dataset you collect.</li><li>An end-to-end pipeline: scrape data, clean it, train a model, deploy with FastAPI to a free Render or Fly.io tier.</li><li>A reproducible analysis of a public dataset on a topic your future employer's industry cares about.</li></ul><p>The project must have a README, a writeup of what didn't work, and a deployed demo or a Streamlit app. \"I ran sklearn on a CSV\" doesn't count.</p>"
+        },
+        {
+          "heading": "Month 3: Deep learning + your first NLP/CV project",
+          "body_html": "<p><strong>Week 9-10:</strong> fast.ai's Practical Deep Learning for Coders (free). Lessons 1-4. The pedagogy is unusual — you train models before you learn what's inside them — and it works. Most students who do fast.ai before MIT 6.S191 say it sticks better.</p><p><strong>Week 11-12:</strong> Second portfolio project — pick CV (image classifier on a real-world dataset you scraped) or NLP (a sentiment analyzer or topic classifier on social media data). Deploy it. Write the README like a junior ML engineer's blog post.</p>"
+        },
+        {
+          "heading": "Month 4: LLMs / GenAI (the hiring market is here)",
+          "body_html": "<p>Half of all 2026 AI hiring is LLM-adjacent: RAG, fine-tuning, prompt engineering, evals. Knowing this stack is a massive differentiator.</p><p><strong>Week 13-14:</strong> Andrew Ng's short courses on DeepLearning.AI (free): ChatGPT Prompt Engineering for Developers, Building Systems with the ChatGPT API, LangChain for LLM Application Development. Each is 1-1.5 hours. Do all three.</p><p><strong>Week 15-16:</strong> Build a RAG project. Pick a real corpus (your favorite blog's archive, a textbook PDF, your company's docs if you have permission). Use OpenAI free tier or open-weights (Llama, Mistral via Ollama). Build retrieval + generation + a small eval set. Deploy it.</p><p>This is the project that gets recruiter attention in 2026.</p>"
+        },
+        {
+          "heading": "Month 5: Python coding interviews + system design basics",
+          "body_html": "<p>You will be coded on. Don't skip this.</p><p><strong>Week 17-18:</strong> NeetCode's Blind 75 in Python. Aim for 40-50 problems solved well, not 75 rushed. <a href=\"/python-questions\">getjob4u's 100 Python questions</a> covers the same patterns with worked solutions.</p><p><strong>Week 19:</strong> ML system design — read \"Designing Machine Learning Systems\" by Chip Huyen (chapters available free in many places, also covered in her free MLOps course). Practice 3-5 mock system design questions out loud — \"design YouTube recommendations\", \"design fraud detection for a payments company\".</p><p><strong>Week 20:</strong> Behavioral prep — write out 8 stories using the STAR method covering leadership, conflict, failure, impact, ambiguity, deadline, learning, teamwork. Practice them out loud until they sound natural.</p>"
+        },
+        {
+          "heading": "Month 6: Resume, applications, and the actual job hunt",
+          "body_html": "<p><strong>Week 21:</strong> Resume polish. Use a <a href=\"/sample-resumes\">strong AI/ML sample resume</a> as your template. Lead bullets with action verbs. Quantify every result. Cap at one page.</p><p><strong>Week 22:</strong> Run your resume through the <a href=\"/ats-scanner\">free ATS scanner</a>. Hit 85+ in your target role before applying. Read the <a href=\"/blogs/pass-ats-resume-tips-ai-ml-data-2026\">11 ATS tweaks</a> if you're stuck under 70.</p><p><strong>Week 23-24:</strong> Apply at a pace of 10-15 well-targeted applications per week. JD-match your resume for each. Send 3-5 cold emails per week using the <a href=\"/email-generator\">cold email generator</a>. Track everything in a spreadsheet (date, company, role, channel, status, reply).</p><p>If you're not getting interviews after 30 well-targeted applications, the problem is the resume or the targeting — not the market. Re-scan and iterate.</p>"
+        },
+        {
+          "heading": "What this plan deliberately skips",
+          "body_html": "<ul><li><strong>Paid bootcamps</strong> — none of them teach anything you can't get from the free sources above. The $5,000-$15,000 fee buys you mostly community and accountability. Build a study group with 2-3 others doing this same plan for $0.</li><li><strong>Kaggle ranking grind</strong> — past Expert tier, hiring teams don't care. Two strong portfolio projects beat a Kaggle Master title for entry-level hiring.</li><li><strong>Master's degree</strong> — useful if you want research roles or work visas, often not worth $80K for industry ML. The OMSCS at Georgia Tech is the rare exception ($7K, online, well-respected).</li><li><strong>Random certifications</strong> — most don't move the needle. The ones that do are the free ones you finish: IBM Data Science, Google Data Analytics, DeepLearning.AI specializations.</li></ul>"
+        },
+        {
+          "heading": "Your starting point",
+          "body_html": "<ol><li>Bookmark <a href=\"/career-roadmap\">getjob4u's visual career roadmaps</a> for AI/ML/DS/Data Analyst paths.</li><li>Pick 2-3 courses from <a href=\"/free-courses\">the free courses page</a> matching Month 1's plan.</li><li>Block 8-12 hours/week on your calendar. Same days, same times. The single biggest predictor of success isn't IQ — it's consistency of weekly study hours over 6 months.</li><li>Set a 90-day check-in: have you finished one shipped portfolio project by week 12? If not, you're going to overrun. Adjust scope, not deadline.</li></ol><p>The 6-month plan works when you do the work. The plan doesn't work if you spend month 4 finishing month 1's coursework — which is the most common failure mode. Move on.</p>"
+        }
+      ],
+      "related_tools": [
+        { "url": "/career-roadmap", "title": "Visual Career Roadmaps", "label": "See the full path for each AI/ML/DS role" },
+        { "url": "/free-courses", "title": "Free Courses with Certificates", "label": "All free, all verified" },
+        { "url": "/ats-scanner", "title": "Free ATS Resume Scanner", "label": "Score your resume before you apply" },
+        { "url": "/python-questions", "title": "100 FAANG Python Questions", "label": "Practice the coding bar" }
+      ]
+    }
+  ]
+}

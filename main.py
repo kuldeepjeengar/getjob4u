@@ -179,24 +179,81 @@ def youtube_page(request: Request):
     )
 
 
+def _format_post_date(iso: str) -> str:
+    """Render an ISO date like 2026-05-25 → 'May 25, 2026' (cross-platform)."""
+    try:
+        d = datetime.strptime(iso, "%Y-%m-%d")
+        return f"{d.strftime('%B')} {d.day}, {d.year}"
+    except (ValueError, TypeError):
+        return iso or ""
+
+
+def _load_blog_posts() -> list[dict]:
+    """Load blog_posts.json, decorate each post with display dates + word count,
+    and return them sorted newest-first."""
+    data = _load_json("blog_posts.json")
+    posts = list(data.get("posts", []))
+    for p in posts:
+        p["published_display"] = _format_post_date(p.get("published", ""))
+        p["updated_display"] = _format_post_date(p.get("updated", p.get("published", "")))
+        # Cheap word count for Article schema — strip HTML tags, split on whitespace.
+        text = " ".join(s.get("body_html", "") for s in p.get("sections", []))
+        import re as _re
+        words = _re.sub(r"<[^>]+>", " ", text).split()
+        p["word_count"] = len(words) + len(p.get("title", "").split()) + len(p.get("summary", "").split())
+    posts.sort(key=lambda x: x.get("published", ""), reverse=True)
+    return posts
+
+
 @app.get("/blogs", response_class=HTMLResponse)
 def blogs_page(request: Request):
     data = _load_json("blogs.json")
+    internal_posts = _load_blog_posts()
     return templates.TemplateResponse(
         request,
         "blogs.html",
         {
             "categories": data["categories"],
             "newsletters": data["newsletters"],
-            "page_title": "Best AI / ML / Data Science Blogs - getjob4u",
-            "page_description": "Hand-picked AI, ML, and Data Science blogs from Medium, Distill, Hugging Face, Netflix, Uber, and more. Read what practitioners actually read.",
-            "keywords": "AI blogs, ML blogs, data science blogs, Medium AI, Towards Data Science, deep learning blogs, MLOps blogs",
+            "internal_posts": internal_posts,
+            "page_title": "AI / ML / Data Science Blog - Guides & Curated Reading - getjob4u",
+            "page_description": "Original long-form guides on ATS resumes, cold email referrals, and AI/ML career roadmaps, plus a hand-picked list of the best external AI/ML/Data Science blogs to follow.",
+            "keywords": "AI blog, ML blog, data science blog, ATS resume tips, cold email templates, ML career roadmap",
             "og_url": "/blogs",
             "canonical_url": "/blogs",
             "page_category": "blogs",
             "breadcrumbs": [
                 {"name": "Home", "url": "/"},
-                {"name": "Blogs", "url": "/blogs"},
+                {"name": "Blog", "url": "/blogs"},
+            ],
+        },
+    )
+
+
+@app.get("/blogs/{slug}", response_class=HTMLResponse)
+def blog_post_page(request: Request, slug: str):
+    posts = _load_blog_posts()
+    post = next((p for p in posts if p.get("slug") == slug), None)
+    if not post:
+        raise HTTPException(status_code=404, detail="Blog post not found.")
+    other_posts = [p for p in posts if p.get("slug") != slug][:3]
+    return templates.TemplateResponse(
+        request,
+        "blog_post.html",
+        {
+            "post": post,
+            "other_posts": other_posts,
+            "page_title": f"{post['title']} - getjob4u",
+            "page_description": post["description"],
+            "keywords": ", ".join(post.get("tags", [])),
+            "og_url": f"/blogs/{slug}",
+            "canonical_url": f"/blogs/{slug}",
+            "page_category": "blog_post",
+            "page_section": post.get("category", ""),
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Blog", "url": "/blogs"},
+                {"name": post["title"], "url": f"/blogs/{slug}"},
             ],
         },
     )
@@ -370,6 +427,29 @@ def about_page(request: Request):
             "breadcrumbs": [
                 {"name": "Home", "url": "/"},
                 {"name": "About", "url": "/about"},
+            ],
+        },
+    )
+
+
+@app.get("/privacy", response_class=HTMLResponse)
+def privacy_page(request: Request):
+    last_updated = datetime.utcfromtimestamp(
+        (BASE_DIR / "templates" / "privacy.html").stat().st_mtime
+    ).strftime("%B %d, %Y")
+    return templates.TemplateResponse(
+        request,
+        "privacy.html",
+        {
+            "page_title": "Privacy Policy — getjob4u",
+            "page_description": "How getjob4u collects, uses, and protects your data. Covers Google Analytics, Google AdSense, cookies, your rights under GDPR / CCPA / DPDP, and how to request deletion.",
+            "canonical_url": "/privacy",
+            "og_url": "/privacy",
+            "page_category": "privacy",
+            "last_updated": last_updated,
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Privacy Policy", "url": "/privacy"},
             ],
         },
     )
@@ -704,6 +784,7 @@ def sitemap():
         ("/about",             "monthly", "0.70", "about.html"),
         ("/contact",           "monthly", "0.65", "contact.html"),
         ("/feedback",          "monthly", "0.60", "feedback.html"),
+        ("/privacy",           "yearly",  "0.30", "privacy.html"),
     ]
 
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -715,6 +796,20 @@ def sitemap():
         xml += f'    <changefreq>{changefreq}</changefreq>\n'
         xml += f'    <priority>{priority}</priority>\n'
         xml += '  </url>\n'
+
+    # Each original blog post is its own indexable URL — uses the post's own
+    # 'updated' date for lastmod so Google can prioritize re-crawling edits.
+    try:
+        for post in _load_blog_posts():
+            xml += '  <url>\n'
+            xml += f'    <loc>https://getjob4u.com/blogs/{post["slug"]}</loc>\n'
+            xml += f'    <lastmod>{post.get("updated") or post.get("published", "")}</lastmod>\n'
+            xml += '    <changefreq>monthly</changefreq>\n'
+            xml += '    <priority>0.80</priority>\n'
+            xml += '  </url>\n'
+    except Exception:
+        pass
+
     xml += '</urlset>'
     return Response(content=xml, media_type="application/xml")
 

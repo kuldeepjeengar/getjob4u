@@ -1,0 +1,159 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="pill">Legal · Last updated {{ last_updated }}</span>
+    <h1>Privacy <span class="grad-text">Policy</span></h1>
+    <p class="lead">Plain-English summary of what data getjob4u collects, why, and how to opt out. No dark patterns.</p>
+  </div>
+</section>
+
+<section class="container legal-page">
+  <div class="legal-content">
+
+    <h2>1. Who runs this site</h2>
+    <p>
+      getjob4u ("getjob4u", "we", "us") is a free career toolkit for AI, ML, and Data Science job seekers,
+      operated solo by Kuldeep Jeengar from India. You can reach us at
+      <a href="mailto:kuldeepjeengar50@gmail.com">kuldeepjeengar50@gmail.com</a> or via the
+      <a href="/contact">contact page</a>.
+    </p>
+
+    <h2>2. The short version</h2>
+    <ul class="legal-list">
+      <li>We do not sell your data. Ever.</li>
+      <li>We use Google Analytics to count visits and Google AdSense to show ads — both use cookies.</li>
+      <li>If you upload a resume to the ATS scanner, we store the file so admins can audit submissions and improve the tool. We don't share it.</li>
+      <li>If you submit the feedback form or generate a cold email, we store the form data so we can read and improve responses.</li>
+      <li>You can request deletion of anything personal by emailing us.</li>
+    </ul>
+
+    <h2>3. What we collect</h2>
+
+    <h3>3a. Information you give us directly</h3>
+    <ul>
+      <li><strong>Resume uploads (ATS scanner):</strong> the resume file you upload (PDF, DOCX, or TXT), the target role or pasted job description, and your optional name/email if you provide them. We store the file in our database so admins can review submissions and improve the scanner.</li>
+      <li><strong>Cold email generator:</strong> the slot values you fill in (your name, role, skills, recipient details, company). We store the template key and target role for usage stats; we do <strong>not</strong> store the full message body.</li>
+      <li><strong>Feedback form:</strong> your name, email, star rating, category, and message — used to read your feedback and reply if relevant.</li>
+    </ul>
+
+    <h3>3b. Information collected automatically</h3>
+    <ul>
+      <li><strong>Analytics:</strong> via Google Analytics 4 (measurement ID <code>G-EN17K7WRB1</code>) — page views, clicks on tools and links, scroll depth, approximate location (country/city), device/browser, and referral source. This data is aggregated and pseudonymous.</li>
+      <li><strong>Server logs:</strong> standard request logs (IP address, user agent, timestamp, URL) kept short-term for abuse prevention and debugging.</li>
+      <li><strong>Cookies and similar technologies:</strong> see Section 5 below.</li>
+    </ul>
+
+    <h2>4. How we use your data</h2>
+    <ul>
+      <li>Operate the site and provide the tools you requested (scan your resume, generate an email, submit feedback).</li>
+      <li>Understand which pages and tools are used, so we can improve them.</li>
+      <li>Show third-party advertising via Google AdSense (see Section 6).</li>
+      <li>Detect abuse, fraud, or attempts to compromise the service.</li>
+      <li>Reply to you if you contact us directly.</li>
+    </ul>
+    <p>We do <strong>not</strong> use your data to train AI models, sell to data brokers, or send marketing emails.</p>
+
+    <h2>5. Cookies and tracking</h2>
+    <p>getjob4u uses cookies and similar storage for three purposes:</p>
+    <ul>
+      <li><strong>Strictly necessary cookies</strong> — session and login state for the admin area. The site itself does not require login.</li>
+      <li><strong>Analytics cookies</strong> — Google Analytics 4 sets <code>_ga</code> and related cookies to count unique visits and measure engagement. Data is aggregated and held by Google according to their policies. Learn more: <a href="https://policies.google.com/technologies/cookies" target="_blank" rel="noopener">policies.google.com/technologies/cookies</a>.</li>
+      <li><strong>Advertising cookies</strong> — see Section 6 (Google AdSense).</li>
+    </ul>
+    <p>You can disable cookies in your browser settings at any time. Disabling analytics or advertising cookies does not affect the tools themselves.</p>
+
+    <h2>6. Third-party advertising (Google AdSense)</h2>
+    <p>
+      getjob4u uses Google AdSense (publisher ID <code>ca-pub-8170876893682596</code>) to show ads.
+      Per Google's policies, we must disclose the following:
+    </p>
+    <ul>
+      <li>Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to this site and other sites on the internet.</li>
+      <li>Google's use of advertising cookies enables it and its partners to serve ads to users based on their visit to this and other sites.</li>
+      <li>You may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">Google Ads Settings</a>.</li>
+      <li>You may also opt out of third-party vendors' use of cookies for personalized ads by visiting <a href="https://www.aboutads.info/" target="_blank" rel="noopener">aboutads.info</a> or <a href="https://www.youronlinechoices.eu/" target="_blank" rel="noopener">youronlinechoices.eu</a>.</li>
+      <li>Google uses the DoubleClick DART cookie to serve ads to our users based on their visit to getjob4u and other sites on the internet. You can opt out of the DART cookie at <a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener">policies.google.com/technologies/ads</a>.</li>
+    </ul>
+
+    <h2>7. Other third-party services we use</h2>
+    <ul>
+      <li><strong>Google Fonts</strong> — to load the Inter and JetBrains Mono fonts.</li>
+      <li><strong>Google Analytics 4</strong> — described above.</li>
+      <li><strong>Google AdSense</strong> — described above.</li>
+      <li><strong>Hosting / CDN</strong> — the site is hosted on standard cloud infrastructure; request data is processed by the hosting provider as required to serve the site.</li>
+    </ul>
+    <p>Each provider's privacy practices are governed by their own privacy policy.</p>
+
+    <h2>8. Your rights</h2>
+    <p>Depending on where you live, you may have rights under the EU GDPR, UK GDPR, California CCPA / CPRA, India's DPDP Act 2023, or similar laws — including the right to:</p>
+    <ul>
+      <li>Know what personal data we have about you.</li>
+      <li>Request a copy of that data.</li>
+      <li>Request correction or deletion.</li>
+      <li>Object to or restrict processing.</li>
+      <li>Withdraw consent at any time (without affecting processing already done).</li>
+      <li>Lodge a complaint with your local data protection authority.</li>
+    </ul>
+    <p>
+      To exercise any of these rights, email
+      <a href="mailto:kuldeepjeengar50@gmail.com">kuldeepjeengar50@gmail.com</a>
+      with the subject line "Privacy request" and we will respond within 30 days.
+    </p>
+
+    <h2>9. Data retention</h2>
+    <ul>
+      <li>Resume uploads, feedback submissions, and email generator usage records are retained while the service is operational, or until you request deletion.</li>
+      <li>Analytics data is retained according to Google Analytics' default retention (currently 14 months for event-level data).</li>
+      <li>Server logs are retained for a short window (typically under 90 days) for abuse prevention.</li>
+    </ul>
+
+    <h2>10. Children's privacy</h2>
+    <p>
+      getjob4u is intended for users aged 16 and over and is not directed to children under 13.
+      We do not knowingly collect data from children under 13. If you believe a child has provided
+      data to us, please contact us and we will delete it.
+    </p>
+
+    <h2>11. Data security</h2>
+    <p>
+      We use industry-standard security practices to protect your data — encrypted transit (HTTPS),
+      restricted admin access, and minimal data collection. No system is 100% secure, and we cannot
+      guarantee absolute security.
+    </p>
+
+    <h2>12. International transfers</h2>
+    <p>
+      getjob4u is operated from India. By using the site, you understand that your data may be
+      processed in India and in any country where our third-party providers (Google, hosting, etc.)
+      operate, including the United States and the European Union.
+    </p>
+
+    <h2>13. Changes to this policy</h2>
+    <p>
+      We may update this policy from time to time. The "Last updated" date at the top of this page
+      will reflect the most recent change. Material changes will be highlighted on the home page or
+      via an in-product notice.
+    </p>
+
+    <h2>14. Contact us</h2>
+    <p>
+      Questions, deletion requests, or privacy concerns:
+      <a href="mailto:kuldeepjeengar50@gmail.com">kuldeepjeengar50@gmail.com</a>
+      or use the <a href="/contact">contact page</a>.
+    </p>
+
+  </div>
+
+  <div class="related-block">
+    <h2>Related</h2>
+    <div class="related-grid">
+      <a class="related-card" href="/about"><strong>About getjob4u →</strong><span>Why this site exists</span></a>
+      <a class="related-card" href="/contact"><strong>Contact →</strong><span>Reach the founder directly</span></a>
+      <a class="related-card" href="/feedback"><strong>Feedback →</strong><span>Suggestions and bug reports</span></a>
+    </div>
+  </div>
+</section>
+{% endblock %}

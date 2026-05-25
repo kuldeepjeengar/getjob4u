@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }} — getjob4u{% endblock %}
+
+{% block content %}
+<article class="blog-post-page">
+  <section class="page-hero">
+    <div class="container">
+      <span class="pill">{{ post.hero_pill }}</span>
+      <h1>{{ post.title }}</h1>
+      <p class="lead">{{ post.summary }}</p>
+      <div class="blog-post-meta">
+        <span>By <strong>{{ post.author }}</strong></span>
+        <span class="dot">·</span>
+        <time datetime="{{ post.published }}">Published {{ post.published_display }}</time>
+        {% if post.updated and post.updated != post.published %}
+        <span class="dot">·</span>
+        <time datetime="{{ post.updated }}">Updated {{ post.updated_display }}</time>
+        {% endif %}
+        <span class="dot">·</span>
+        <span>{{ post.read_minutes }} min read</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="container blog-post-body">
+    <div class="blog-post-content">
+      {% for section in post.sections %}
+        <h2>{{ section.heading }}</h2>
+        {{ section.body_html | safe }}
+      {% endfor %}
+    </div>
+
+    <aside class="blog-post-cta">
+      <h3>Try the tools mentioned in this post</h3>
+      <div class="related-grid">
+        {% for tool in post.related_tools %}
+        <a class="related-card" href="{{ tool.url }}"
+           data-gtag="blog_post_cta_click" data-gtag-label="{{ tool.title }}">
+          <strong>{{ tool.title }} →</strong>
+          <span>{{ tool.label }}</span>
+        </a>
+        {% endfor %}
+      </div>
+    </aside>
+
+    {% if other_posts %}
+    <div class="related-block">
+      <h2>More from the getjob4u blog</h2>
+      <div class="related-grid">
+        {% for p in other_posts %}
+        <a class="related-card" href="/blogs/{{ p.slug }}"
+           data-gtag="blog_internal_link" data-gtag-label="{{ p.slug }}">
+          <strong>{{ p.title }} →</strong>
+          <span>{{ p.summary[:120] }}{% if p.summary | length > 120 %}…{% endif %}</span>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </section>
+</article>
+
+<!-- Article schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": {{ post.title | tojson }},
+  "description": {{ post.description | tojson }},
+  "datePublished": {{ post.published | tojson }},
+  "dateModified": {{ post.updated | tojson }},
+  "author": {
+    "@type": "Person",
+    "name": {{ post.author | tojson }},
+    "url": "https://www.linkedin.com/in/kuldeep-jeengar/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "getjob4u",
+    "url": "https://getjob4u.com",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://getjob4u.com/static/images/favicon.svg"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://getjob4u.com/blogs/{{ post.slug }}"
+  },
+  "image": "https://getjob4u.com/static/images/og-default.jpg",
+  "keywords": {{ post.tags | tojson }},
+  "articleSection": {{ post.category | tojson }},
+  "wordCount": {{ post.word_count | default(1200) }},
+  "inLanguage": "en"
+}
+</script>
+{% endblock %}

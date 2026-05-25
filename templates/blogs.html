@@ -11,6 +11,25 @@
 </section>
 
 <section class="container blogs-page">
+  {% if internal_posts %}
+  <div class="blog-category internal-posts">
+    <h2><span class="blog-cat-icon">✍️</span>From getjob4u</h2>
+    <p class="muted">Original long-form guides from the team, tightly tied to the tools on this site.</p>
+    <div class="blog-grid">
+      {% for p in internal_posts %}
+      <a class="blog-card internal-post-card" href="/blogs/{{ p.slug }}"
+         data-gtag="internal_blog_click" data-gtag-label="{{ p.slug }}">
+        <div class="blog-source">{{ p.category }} · {{ p.read_minutes }} min</div>
+        <h3>{{ p.title }}</h3>
+        <p class="blog-author">by {{ p.author }} · {{ p.published_display }}</p>
+        <p class="blog-desc">{{ p.summary[:170] }}{% if p.summary | length > 170 %}…{% endif %}</p>
+        <span class="link-arrow">Read →</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
   {% for cat in categories %}
   <div class="blog-category">
     <h2><span class="blog-cat-icon">{{ cat.icon }}</span>{{ cat.name }}</h2>
@@ -27,6 +46,33 @@
     </div>
   </div>
   {% endfor %}
+
+  {% if internal_posts %}
+  <!-- Blog schema — lists getjob4u's own articles so Google sees the site as a publisher -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "getjob4u Blog",
+    "url": "https://getjob4u.com/blogs",
+    "publisher": { "@type": "Organization", "name": "getjob4u", "url": "https://getjob4u.com" },
+    "blogPost": [
+      {% for p in internal_posts %}
+      {
+        "@type": "BlogPosting",
+        "headline": {{ p.title | tojson }},
+        "description": {{ p.description | tojson }},
+        "url": "https://getjob4u.com/blogs/{{ p.slug }}",
+        "datePublished": {{ p.published | tojson }},
+        "dateModified": {{ p.updated | tojson }},
+        "author": { "@type": "Person", "name": {{ p.author | tojson }} },
+        "keywords": {{ p.tags | tojson }}
+      }{% if not loop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }
+  </script>
+  {% endif %}
 
   <div class="blog-category">
     <h2><span class="blog-cat-icon">📬</span>Newsletters</h2>
