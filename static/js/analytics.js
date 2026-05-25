@@ -26,6 +26,16 @@
   // Public helper.
   window.g4uTrack = send;
 
+  // Key events = conversions. These are the events we'll mark as "Key Event"
+  // in the GA4 admin UI. The is_key_event flag is just a tag so we can filter
+  // in DebugView / Explorations — it does NOT make GA4 treat it as one.
+  // Names to mark in GA4 (Admin → Events → toggle "Mark as key event"):
+  //   ats_scan_success, email_generate_success, feedback_submit_success,
+  //   contact_click, resume_copy.
+  window.g4uKeyEvent = function (event, params) {
+    send(event, Object.assign({ is_key_event: true }, params || {}));
+  };
+
   // Fire the per-page page_view with the category provided by base.html.
   if (window.__G4U_PAGE__) {
     send('page_view', {
@@ -92,6 +102,11 @@
       event_label: label,
       page_path: window.location.pathname,
     };
+
+    // Click-fired key events: opt in via data-gtag-key="1".
+    if (el.getAttribute('data-gtag-key') === '1') {
+      params.is_key_event = true;
+    }
 
     // Outbound link?
     const href = el.getAttribute && el.getAttribute('href');

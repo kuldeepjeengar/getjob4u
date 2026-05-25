@@ -15,7 +15,11 @@
     <div class="about-photo-wrap">
       <img class="about-photo"
            src="{{ url_for('static', path='/images/founder.jpg') }}"
-           alt="Kuldeep Jeengar — Founder of getjob4u"
+           alt="Kuldeep Jeengar — Founder of getjob4u, building free AI/ML/DS job-seeker tools"
+           width="240"
+           height="240"
+           fetchpriority="high"
+           decoding="async"
            onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';" />
       <div class="about-photo-fallback" style="display:none;">KJ</div>
       <div class="about-photo-glow" aria-hidden="true"></div>

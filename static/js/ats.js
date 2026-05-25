@@ -100,6 +100,15 @@
       }
       if (!r.ok) throw new Error(data.detail || `Scan failed (${r.status})`);
       renderResult(data);
+      if (window.g4uKeyEvent) {
+        window.g4uKeyEvent('ats_scan_success', {
+          event_category: 'ats_scanner',
+          mode: mode,
+          target_role: data.target_role,
+          score: Math.round(data.overall_score),
+          grade: data.grade,
+        });
+      }
     } catch (err) {
       alert('Scan failed: ' + err.message);
     } finally {

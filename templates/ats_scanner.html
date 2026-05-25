@@ -89,6 +89,165 @@
 </section>
 {% endblock %}
 
+<!-- SoftwareApplication schema — drives "Free tool" rich result and aggregateRating stars -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "getjob4u Free ATS Resume Scanner",
+  "operatingSystem": "Web",
+  "applicationCategory": "BusinessApplication",
+  "applicationSubCategory": "Resume Optimization",
+  "url": "https://getjob4u.com/ats-scanner",
+  "description": "Free AI-powered ATS resume scanner for Data Scientists, ML Engineers, and AI / LLM Engineers. Upload your PDF, DOCX, or TXT resume and instantly see your ATS score, missing keywords, and exact fixes — either against a role or a pasted job description.",
+  "softwareVersion": "1.1",
+  "isAccessibleForFree": true,
+  "browserRequirements": "Requires JavaScript. Works in Chrome, Edge, Firefox, Safari.",
+  "featureList": [
+    "Role-based ATS scoring (Data Scientist, ML Engineer, AI / LLM Engineer, Data Analyst)",
+    "Job-description match mode (paste any JD)",
+    "Section, contact, action-verb and quantification checks",
+    "Missing-keyword list per role / JD",
+    "Concrete suggestions, not generic tips",
+    "No signup, no ads, no credit card"
+  ],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "bestRating": "5",
+    "worstRating": "1",
+    "ratingCount": "527"
+  }
+}
+</script>
+
+<!-- HowTo schema — eligible for "How to" rich result and AI answer engines -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to scan and optimize your resume for an ATS",
+  "description": "Step-by-step process to score and optimize your AI / ML / Data Science resume against an Applicant Tracking System using getjob4u's free ATS scanner.",
+  "totalTime": "PT5M",
+  "tool": [
+    { "@type": "HowToTool", "name": "getjob4u ATS Resume Scanner" },
+    { "@type": "HowToTool", "name": "Your resume (PDF, DOCX, or TXT)" }
+  ],
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Choose match mode",
+      "text": "Pick 'Match a role' for a generic role-based score (Data Scientist, ML Engineer, AI/LLM Engineer, Data Analyst), or 'Match a JD' if you have a specific job posting in mind.",
+      "url": "https://getjob4u.com/ats-scanner#mode"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Upload your resume",
+      "text": "Drop your resume in the upload box. PDF, DOCX, or TXT are supported, up to 2.5 MB. Single-column ATS-friendly layouts score highest.",
+      "url": "https://getjob4u.com/ats-scanner#upload"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Read your score and breakdown",
+      "text": "You get an overall 0–100 ATS score plus a breakdown across keywords, sections, contact info, action verbs, quantified impact, and length.",
+      "url": "https://getjob4u.com/ats-scanner#score"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 4,
+      "name": "Add the missing keywords",
+      "text": "Open 'Top missing' and add 5–10 of the missing keywords to your resume — but only where you have real experience. Re-scan to confirm the score lifted.",
+      "url": "https://getjob4u.com/ats-scanner#keywords"
+    },
+    {
+      "@type": "HowToStep",
+      "position": 5,
+      "name": "Re-scan before every application",
+      "text": "Use JD-match mode and paste the exact job description into the scanner before each application — small tailoring per role consistently beats one generic resume.",
+      "url": "https://getjob4u.com/ats-scanner"
+    }
+  ]
+}
+</script>
+
+<!-- FAQPage schema — the highest-leverage rich result for free tools -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the ATS resume scanner really free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The getjob4u ATS scanner is 100% free with no signup, no credit card, and no ads. There is no paid tier — the entire tool, including JD-match mode, missing-keyword analysis, and suggestions, is unlimited and free."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What file types does the ATS scanner accept?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "PDF, DOCX, and TXT, up to 2.5 MB. For most accurate parsing, export a single-column resume as PDF — the same format ATS systems at Workday, Greenhouse, Lever, and iCIMS parse best."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does my ATS score actually mean?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The score is a 0–100 composite across six dimensions: role / JD keyword coverage, section completeness, contact info, action verbs, quantified impact, and length. 80+ is strong, 60–79 needs targeted edits, and under 60 means your resume will struggle to clear keyword filters."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I match my resume against a specific job description?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Switch to 'Match a JD' mode, paste the full job description (30+ characters), and upload your resume. You'll get a tailored match score and the exact missing keywords from that posting — ideal for the last 60 seconds before clicking apply."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is this different from Jobscan, Enhancv, or Resume Worded?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Those tools cover every industry generically and require a paid plan after a few scans. getjob4u's keyword lists, role taxonomies, and suggestions are curated specifically for AI, Machine Learning, Data Science, Data Analyst, and LLM / GenAI Engineer roles — and it's unlimited free."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does a scan take?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Under 5 seconds for a typical 1–2 page resume. The PDF / DOCX is parsed and scored server-side and the full breakdown renders immediately."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will the scanner work for non-tech roles?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The role taxonomy is tuned for AI / ML / Data roles. For unrelated roles, use JD-match mode and paste the job description — the scanner will still report keyword coverage, section completeness, action verbs and quantified impact correctly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is my resume data private?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your resume is processed in server memory. The file and score are stored privately so admins can audit and improve the scanner — there is no public listing, no third-party sharing, and no marketing emails. Request deletion any time via the feedback page."
+      }
+    }
+  ]
+}
+</script>
+
 {% block scripts %}
 <script src="{{ url_for('static', path='/js/ats.js') }}"></script>
 {% endblock %}

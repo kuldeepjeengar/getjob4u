@@ -35,6 +35,48 @@
 </section>
 {% endblock %}
 
+<!-- FAQPage schema generated from the first tip in each category. Keeps the
+     payload small (Google ignores schemas with hundreds of entries) while still
+     winning rich results across every category. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {% for cat in categories %}{% for tip in cat.tips[:3] %}
+    {
+      "@type": "Question",
+      "name": {{ tip.title | tojson }},
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ tip.content | tojson }}
+      }
+    }{% if not (loop.last and loop.parent.last) %},{% endif %}
+    {% endfor %}{% endfor %}
+  ]
+}
+</script>
+
+<!-- Article schema — interview-tips reads like a guide; Article schema lets it
+     compete in Google Discover / news-style cards. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI / ML / Data Science Interview Tips — 35+ Curated Questions",
+  "description": "Battle-tested interview guidance across ML, deep learning, LLMs, statistics, SQL, and behavioral rounds for AI / ML / Data Science roles.",
+  "author": { "@type": "Person", "name": "Kuldeep Jeengar", "url": "https://www.linkedin.com/in/kuldeep-jeengar/" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "getjob4u",
+    "logo": { "@type": "ImageObject", "url": "https://getjob4u.com/static/images/favicon.svg" }
+  },
+  "mainEntityOfPage": "https://getjob4u.com/interview-tips",
+  "image": "https://getjob4u.com/static/images/og-default.jpg",
+  "inLanguage": "en"
+}
+</script>
+
 {% block scripts %}
 <script src="{{ url_for('static', path='/js/tabs.js') }}"></script>
 {% endblock %}

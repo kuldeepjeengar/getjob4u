@@ -9,6 +9,12 @@
         const old = btn.textContent;
         btn.textContent = '✓ Copied';
         setTimeout(() => (btn.textContent = old), 1500);
+        if (window.g4uKeyEvent) {
+          window.g4uKeyEvent('resume_copy', {
+            event_category: 'sample_resumes',
+            resume_id: id,
+          });
+        }
       });
     });
   });

@@ -673,41 +673,48 @@ def health():
 
 @app.get("/sitemap.xml")
 def sitemap():
-    """XML sitemap for search engines."""
-    today = datetime.utcnow().strftime("%Y-%m-%d")
+    """XML sitemap for search engines.
+
+    lastmod is taken from each template's filesystem mtime — a real signal
+    Google can use to recrawl just changed pages, instead of the previous
+    "everything was modified today" lie which Google has learned to ignore.
+    """
+    template_dir = BASE_DIR / "templates"
+
+    def lastmod_for(template: str) -> str:
+        path = template_dir / template
+        try:
+            return datetime.utcfromtimestamp(path.stat().st_mtime).strftime("%Y-%m-%d")
+        except OSError:
+            return datetime.utcnow().strftime("%Y-%m-%d")
+
+    # (path, changefreq, priority, template_file)
     urls = [
-        ("/",                  "daily",   "1.00"),
-        ("/ats-scanner",       "weekly",  "0.95"),
-        ("/python-questions",  "weekly",  "0.95"),
-        ("/career-roadmap",    "weekly",  "0.95"),
-        ("/free-ai-tools",     "weekly",  "0.95"),
-        ("/free-courses",      "weekly",  "0.95"),
-        ("/interview-tips",    "daily",   "0.90"),
-        ("/email-generator",   "weekly",  "0.90"),
-        ("/blogs",             "weekly",  "0.85"),
-        ("/youtube-resources", "weekly",  "0.85"),
-        ("/sample-resumes",    "monthly", "0.80"),
-        ("/about",             "monthly", "0.75"),
-        ("/contact",           "monthly", "0.70"),
-        ("/feedback",          "monthly", "0.65"),
+        ("/",                  "weekly",  "1.00", "index.html"),
+        ("/ats-scanner",       "weekly",  "0.95", "ats_scanner.html"),
+        ("/python-questions",  "weekly",  "0.95", "python_questions.html"),
+        ("/career-roadmap",    "monthly", "0.90", "career_roadmap.html"),
+        ("/free-ai-tools",     "weekly",  "0.95", "free_ai_tools.html"),
+        ("/free-courses",      "weekly",  "0.95", "free_courses.html"),
+        ("/interview-tips",    "weekly",  "0.90", "interview_tips.html"),
+        ("/email-generator",   "weekly",  "0.90", "email_generator.html"),
+        ("/blogs",             "weekly",  "0.85", "blogs.html"),
+        ("/youtube-resources", "monthly", "0.80", "youtube_resources.html"),
+        ("/sample-resumes",    "monthly", "0.80", "sample_resumes.html"),
+        ("/about",             "monthly", "0.70", "about.html"),
+        ("/contact",           "monthly", "0.65", "contact.html"),
+        ("/feedback",          "monthly", "0.60", "feedback.html"),
     ]
 
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
-    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" '
-    xml += 'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n'
-
-    for url, changefreq, priority in urls:
+    xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    for url, changefreq, priority, tpl in urls:
         xml += '  <url>\n'
         xml += f'    <loc>https://getjob4u.com{url}</loc>\n'
-        xml += f'    <lastmod>{today}</lastmod>\n'
+        xml += f'    <lastmod>{lastmod_for(tpl)}</lastmod>\n'
         xml += f'    <changefreq>{changefreq}</changefreq>\n'
         xml += f'    <priority>{priority}</priority>\n'
-        xml += '    <image:image>\n'
-        xml += '      <image:loc>https://getjob4u.com/static/images/og-default.jpg</image:loc>\n'
-        xml += '      <image:title>getjob4u — Free AI/ML/DS career toolkit</image:title>\n'
-        xml += '    </image:image>\n'
         xml += '  </url>\n'
-
     xml += '</urlset>'
     return Response(content=xml, media_type="application/xml")
 

@@ -45,12 +45,18 @@
   <link rel="icon" type="image/svg+xml" href="{{ url_for('static', path='/images/favicon.svg') }}" />
   <link rel="apple-touch-icon" href="{{ url_for('static', path='/images/favicon.svg') }}" />
   
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}" />
+  <!-- Performance: connect early to third-party origins we will hit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.google-analytics.com">
+  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com">
+
+  <!-- Stylesheets -->
+  <link rel="preload" as="style" href="{{ url_for('static', path='/css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  
+
   <!-- Google AdSense -->
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8170876893682596"
        crossorigin="anonymous">

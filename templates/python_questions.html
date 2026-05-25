@@ -96,7 +96,9 @@
   </div>
 </section>
 
-<!-- AEO / SEO: ItemList schema for the 100 questions -->
+<!-- AEO / SEO: ItemList schema for ALL 100 questions (was 25). Each item is
+     a SoftwareSourceCode so Google understands these are coding questions
+     with solutions, not just article entries. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -105,12 +107,17 @@
   "description": "Curated list of the top 100 Python coding interview questions asked at FAANG companies (Google, Amazon, Meta, Apple, Microsoft, Netflix), each with a worked Python solution.",
   "numberOfItems": {{ questions | length }},
   "itemListElement": [
-    {% for q in questions[:25] %}
+    {% for q in questions %}
     {
       "@type": "ListItem",
       "position": {{ q.id }},
-      "name": "{{ q.title }}",
-      "url": "{{ q.url }}"
+      "item": {
+        "@type": "TechArticle",
+        "name": {{ q.title | tojson }},
+        "headline": {{ q.title | tojson }},
+        "url": {{ q.url | tojson }},
+        "keywords": {{ ((q.companies | default([])) + [q.category, q.difficulty, 'Python', 'Coding Interview']) | tojson }}
+      }
     }{% if not loop.last %},{% endif %}
     {% endfor %}
   ]

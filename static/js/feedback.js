@@ -35,6 +35,12 @@
       if (!r.ok) throw new Error(data.detail || 'Could not submit');
       status.className = 'form-status success';
       status.textContent = data.message;
+      if (window.g4uKeyEvent) {
+        window.g4uKeyEvent('feedback_submit_success', {
+          event_category: 'feedback',
+          rating: parseInt(payload.rating, 10) || 0,
+        });
+      }
       form.reset();
       stars.forEach((x) => x.classList.remove('active'));
     } catch (err) {

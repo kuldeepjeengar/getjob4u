@@ -54,6 +54,80 @@
 </section>
 {% endblock %}
 
+<!-- SoftwareApplication schema for the generator -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "getjob4u Cold Email & LinkedIn DM Generator",
+  "operatingSystem": "Web",
+  "applicationCategory": "BusinessApplication",
+  "url": "https://getjob4u.com/email-generator",
+  "description": "Free cold email and LinkedIn DM generator for AI / ML / Data Science job seekers. Pick a template — referral ask, recruiter reply, alumni outreach, follow-up — fill in the slots, and copy a ready-to-send message.",
+  "isAccessibleForFree": true,
+  "featureList": [
+    "Email + LinkedIn DM length variants",
+    "Templates for referrals, recruiters, alumni, follow-ups",
+    "Slot-filled personalization (their work, achievement, role)",
+    "One-click copy, regenerate, instant length adjustment",
+    "No signup, no credit card"
+  ],
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+
+<!-- HowTo schema for cold email writing -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to write a cold email that gets a referral or recruiter reply",
+  "description": "Step-by-step process to write a cold email or LinkedIn DM that actually gets replies, using getjob4u's free generator.",
+  "totalTime": "PT3M",
+  "step": [
+    { "@type": "HowToStep", "position": 1, "name": "Pick the medium",  "text": "Choose Email for outreach to a work or personal address, or LinkedIn DM for shorter character-limited messages with a different tone." },
+    { "@type": "HowToStep", "position": 2, "name": "Pick the template", "text": "Pick a referral ask, recruiter reply, alumni outreach, or follow-up. Each template uses a different proven structure." },
+    { "@type": "HowToStep", "position": 3, "name": "Personalize the slots", "text": "Fill in their work / project specifically (not 'your recent work') — this is the single biggest factor in reply rate. Add your achievement with a metric." },
+    { "@type": "HowToStep", "position": 4, "name": "Generate, copy, send", "text": "Click Generate, copy the message, and send. Use Regenerate to get a different variant if it doesn't feel right." }
+  ]
+}
+</script>
+
+<!-- FAQPage schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Is the cold email generator free?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Yes — 100% free, no signup, no credit card. Generate as many emails and LinkedIn DMs as you want." }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the best way to ask for a referral by cold email?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Lead with one specific thing they shipped (their_work), state your role and one quantified achievement, name the exact role you're targeting at their company, then ask one small ask — a 15-minute chat or a forward to the hiring manager. The 'Referral request' template here follows this structure." }
+    },
+    {
+      "@type": "Question",
+      "name": "Should I send a cold email or a LinkedIn DM?",
+      "acceptedAnswer": { "@type": "Answer", "text": "If you have their email, send a cold email — longer, easier to forward, lands in their inbox. If you only have LinkedIn, send a short DM (under 300 characters) and follow up with a longer message after they accept the connection." }
+    },
+    {
+      "@type": "Question",
+      "name": "What reply rate should I expect from cold outreach?",
+      "acceptedAnswer": { "@type": "Answer", "text": "A well-personalized AI/ML cold email typically gets a 10–25% reply rate. Generic, slot-filled-but-not-personalized messages get 1–3%. The single highest-impact field is 'their work' — be specific (mention a paper, repo, talk, or shipped feature)." }
+    },
+    {
+      "@type": "Question",
+      "name": "When should I follow up if they don't reply?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Send one follow-up 5–7 days after the original message — short, polite, with a one-line context refresh. If still no reply, move on. The 'Follow-up' template here is built for this." }
+    }
+  ]
+}
+</script>
+
 {% block scripts %}
 <script>
   window.__TEMPLATES__ = {{ templates | tojson }};

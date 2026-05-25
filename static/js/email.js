@@ -62,6 +62,13 @@
       const data = await r.json();
       if (!r.ok) throw new Error(data.detail || 'Failed to generate');
       renderMessage(data);
+      if (window.g4uKeyEvent) {
+        window.g4uKeyEvent('email_generate_success', {
+          event_category: 'email_generator',
+          medium: payload.medium,
+          template_key: payload.template_key || payload.templateKey || '',
+        });
+      }
     } catch (err) {
       alert(err.message);
     }
