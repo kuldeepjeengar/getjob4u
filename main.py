@@ -52,6 +52,117 @@ app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 templates = Jinja2Templates(directory=BASE_DIR / "templates")
 
 
+def _static_version(rel_path: str) -> str:
+    """Return a short cache-busting token for a static asset (mtime as int).
+
+    Used in templates as ?v={{ static_v('css/style.css') }} so browsers fetch
+    a fresh copy whenever the file actually changes, but keep caching otherwise.
+    """
+    try:
+        return str(int((BASE_DIR / "static" / rel_path).stat().st_mtime))
+    except OSError:
+        return "0"
+
+
+templates.env.globals["static_v"] = _static_version
+
+
+# ---------------------------------------------------------------- Canonical redirects
+# Lower-cased typo path -> canonical path. 301 (permanent) so search engines
+# update their index and consolidate link equity onto the real URL.
+PATH_REDIRECTS: dict[str, str] = {
+    # Robots / sitemap typos
+    "/robot.txt": "/robots.txt",
+    "/robots": "/robots.txt",
+    "/sitemap": "/sitemap.xml",
+    "/sitemaps.xml": "/sitemap.xml",
+    "/sitemap.html": "/sitemap.xml",
+    # Common singular/plural slips
+    "/blog": "/blogs",
+    "/blogs.html": "/blogs",
+    "/python-question": "/python-questions",
+    "/python-questions.html": "/python-questions",
+    "/interview-tip": "/interview-tips",
+    "/interview-tips.html": "/interview-tips",
+    "/free-course": "/free-courses",
+    "/courses": "/free-courses",
+    "/course": "/free-courses",
+    "/free-ai-tool": "/free-ai-tools",
+    "/ai-tools": "/free-ai-tools",
+    "/tools": "/free-ai-tools",
+    "/career-roadmaps": "/career-roadmap",
+    "/roadmap": "/career-roadmap",
+    "/roadmaps": "/career-roadmap",
+    "/sample-resume": "/sample-resumes",
+    "/resume": "/sample-resumes",
+    "/resumes": "/sample-resumes",
+    "/feedbacks": "/feedback",
+    # ATS / scanner shortcuts
+    "/ats": "/ats-scanner",
+    "/ats-scan": "/ats-scanner",
+    "/atsscanner": "/ats-scanner",
+    "/scanner": "/ats-scanner",
+    "/resume-scanner": "/ats-scanner",
+    "/resume-checker": "/ats-scanner",
+    # Email generator shortcuts
+    "/email": "/email-generator",
+    "/emails": "/email-generator",
+    "/cold-email": "/email-generator",
+    "/cold-emails": "/email-generator",
+    "/email-generators": "/email-generator",
+    # YouTube / learning
+    "/youtube": "/youtube-resources",
+    "/youtube-resource": "/youtube-resources",
+    "/learning-resources": "/youtube-resources",
+    # Tips shortcuts
+    "/tips": "/interview-tips",
+    "/interview": "/interview-tips",
+    "/interview-prep": "/interview-tips",
+    # About / contact / privacy slips
+    "/about-us": "/about",
+    "/aboutus": "/about",
+    "/contact-us": "/contact",
+    "/contactus": "/contact",
+    "/privacy-policy": "/privacy",
+    "/privacy.html": "/privacy",
+    # Home variants
+    "/home": "/",
+    "/index": "/",
+    "/index.html": "/",
+}
+
+
+@app.middleware("http")
+async def canonical_redirects(request: Request, call_next):
+    """Enforce canonical hostname + fix common path typos with 301s.
+
+    - www.getjob4u.com/x  -> https://getjob4u.com/x  (consolidates SEO equity)
+    - /robot.txt, /blog, /tools, ... -> their canonical paths
+    Local dev (127.0.0.1, localhost) is exempt so reload servers still work.
+    """
+    host = (request.headers.get("host") or "").lower().split(":")[0]
+
+    # Skip redirect logic for local development hosts.
+    is_local = host in {"127.0.0.1", "localhost", "0.0.0.0"} or host.endswith(".local")
+
+    if not is_local and host.startswith("www."):
+        target = f"https://{host[4:]}{request.url.path}"
+        if request.url.query:
+            target += f"?{request.url.query}"
+        return RedirectResponse(target, status_code=301)
+
+    # Path-typo fix. Compare case-insensitively, ignore trailing slash.
+    raw_path = request.url.path
+    normalized = raw_path.lower().rstrip("/") or "/"
+    if normalized in PATH_REDIRECTS:
+        target = PATH_REDIRECTS[normalized]
+        if request.url.query:
+            target += f"?{request.url.query}"
+        return RedirectResponse(target, status_code=301)
+
+    return await call_next(request)
+
+
 @app.on_event("startup")
 def on_startup() -> None:
     init_db()
@@ -104,8 +215,9 @@ def home(request: Request):
         "index.html",
         {
             "daily_question": daily_question,
-            "page_title": "getjob4u — Land Your AI/ML/DS Job",
-            "page_description": "Free career toolkit for AI, ML, and Data Science job seekers. Score your resume, prep for interviews, and land your dream job.",
+            "page_title": "getjob4u — Free ATS Scanner, Interview Prep & AI/ML/DS Career Toolkit",
+            "page_description": "Free career toolkit for AI, ML, and Data Science job seekers. ATS resume scanner, 100 FAANG Python questions, 49+ interview tips, cold email generator, career roadmap, and free certificate courses.",
+            "keywords": "free ATS resume scanner, ATS resume checker free, AI resume scanner, ML resume checker, data science resume scanner, machine learning interview questions, data science interview questions, AI engineer interview prep, FAANG Python interview questions, Python coding interview, free AI courses with certificate, free ML courses, free data science courses, cold email generator, LinkedIn referral message, data science career roadmap, ML engineer roadmap, AI job search toolkit, ATS friendly resume, free interview prep, getjob4u",
             "og_url": "/",
             "canonical_url": "/",
             "page_category": "home",
@@ -122,7 +234,7 @@ def ats_scanner_page(request: Request):
             "roles": ats_scorer.available_roles(),
             "page_title": "Free ATS Resume Scanner - getjob4u",
             "page_description": "Free AI-powered ATS resume scanner. Check your resume against role keywords or a specific job description. Get an instant ATS score, missing keywords, and concrete fixes.",
-            "keywords": "ATS scanner, resume optimizer, resume checker, ATS friendly resume, keywords optimizer, job description matcher",
+            "keywords": "free ATS resume scanner, ATS resume checker online, AI resume checker, resume ATS score, ATS friendly resume, ATS optimization, beat the ATS, resume keyword scanner, job description matcher, resume optimizer, Workday ATS, Greenhouse ATS, Lever ATS, iCIMS ATS, Taleo ATS, data scientist resume scanner, ML engineer resume scanner, AI engineer resume scanner, no signup ATS scanner, instant ATS score, JD vs resume match, resume keywords for data science, resume keywords for ML engineer",
             "og_url": "/ats-scanner",
             "canonical_url": "/ats-scanner",
             "page_category": "ats_scanner",
@@ -144,7 +256,7 @@ def interview_tips_page(request: Request):
             "categories": data["categories"],
             "page_title": "AI/ML/DS Interview Tips & Questions - getjob4u",
             "page_description": "Master your AI, ML, and Data Science interviews. Daily questions, behavioral tips, technical prep, and expert guidance for landing your dream role.",
-            "keywords": "interview questions, behavioral interview, technical interview, data science interview, ML interview, AI interview",
+            "keywords": "data science interview questions, machine learning interview questions, AI interview questions, deep learning interview questions, LLM interview questions, generative AI interview questions, RAG interview questions, transformer interview questions, NLP interview questions, statistics interview questions, A/B testing interview questions, SQL interview questions, behavioral interview questions data science, FAANG data science interview, Google data science interview, Meta ML interview, ML engineer interview prep, AI engineer interview prep, MLOps interview questions, data science behavioral questions, STAR method data science",
             "og_url": "/interview-tips",
             "canonical_url": "/interview-tips",
             "page_category": "interview_tips",
@@ -167,7 +279,7 @@ def youtube_page(request: Request):
             "courses": data["free_courses"],
             "page_title": "Free AI/ML/DS Learning Resources - YouTube & Courses",
             "page_description": "Curated free YouTube channels and courses for AI, ML, and Data Science learning. Top creators and structured learning paths.",
-            "keywords": "free courses, YouTube channels, machine learning courses, data science courses, AI learning",
+            "keywords": "free YouTube channels machine learning, best YouTube channels for data science, free AI YouTube channels, free ML video courses, StatQuest, 3Blue1Brown, Andrej Karpathy, Andrew Ng courses free, Yannic Kilcher, free deep learning lectures, free ML lectures, free Stanford ML lectures, free MIT AI lectures, free YouTube data analytics, free generative AI tutorials YouTube",
             "og_url": "/youtube-resources",
             "canonical_url": "/youtube-resources",
             "page_category": "youtube_resources",
@@ -218,7 +330,7 @@ def blogs_page(request: Request):
             "internal_posts": internal_posts,
             "page_title": "AI / ML / Data Science Blog - Guides & Curated Reading - getjob4u",
             "page_description": "Original long-form guides on ATS resumes, cold email referrals, and AI/ML career roadmaps, plus a hand-picked list of the best external AI/ML/Data Science blogs to follow.",
-            "keywords": "AI blog, ML blog, data science blog, ATS resume tips, cold email templates, ML career roadmap",
+            "keywords": "AI blog, ML blog, data science blog, AI ML newsletters, ATS resume tips, cold email referral guide, ML career roadmap guide, best AI blogs to follow 2026, best ML blogs to read, best data science blogs, generative AI blog, LLM blog, MLOps blog, Sebastian Raschka, Lilian Weng, Distill.pub, Towards Data Science, free AI newsletters, AI papers explained, ML paper summaries",
             "og_url": "/blogs",
             "canonical_url": "/blogs",
             "page_category": "blogs",
@@ -268,7 +380,7 @@ def email_generator_page(request: Request):
             "templates": email_generator.available_templates(),
             "page_title": "Cold Email & LinkedIn Message Generator - getjob4u",
             "page_description": "Generate personalized cold emails and LinkedIn DMs for job seekers. Templates for referrals, applications, follow-ups, and networking.",
-            "keywords": "cold email templates, LinkedIn templates, networking messages, job search templates",
+            "keywords": "cold email generator free, LinkedIn message generator, referral request email template, job application email, recruiter outreach email, networking email templates, follow up email after interview, cold email for data science job, cold email for ML engineer job, referral cold email template, free cold email tool, cold DM template LinkedIn, AI cold email generator, cold email examples that work, cold email subject lines",
             "og_url": "/email-generator",
             "canonical_url": "/email-generator",
             "page_category": "email_generator",
@@ -291,7 +403,7 @@ def sample_resumes_page(request: Request):
             "tips": data["general_tips"],
             "page_title": "Sample AI/ML/DS Resumes - Free Resume Templates",
             "page_description": "Download free sample resumes for Data Scientists, ML Engineers, and AI specialists. ATS-optimized templates and best practices.",
-            "keywords": "resume templates, sample resumes, data science resume, ML engineer resume",
+            "keywords": "sample data science resume, sample ML engineer resume, sample AI resume, sample data analyst resume, free resume templates download, ATS friendly resume template, data scientist resume template free, ML resume sample download, resume for data science fresher, AI engineer resume sample, machine learning resume sample, deep learning engineer resume, NLP engineer resume sample, data engineer resume sample, MLOps engineer resume sample, resume PDF download free",
             "og_url": "/sample-resumes",
             "canonical_url": "/sample-resumes",
             "page_category": "sample_resumes",
@@ -313,7 +425,7 @@ def roadmap_page(request: Request):
             "roadmaps": data["roadmaps"],
             "page_title": "AI/ML/DS Career Roadmap - Learning Paths & Milestones",
             "page_description": "Step-by-step career roadmaps for Data Scientists and ML Engineers. Learn skills, milestones, and resources for each level.",
-            "keywords": "career roadmap, learning path, data science skills, machine learning career",
+            "keywords": "data scientist career roadmap, ML engineer roadmap, AI engineer roadmap, data analyst career roadmap, machine learning learning path, data science learning path 2026, how to become data scientist, how to become ML engineer, AI engineer career path, data science fresher roadmap, ML beginner roadmap, MLOps career path, generative AI engineer roadmap, LLM engineer roadmap, data science skills 2026, AI career path with no experience",
             "og_url": "/career-roadmap",
             "canonical_url": "/career-roadmap",
             "page_category": "career_roadmap",
@@ -336,7 +448,7 @@ def python_questions_page(request: Request):
             "categories": data["categories"],
             "page_title": "100 Most Asked Python Coding Interview Questions (FAANG) - getjob4u",
             "page_description": "Top 100 Python coding interview questions asked at FAANG companies — Google, Amazon, Meta, Apple, Microsoft, Netflix. Each with a worked Python solution you can reveal, copy, and study. Free, no signup.",
-            "keywords": "Python coding interview questions, FAANG Python questions, Python LeetCode, Blind 75 Python, NeetCode 150 Python, Google Python interview, Amazon Python interview, Meta Python interview",
+            "keywords": "Python coding interview questions, FAANG Python questions, Python LeetCode questions, Blind 75 Python, NeetCode 150 Python, Google Python interview, Amazon Python interview, Meta Python interview, Microsoft Python interview, Netflix Python interview, Apple Python interview, Python algorithm questions, Python data structure interview, two pointer Python, sliding window Python, dynamic programming Python, recursion Python interview, top 100 Python questions, Python interview practice free, Python coding round, Python DSA questions",
             "og_url": "/python-questions",
             "canonical_url": "/python-questions",
             "page_category": "python_questions",
@@ -356,6 +468,7 @@ def feedback_page(request: Request):
         {
             "page_title": "Share Feedback - getjob4u",
             "page_description": "Help us improve getjob4u. Share your feedback, suggestions, and feature requests.",
+            "keywords": "getjob4u feedback, AI ML toolkit feedback, ATS scanner feedback, suggest a feature, free career tools feedback, contact getjob4u, report a bug, request a feature",
             "og_url": "/feedback",
             "canonical_url": "/feedback",
             "page_category": "feedback",
@@ -378,7 +491,7 @@ def free_ai_tools_page(request: Request):
             "intro": data.get("intro", ""),
             "page_title": "50+ Free AI Tools (Video, PDF, Image, Code, Voice) - getjob4u",
             "page_description": "Hand-picked free AI tools across video generation, PDF tools, image gen, voice, code, presentations and more. All links verified, every tool has a real free tier.",
-            "keywords": "free AI tools, free video generation AI, free PDF AI tools, free image generation, free AI coding tools, free AI voice generator, free chatbot",
+            "keywords": "free AI tools, free AI tools 2026, best free AI tools, free AI video generation, free AI image generation, free AI PDF tools, free AI coding tools, free AI voice generator, free AI chatbot, free ChatGPT alternatives, free AI presentation generator, free AI summarizer, free AI writing tools, free AI design tools, free AI productivity tools, free AI for students, free AI without signup, free AI for resume, free AI logo maker, free AI music generator",
             "og_url": "/free-ai-tools",
             "canonical_url": "/free-ai-tools",
             "page_category": "free_ai_tools",
@@ -401,7 +514,7 @@ def free_courses_page(request: Request):
             "intro": data.get("intro", ""),
             "page_title": "Free AI/ML/Data Science Courses with Certificates - getjob4u",
             "page_description": "Free online courses with certificates in AI, ML, Data Science, Data Analytics, and Generative AI from IBM, Google, Microsoft, Coursera, Udemy, freeCodeCamp, Kaggle, Hugging Face and more.",
-            "keywords": "free AI courses with certificate, free ML courses, free data science certificate, free Udemy courses, free Coursera, IBM Cognitive Class, Great Learning Academy, Simplilearn SkillUp",
+            "keywords": "free AI courses with certificate, free machine learning courses with certificate, free data science courses with certificate, free data analytics certificate, free generative AI courses, free Coursera courses, free Udemy courses, free IBM Cognitive Class, free Google AI courses, free Microsoft Learn, free Kaggle courses, free Hugging Face courses, free LangChain course, free LLM courses, free Python certification, free SQL course free certificate, Great Learning Academy free, Simplilearn SkillUp free, freeCodeCamp data science, free MLOps course, free PyTorch course, free TensorFlow course",
             "og_url": "/free-courses",
             "canonical_url": "/free-courses",
             "page_category": "free_courses",
@@ -421,6 +534,7 @@ def about_page(request: Request):
         {
             "page_title": "About getjob4u - Built solo by Kuldeep Jeengar",
             "page_description": "About getjob4u - a free career toolkit for AI, ML and Data Science job seekers. Built solo by Kuldeep Jeengar to make the AI/ML job hunt fair for everyone.",
+            "keywords": "about getjob4u, Kuldeep Jeengar, indie founder data science, free AI ML toolkit creator, getjob4u story, who built getjob4u, AI career toolkit by Kuldeep Jeengar, solo founder data scientist",
             "og_url": "/about",
             "canonical_url": "/about",
             "page_category": "about",
@@ -443,6 +557,7 @@ def privacy_page(request: Request):
         {
             "page_title": "Privacy Policy — getjob4u",
             "page_description": "How getjob4u collects, uses, and protects your data. Covers Google Analytics, Google AdSense, cookies, your rights under GDPR / CCPA / DPDP, and how to request deletion.",
+            "keywords": "getjob4u privacy policy, data privacy AI tools, GDPR privacy policy, CCPA privacy policy, DPDP India privacy policy, cookie policy, Google Analytics privacy, Google AdSense privacy, data deletion request",
             "canonical_url": "/privacy",
             "og_url": "/privacy",
             "page_category": "privacy",
@@ -463,6 +578,7 @@ def contact_page(request: Request):
         {
             "page_title": "Contact getjob4u",
             "page_description": "Get in touch with getjob4u. Email getjob4u@gmail.com (launching soon), reach out to founder Kuldeep Jeengar on LinkedIn, or use our feedback form.",
+            "keywords": "contact getjob4u, getjob4u email, Kuldeep Jeengar LinkedIn, AI ML toolkit contact, getjob4u support, partnership getjob4u, hire Kuldeep Jeengar",
             "og_url": "/contact",
             "canonical_url": "/contact",
             "page_category": "contact",

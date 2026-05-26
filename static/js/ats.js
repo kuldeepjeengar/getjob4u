@@ -118,8 +118,13 @@
   });
 
   function renderResult(data) {
+    // Belt-and-suspenders: set both the hidden attribute AND an inline display
+    // so stale cached CSS (older builds where `.placeholder { display: flex }`
+    // outranks `[hidden]`) can't keep the box visible.
     placeholder.hidden = true;
+    placeholder.style.display = 'none';
     resultBox.hidden = false;
+    resultBox.style.display = '';
 
     document.getElementById('scoreNum').textContent = Math.round(data.overall_score);
     document.getElementById('scoreGrade').textContent = data.grade;

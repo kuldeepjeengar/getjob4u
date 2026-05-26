@@ -12,7 +12,8 @@
       "PowerShell(d:\\\\getjob4u\\\\.venv\\\\Scripts\\\\python.exe -c \"from jinja2 import Environment, FileSystemLoader; env = Environment\\(loader=FileSystemLoader\\('d:/getjob4u/templates'\\)\\); env.get_template\\('privacy.html'\\); env.get_template\\('base.html'\\); print\\('templates: ok'\\)\")",
       "PowerShell(d:\\\\getjob4u\\\\.venv\\\\Scripts\\\\python.exe -c \"import ast; ast.parse\\(open\\('d:/getjob4u/main.py', encoding='utf-8'\\).read\\(\\)\\); print\\('main.py: ok'\\)\")",
       "Bash(python -c \"import json; d=json.load\\(open\\('data/interview_tips.json','r',encoding='utf-8'\\)\\); print\\('categories:', len\\(d['categories']\\)\\); [print\\(' -', c['title'], '→', len\\(c['tips']\\), 'tips'\\) for c in d['categories']]; print\\('total tips:', sum\\(len\\(c['tips']\\) for c in d['categories']\\)\\); print\\('daily questions:', len\\(d['daily_questions']\\)\\)\")",
-      "Bash(python -c \"import json; d=json.load\\(open\\('data/interview_tips.json','r',encoding='utf-8'\\)\\); print\\('categories:', len\\(d['categories']\\)\\); [print\\(' -', c['title'], ':', len\\(c['tips']\\), 'tips'\\) for c in d['categories']]; print\\('total tips:', sum\\(len\\(c['tips']\\) for c in d['categories']\\)\\); print\\('daily questions:', len\\(d['daily_questions']\\)\\)\")"
+      "Bash(python -c \"import json; d=json.load\\(open\\('data/interview_tips.json','r',encoding='utf-8'\\)\\); print\\('categories:', len\\(d['categories']\\)\\); [print\\(' -', c['title'], ':', len\\(c['tips']\\), 'tips'\\) for c in d['categories']]; print\\('total tips:', sum\\(len\\(c['tips']\\) for c in d['categories']\\)\\); print\\('daily questions:', len\\(d['daily_questions']\\)\\)\")",
+      "Bash(python -c \"import ast; ast.parse\\(open\\('main.py', encoding='utf-8'\\).read\\(\\)\\); print\\('OK'\\)\")"
     ]
   }
 }
