@@ -6,7 +6,11 @@
   <meta name="format-detection" content="telephone=no" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  {% if robots_noindex %}
+  <meta name="robots" content="noindex, nofollow" />
+  {% else %}
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  {% endif %}
   <meta name="author" content="getjob4u" />
   <meta name="keywords" content="{% block keywords %}{{ keywords | default('free ATS resume scanner, ATS resume checker, AI resume scanner, ML resume scanner, data science resume scanner, AI ML DS career toolkit, free interview prep, machine learning interview questions, data science interview questions, AI engineer interview, Python coding interview questions, FAANG interview prep, cold email generator, LinkedIn referral message, data science career roadmap, ML engineer roadmap, free AI courses with certificate, free machine learning courses, free data science courses, getjob4u') }}{% endblock %}" />
   

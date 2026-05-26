@@ -612,6 +612,7 @@ def admin_login_page(request: Request, session_token: str | None = Cookie(defaul
             "canonical_url": "/admin/login",
             "og_url": "/admin/login",
             "page_category": "admin_login",
+            "robots_noindex": True,
             "error": None,
         },
     )
@@ -634,6 +635,7 @@ def admin_login_submit(
                 "canonical_url": "/admin/login",
                 "og_url": "/admin/login",
                 "page_category": "admin_login",
+                "robots_noindex": True,
                 "error": "Invalid name or password.",
             },
             status_code=401,
@@ -691,6 +693,7 @@ def admin_dashboard(
             "canonical_url": "/admin/dashboard",
             "og_url": "/admin/dashboard",
             "page_category": "admin_dashboard",
+            "robots_noindex": True,
             "admin_name": sess["username"],
             "scans": scans,
             "feedback": feedback,
@@ -932,31 +935,14 @@ def sitemap():
 
 @app.get("/blogs-sitemap.xml")
 def blogs_sitemap():
-    """Dedicated blog sitemap for blog entries and resources."""
+    """Dedicated blog sitemap for blog entries and resources.
+    
+    NOTE: Only includes canonical URLs without query parameters.
+    Query params (?category=, ?newsletter=) create alternate page versions
+    that confuse Google's indexing. Use URL params in Search Console instead.
+    """
     today = datetime.utcnow().strftime("%Y-%m-%d")
-    try:
-        blogs_data = _load_json("blogs.json")
-        blog_urls = []
-        
-        # Add main blogs page
-        blog_urls.append(("/blogs", "weekly", "0.90"))
-        
-        # Add individual blog sources/categories if they exist
-        if "categories" in blogs_data:
-            for category in blogs_data.get("categories", []):
-                if "name" in category:
-                    slug = category["name"].lower().replace(" ", "-")
-                    blog_urls.append((f"/blogs?category={slug}", "weekly", "0.80"))
-        
-        # Add newsletter entries if they exist
-        if "newsletters" in blogs_data:
-            for newsletter in blogs_data.get("newsletters", []):
-                if "name" in newsletter:
-                    slug = newsletter["name"].lower().replace(" ", "-")
-                    blog_urls.append((f"/blogs?newsletter={slug}", "weekly", "0.75"))
-        
-    except Exception:
-        blog_urls = [("/blogs", "weekly", "0.90")]
+    blog_urls = [("/blogs", "weekly", "0.90")]
     
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n'
     xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
