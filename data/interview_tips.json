@@ -9,7 +9,9 @@
         {"title": "Use the STAR method", "content": "Situation, Task, Action, Result. Structure every behavioral answer this way. Practice 8-10 stories that cover leadership, conflict, failure, impact."},
         {"title": "Always end with metrics", "content": "Don't just say 'I built a model.' Say 'I built a churn model that reduced false positives by 32%, saving the team 12 hours/week of manual review.'"},
         {"title": "Have 3 questions ready for them", "content": "Ask about the team's hardest current problem, how success is measured in the first 90 days, and what the interviewer enjoys most. Never ask anything Google would tell you."},
-        {"title": "Practice the 60-second intro", "content": "Past → Present → Future. 'I'm an X who did Y, currently doing Z, looking for opportunities to do W.' Rehearse it until it feels natural, not robotic."}
+        {"title": "Practice the 60-second intro", "content": "Past → Present → Future. 'I'm an X who did Y, currently doing Z, looking for opportunities to do W.' Rehearse it until it feels natural, not robotic."},
+        {"title": "Mirror the interviewer's vocabulary", "content": "If they say 'experiment' use 'experiment', not 'A/B test'. If they say 'model' don't switch to 'algorithm'. Subconsciously signals you're already part of the team."},
+        {"title": "Reset after a bad answer", "content": "Don't dwell. Say 'Let me reframe that' or 'Actually, the cleaner answer is...' and move on. Interviewers weigh trajectory over individual misses — recover well and you still pass."}
       ]
     },
     {
@@ -21,7 +23,9 @@
         {"title": "Know your evaluation metrics cold", "content": "Precision, recall, F1, AUC-ROC, AUC-PR. When does each matter? Hint: imbalanced classes → PR-AUC over ROC-AUC. Fraud detection → recall matters more than accuracy."},
         {"title": "Cross-validation pitfalls", "content": "Time series → use TimeSeriesSplit, never random splits. Grouped data (same user multiple rows) → GroupKFold. Leakage from preprocessing on full dataset → always fit on train only."},
         {"title": "Feature engineering > model choice", "content": "A linear model with great features beats XGBoost with bad features. Talk about feature creation, encoding categoricals (target, one-hot, embeddings), handling missing values, and scaling."},
-        {"title": "Why does a tree split that way?", "content": "Gini impurity, entropy, information gain. For regression: variance reduction (MSE). Random Forest = bagging trees on bootstrap samples + random feature subsets per split."}
+        {"title": "Why does a tree split that way?", "content": "Gini impurity, entropy, information gain. For regression: variance reduction (MSE). Random Forest = bagging trees on bootstrap samples + random feature subsets per split."},
+        {"title": "Handling class imbalance", "content": "Don't reflexively reach for SMOTE. Try class weights first, then resampling, then anomaly-detection framing. Always evaluate on the original distribution — resampling the test set lies to you."},
+        {"title": "Calibration matters more than accuracy", "content": "A model with 0.9 confidence should be right 90% of the time. XGBoost and neural nets are often miscalibrated. Use Platt scaling or isotonic regression. Critical for ranking, thresholding, and expected-value decisions."}
       ]
     },
     {
@@ -33,7 +37,9 @@
         {"title": "Transformer architecture from memory", "content": "Self-attention: Q, K, V matrices. Attention(Q,K,V) = softmax(QK^T / sqrt(d_k)) V. Multi-head attention runs N attention layers in parallel. Positional encoding adds order info."},
         {"title": "Regularization techniques", "content": "Dropout (random zeroing), L2 weight decay, early stopping, data augmentation, label smoothing. Know when each helps."},
         {"title": "Optimizer differences", "content": "SGD = stable, slow. Momentum = accelerates in consistent directions. Adam = adaptive learning rate per param, works out of the box. AdamW = Adam with proper weight decay."},
-        {"title": "How would you debug a model that won't learn?", "content": "Check learning rate (too high → exploding loss, too low → no progress), verify data loading, overfit a single batch first, check loss function correctness, inspect gradients."}
+        {"title": "How would you debug a model that won't learn?", "content": "Check learning rate (too high → exploding loss, too low → no progress), verify data loading, overfit a single batch first, check loss function correctness, inspect gradients."},
+        {"title": "Batch size effects", "content": "Larger batch = more stable gradients, more parallelism, but worse generalization (sharp minima). Smaller batch = noisier, better generalization. Scale learning rate linearly with batch size as a starting heuristic."},
+        {"title": "Why use mixed precision (FP16/BF16)?", "content": "2x speedup and ~50% memory reduction on modern GPUs. FP16 needs loss scaling to avoid underflow; BF16 has the same range as FP32 so it just works. Default to BF16 on A100/H100."}
       ]
     },
     {
@@ -45,7 +51,9 @@
         {"title": "Why does my LLM hallucinate?", "content": "Out-of-distribution queries, weak retrieval (irrelevant chunks), context exceeding model attention, low-temperature decoding masking the issue. Solutions: better retrieval, citations, confidence scoring, function calling."},
         {"title": "Prompt engineering basics", "content": "Few-shot examples, chain-of-thought ('think step by step'), output format constraints (JSON schema), role assignment, delimiters. Know the difference between prompt and system prompt."},
         {"title": "Vector DB selection", "content": "Pinecone (managed, easy), Chroma (open-source, local), Weaviate (hybrid search), pgvector (use Postgres you already have). Compare on cost, latency, hybrid search support."},
-        {"title": "Evaluating LLM applications", "content": "BLEU/ROUGE are weak for open generation. Use LLM-as-judge, human eval rubrics, faithfulness/groundedness for RAG, retrieval recall@k. Trace + log every call (LangSmith, Helicone)."}
+        {"title": "Evaluating LLM applications", "content": "BLEU/ROUGE are weak for open generation. Use LLM-as-judge, human eval rubrics, faithfulness/groundedness for RAG, retrieval recall@k. Trace + log every call (LangSmith, Helicone)."},
+        {"title": "Token economics", "content": "Know the cost per 1M tokens for the model you're using. Cache repeated prompts (Anthropic prompt caching, OpenAI cached input), use smaller models for routing/classification, reserve the big model for hard reasoning. Streaming hides latency, not cost."},
+        {"title": "Agents — when not to use them", "content": "Agents add latency, cost, and failure modes. If the workflow is deterministic, just chain calls. Reach for agents when the path branches based on intermediate output. Always bound recursion and tool-call count."}
       ]
     },
     {
@@ -57,7 +65,9 @@
         {"title": "A/B testing in practice", "content": "Power analysis BEFORE the test (sample size, MDE). Watch for peeking (early stopping inflates false positives). Use CUPED for variance reduction. Two-tailed by default. Bonferroni if testing multiple metrics."},
         {"title": "Central Limit Theorem", "content": "Sampling distribution of the mean approaches normal as n grows, regardless of underlying distribution. Why we can use t-tests on non-normal data with large samples."},
         {"title": "Bayesian vs frequentist", "content": "Frequentist: 'p-value < 0.05'. Bayesian: 'posterior probability the effect is positive is 96%'. Bayesian is more interpretable for stakeholders and handles peeking better."},
-        {"title": "Confidence intervals", "content": "A 95% CI means 95% of intervals constructed this way contain the true parameter. It does NOT mean 'the parameter is in this interval with 95% probability' — that's the Bayesian credible interval."}
+        {"title": "Confidence intervals", "content": "A 95% CI means 95% of intervals constructed this way contain the true parameter. It does NOT mean 'the parameter is in this interval with 95% probability' — that's the Bayesian credible interval."},
+        {"title": "Simpson's paradox", "content": "An effect that appears in groups can reverse when groups are combined (or vice versa). Always check whether your aggregate metric hides subgroup heterogeneity. Classic example: UC Berkeley admissions case."},
+        {"title": "Correlation pitfalls", "content": "Pearson catches linear, Spearman catches monotonic, mutual information catches anything. A correlation of 0 doesn't mean independence (e.g., y = x²). Always plot your data — Anscombe's quartet is the canonical warning."}
       ]
     },
     {
@@ -69,7 +79,9 @@
         {"title": "Self joins for finding duplicates / relationships", "content": "Find users who referred others, find rows where col_a = col_b but ids differ. SELECT a.id, b.id FROM t a JOIN t b ON a.email = b.email AND a.id < b.id."},
         {"title": "EXPLAIN your query", "content": "When asked 'is this efficient?', talk about indexes, full scans vs index seeks, hash joins vs nested loops. Adding LIMIT doesn't help if there's a sort first."},
         {"title": "Python: don't reinvent the wheel", "content": "Counter, defaultdict, itertools.groupby, bisect, heapq. Interviewers love when you reach for the right tool. Use list comprehensions for clarity, generators for memory."},
-        {"title": "Talk while coding", "content": "Narrate your thinking. 'I'll start with brute force, then optimize.' Walk through an example before coding. Ask about constraints (input size, edge cases). Don't go silent."}
+        {"title": "Talk while coding", "content": "Narrate your thinking. 'I'll start with brute force, then optimize.' Walk through an example before coding. Ask about constraints (input size, edge cases). Don't go silent."},
+        {"title": "CTEs over nested subqueries", "content": "WITH clauses are readable, debuggable, and most modern optimizers handle them as well as subqueries. Chain them to express multi-step logic. Bonus: easy to test each CTE in isolation."},
+        {"title": "Big-O is necessary, not sufficient", "content": "O(n) with cache misses can lose to O(n log n) that fits in L2. Mention constants and memory access patterns when relevant. For ML interviews: vectorized NumPy beats a pure-Python loop even at the same asymptotic complexity."}
       ]
     },
     {
@@ -81,7 +93,9 @@
         {"title": "Conflict with a colleague", "content": "Frame it as collaborative problem-solving, not 'I was right'. Show you listened, sought to understand, found a path forward, and maintained the relationship."},
         {"title": "Why are you leaving your current job?", "content": "Pull toward something new, not push away from something bad. 'I'm looking for more X' beats 'My current manager is Y'. Never trash-talk previous employers."},
         {"title": "Where do you see yourself in 5 years?", "content": "Show ambition tied to the company's growth, not a different industry. Tech lead, IC depth, founding a team — pick one and back it with what you'd need to learn."},
-        {"title": "Salary negotiation", "content": "Never give a number first. Say 'I'd like to focus on the role first; I'm sure we can align on compensation when we get there.' When pressed, give a range with the low end above your real floor."}
+        {"title": "Salary negotiation", "content": "Never give a number first. Say 'I'd like to focus on the role first; I'm sure we can align on compensation when we get there.' When pressed, give a range with the low end above your real floor."},
+        {"title": "Disagree with your manager — give a real example", "content": "Interviewers want to see you can push back constructively, not that you always agree. Walk through how you stated your case, what data you brought, how you escalated (or yielded), and what the outcome taught you."},
+        {"title": "Project you're most proud of", "content": "Pick one with quantifiable impact AND personal ownership (not 'my team did X'). Be ready for follow-ups: what tradeoffs you made, what you'd redo, what was the hardest part. Generic answers signal you weren't really driving it."}
       ]
     }
   ],
@@ -95,6 +109,11 @@
     "Explain LoRA fine-tuning and why it's so much cheaper than full fine-tuning.",
     "Your batch normalization layer is hurting performance at inference. Why?",
     "How do you handle class imbalance? Name three approaches.",
-    "What's the difference between bagging and boosting, and when does each shine?"
+    "What's the difference between bagging and boosting, and when does each shine?",
+    "Your RAG system returns the right documents but the LLM still hallucinates. What do you check first?",
+    "Why is dropout disabled at inference time?",
+    "When would you pick a linear model over XGBoost in production?",
+    "How would you detect data drift in a deployed model — without ground truth labels?",
+    "Explain the difference between encoder-only, decoder-only, and encoder-decoder transformers with one example each."
   ]
 }

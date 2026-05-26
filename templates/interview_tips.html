@@ -4,7 +4,7 @@
 {% block content %}
 <section class="page-hero">
   <div class="container">
-    <span class="pill">Curated · 35+ tips · AI/ML/DS specific</span>
+    <span class="pill">Curated · 49+ tips · AI/ML/DS specific</span>
     <h1>Interview Tips & Tricks</h1>
     <p class="lead">Battle-tested guidance across ML, deep learning, LLMs, statistics, SQL, and behavioral rounds.</p>
   </div>
@@ -43,7 +43,7 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    {% for cat in categories %}{% for tip in cat.tips[:3] %}
+    {% for cat in categories %}{% set cat_loop = loop %}{% for tip in cat.tips[:3] %}
     {
       "@type": "Question",
       "name": {{ tip.title | tojson }},
@@ -51,7 +51,7 @@
         "@type": "Answer",
         "text": {{ tip.content | tojson }}
       }
-    }{% if not (loop.last and loop.parent.last) %},{% endif %}
+    }{% if not (loop.last and cat_loop.last) %},{% endif %}
     {% endfor %}{% endfor %}
   ]
 }
@@ -63,7 +63,7 @@
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "AI / ML / Data Science Interview Tips — 35+ Curated Questions",
+  "headline": "AI / ML / Data Science Interview Tips — 49+ Curated Questions",
   "description": "Battle-tested interview guidance across ML, deep learning, LLMs, statistics, SQL, and behavioral rounds for AI / ML / Data Science roles.",
   "author": { "@type": "Person", "name": "Kuldeep Jeengar", "url": "https://www.linkedin.com/in/kuldeep-jeengar/" },
   "publisher": {
