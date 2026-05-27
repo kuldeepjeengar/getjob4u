@@ -13,7 +13,17 @@
       "PowerShell(d:\\\\getjob4u\\\\.venv\\\\Scripts\\\\python.exe -c \"import ast; ast.parse\\(open\\('d:/getjob4u/main.py', encoding='utf-8'\\).read\\(\\)\\); print\\('main.py: ok'\\)\")",
       "Bash(python -c \"import json; d=json.load\\(open\\('data/interview_tips.json','r',encoding='utf-8'\\)\\); print\\('categories:', len\\(d['categories']\\)\\); [print\\(' -', c['title'], '→', len\\(c['tips']\\), 'tips'\\) for c in d['categories']]; print\\('total tips:', sum\\(len\\(c['tips']\\) for c in d['categories']\\)\\); print\\('daily questions:', len\\(d['daily_questions']\\)\\)\")",
       "Bash(python -c \"import json; d=json.load\\(open\\('data/interview_tips.json','r',encoding='utf-8'\\)\\); print\\('categories:', len\\(d['categories']\\)\\); [print\\(' -', c['title'], ':', len\\(c['tips']\\), 'tips'\\) for c in d['categories']]; print\\('total tips:', sum\\(len\\(c['tips']\\) for c in d['categories']\\)\\); print\\('daily questions:', len\\(d['daily_questions']\\)\\)\")",
-      "Bash(python -c \"import ast; ast.parse\\(open\\('main.py', encoding='utf-8'\\).read\\(\\)\\); print\\('OK'\\)\")"
+      "Bash(python -c \"import ast; ast.parse\\(open\\('main.py', encoding='utf-8'\\).read\\(\\)\\); print\\('OK'\\)\")",
+      "Bash(dir d:\\\\getjob4u)",
+      "Bash(python -c \"import json; d = json.load\\(open\\('data/python_questions.json', encoding='utf-8'\\)\\); print\\('coding:', len\\(d['questions']\\), 'theory:', len\\(d['theory_questions']\\), 'coding cats:', len\\(d['categories']\\), 'theory cats:', len\\(d['theory_categories']\\)\\)\")",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(.venv/Scripts/python.exe _build_theory.py)",
+      "Bash(.venv/Scripts/python.exe -c ' *)",
+      "Bash(.venv/Scripts/python.exe -m uvicorn main:app --port 8765 --no-access-log)",
+      "Bash(.venv/Scripts/python.exe -m uvicorn main:app --port 8767 --no-access-log)",
+      "Bash(.venv/Scripts/python.exe -m uvicorn main:app --port 8768 --no-access-log)",
+      "Bash(.venv/Scripts/python.exe -m uvicorn main:app --port 8771 --no-access-log)",
+      "Bash(.venv/Scripts/python.exe -m uvicorn main:app --port 8772 --no-access-log)"
     ]
   }
 }

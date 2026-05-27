@@ -1,98 +1,223 @@
 {% extends "base.html" %}
-{% block title %}100 Most Asked Python Coding Interview Questions (FAANG) — getjob4u{% endblock %}
+{% block title %}{{ (questions | length) + (theory_questions | length) }} Python Interview Questions — Coding + Theory (FAANG) — getjob4u{% endblock %}
 
 {% block content %}
 <section class="page-hero">
   <div class="container">
-    <span class="pill">100 questions · FAANG curated · With solutions</span>
-    <h1>Top 100 Python Coding Interview Questions</h1>
-    <p class="lead">The most-asked Python interview problems at Google, Amazon, Meta, Apple, Microsoft, and Netflix — mapped against the canonical <a href="https://neetcode.io/practice/practice/blind75" rel="noopener" target="_blank" data-gtag="external_link" data-gtag-label="blind 75">Blind 75</a> / <a href="https://neetcode.io/practice/practice/neetcode150" rel="noopener" target="_blank" data-gtag="external_link" data-gtag-label="neetcode 150">NeetCode 150</a> + the <a href="https://github.com/ombharatiya/FAANG-Coding-Interview-Questions" rel="noopener" target="_blank" data-gtag="external_link" data-gtag-label="faang repo">FAANG-Coding-Interview-Questions</a> repo. Click <em>Show solution</em> on any card for the Python answer.</p>
+    <span class="pill">{{ questions | length }} coding · {{ theory_questions | length }} theory · FAANG curated</span>
+    <h1>Python Interview Questions — Coding &amp; Theory</h1>
+    <p class="lead">The most-asked Python interview content at Google, Amazon, Meta, Apple, Microsoft, and Netflix — {{ questions | length }} coding problems mapped against the canonical <a href="https://neetcode.io/practice/practice/blind75" rel="noopener" target="_blank" data-gtag="external_link" data-gtag-label="blind 75">Blind 75</a> / <a href="https://neetcode.io/practice/practice/neetcode150" rel="noopener" target="_blank" data-gtag="external_link" data-gtag-label="neetcode 150">NeetCode 150</a>, plus {{ theory_questions | length }} theory questions covering Python internals, OOP, decorators, generators, the GIL, async, exceptions, modules, and the standard library.</p>
 
     <div class="pyq-stats">
-      <div><strong>{{ questions | length }}</strong><span>Total</span></div>
-      <div><strong>{{ questions | selectattr('difficulty', 'equalto', 'Easy') | list | length }}</strong><span>Easy</span></div>
-      <div><strong>{{ questions | selectattr('difficulty', 'equalto', 'Medium') | list | length }}</strong><span>Medium</span></div>
-      <div><strong>{{ questions | selectattr('difficulty', 'equalto', 'Hard') | list | length }}</strong><span>Hard</span></div>
-      <div><strong>{{ categories | length }}</strong><span>Patterns</span></div>
+      <div><strong>{{ questions | length }}</strong><span>Coding</span></div>
+      <div><strong>{{ theory_questions | length }}</strong><span>Theory</span></div>
+      <div><strong>{{ (questions | selectattr('difficulty', 'equalto', 'Easy') | list | length) + (theory_questions | selectattr('difficulty', 'equalto', 'Easy') | list | length) }}</strong><span>Easy</span></div>
+      <div><strong>{{ (questions | selectattr('difficulty', 'equalto', 'Medium') | list | length) + (theory_questions | selectattr('difficulty', 'equalto', 'Medium') | list | length) }}</strong><span>Medium</span></div>
+      <div><strong>{{ (questions | selectattr('difficulty', 'equalto', 'Hard') | list | length) + (theory_questions | selectattr('difficulty', 'equalto', 'Hard') | list | length) }}</strong><span>Hard</span></div>
     </div>
   </div>
 </section>
 
 <section class="container pyq-page">
-  <!-- Filter / search bar -->
-  <div class="pyq-filters card">
-    <div class="pyq-filter-group">
-      <span class="pyq-filter-label">Difficulty</span>
-      <div class="filter-chips" data-filter="difficulty">
-        <button type="button" class="filter-chip is-active" data-value="all" data-gtag="pyq_filter" data-gtag-label="all-difficulty">All</button>
-        <button type="button" class="filter-chip" data-value="Easy"   data-gtag="pyq_filter" data-gtag-label="Easy">Easy</button>
-        <button type="button" class="filter-chip" data-value="Medium" data-gtag="pyq_filter" data-gtag-label="Medium">Medium</button>
-        <button type="button" class="filter-chip" data-value="Hard"   data-gtag="pyq_filter" data-gtag-label="Hard">Hard</button>
+  <!-- Tab toggle: Coding vs Theory -->
+  <div class="pyq-tabs" role="tablist" aria-label="Question type">
+    <button type="button" class="pyq-tab is-active" role="tab" aria-selected="true"
+            data-tab="coding" data-gtag="pyq_tab" data-gtag-label="coding">
+      <span class="pyq-tab-icon">⚡</span>
+      Coding Questions
+      <span class="pyq-tab-count">{{ questions | length }}</span>
+    </button>
+    <button type="button" class="pyq-tab" role="tab" aria-selected="false"
+            data-tab="theory" data-gtag="pyq_tab" data-gtag-label="theory">
+      <span class="pyq-tab-icon">📘</span>
+      Theory Questions
+      <span class="pyq-tab-count">{{ theory_questions | length }}</span>
+    </button>
+  </div>
+
+  <!-- =========================================================== -->
+  <!-- CODING PANEL                                                  -->
+  <!-- =========================================================== -->
+  <div class="pyq-panel is-active" data-panel="coding" role="tabpanel">
+    <div class="pyq-filters card">
+      <div class="pyq-filter-group">
+        <span class="pyq-filter-label">Difficulty</span>
+        <div class="filter-chips" data-filter="difficulty" data-scope="coding">
+          <button type="button" class="filter-chip is-active" data-value="all" data-gtag="pyq_filter" data-gtag-label="all-difficulty">All</button>
+          <button type="button" class="filter-chip" data-value="Easy"   data-gtag="pyq_filter" data-gtag-label="Easy">Easy</button>
+          <button type="button" class="filter-chip" data-value="Medium" data-gtag="pyq_filter" data-gtag-label="Medium">Medium</button>
+          <button type="button" class="filter-chip" data-value="Hard"   data-gtag="pyq_filter" data-gtag-label="Hard">Hard</button>
+        </div>
+      </div>
+
+      <div class="pyq-filter-group">
+        <span class="pyq-filter-label">Pattern</span>
+        <div class="filter-chips" data-filter="category" data-scope="coding">
+          <button type="button" class="filter-chip is-active" data-value="all" data-gtag="pyq_filter" data-gtag-label="all-pattern">All</button>
+          {% for cat in categories %}
+          <button type="button" class="filter-chip" data-value="{{ cat }}" data-gtag="pyq_filter" data-gtag-label="{{ cat }}">{{ cat }}</button>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="pyq-search-wrap">
+        <input type="search" class="pyq-search" id="pyqSearch" placeholder="Search by title, pattern, or company…" aria-label="Search Python coding questions" />
+        <span class="pyq-count" id="pyqCount">{{ questions | length }} questions</span>
       </div>
     </div>
 
-    <div class="pyq-filter-group">
-      <span class="pyq-filter-label">Pattern</span>
-      <div class="filter-chips" data-filter="category">
-        <button type="button" class="filter-chip is-active" data-value="all" data-gtag="pyq_filter" data-gtag-label="all-pattern">All</button>
-        {% for cat in categories %}
-        <button type="button" class="filter-chip" data-value="{{ cat }}" data-gtag="pyq_filter" data-gtag-label="{{ cat }}">{{ cat }}</button>
-        {% endfor %}
-      </div>
-    </div>
+    <!-- Coding question cards -->
+    <ol class="pyq-list" id="pyqList">
+      {% for q in questions %}
+      <li class="pyq-card"
+          data-difficulty="{{ q.difficulty }}"
+          data-category="{{ q.category }}"
+          data-search="{{ q.title | lower }} {{ q.category | lower }} {{ q.companies | join(' ') | lower }}">
+        <div class="pyq-head">
+          <span class="pyq-num">#{{ q.id }}</span>
+          <h3 class="pyq-title">{{ q.title }}</h3>
+          <span class="pyq-diff pyq-diff-{{ q.difficulty | lower }}">{{ q.difficulty }}</span>
+        </div>
+        <div class="pyq-meta">
+          <span class="pyq-cat">{{ q.category }}</span>
+          <span class="pyq-companies">
+            {% for c in q.companies %}<span class="pyq-co">{{ c }}</span>{% endfor %}
+          </span>
+        </div>
+        <p class="pyq-approach"><strong>Approach:</strong> {{ q.approach }}</p>
 
-    <div class="pyq-search-wrap">
-      <input type="search" class="pyq-search" id="pyqSearch" placeholder="Search by title, pattern, or company…" aria-label="Search Python questions" />
-      <span class="pyq-count" id="pyqCount">{{ questions | length }} questions</span>
+        <details class="pyq-reveal">
+          <summary class="pyq-reveal-btn" data-gtag="solution_reveal" data-gtag-label="{{ q.title }}">
+            <span class="pyq-reveal-show">▼ Show solution</span>
+            <span class="pyq-reveal-hide">▲ Hide solution</span>
+          </summary>
+          <div class="pyq-solution">
+            <div class="pyq-code-head">
+              <span class="pyq-code-lang">python</span>
+              <div class="pyq-code-actions">
+                <button type="button" class="pyq-run-btn" data-gtag="solution_run" data-gtag-label="{{ q.title }}">
+                  <span class="pyq-run-icon">▶</span>
+                  <span class="pyq-run-text">Run</span>
+                </button>
+                <button type="button" class="pyq-copy-btn" data-gtag="solution_copy" data-gtag-label="{{ q.title }}">Copy</button>
+              </div>
+            </div>
+            <pre class="pyq-code"><code>{{ q.code }}</code></pre>
+            <div class="pyq-run-panel" hidden>
+              <div class="pyq-run-head">
+                <span class="pyq-run-label">Output</span>
+                <span class="pyq-run-status">Idle</span>
+                <button type="button" class="pyq-run-close" aria-label="Close output">✕</button>
+              </div>
+              <pre class="pyq-run-output" aria-live="polite"></pre>
+            </div>
+            <div class="pyq-complexity">⏱ {{ q.complexity }}</div>
+            {% if q.url %}
+            <a class="pyq-leetcode" href="{{ q.url }}" target="_blank" rel="noopener"
+               data-gtag="leetcode_link" data-gtag-label="{{ q.title }}">
+              Open on LeetCode ↗
+            </a>
+            {% endif %}
+          </div>
+        </details>
+      </li>
+      {% endfor %}
+    </ol>
+
+    <div class="pyq-empty" id="pyqEmpty" hidden>
+      <p>No coding questions match those filters. Try clearing the search or changing difficulty.</p>
     </div>
   </div>
 
-  <!-- Question cards -->
-  <ol class="pyq-list" id="pyqList">
-    {% for q in questions %}
-    <li class="pyq-card"
-        data-difficulty="{{ q.difficulty }}"
-        data-category="{{ q.category }}"
-        data-search="{{ q.title | lower }} {{ q.category | lower }} {{ q.companies | join(' ') | lower }}">
-      <div class="pyq-head">
-        <span class="pyq-num">#{{ q.id }}</span>
-        <h3 class="pyq-title">{{ q.title }}</h3>
-        <span class="pyq-diff pyq-diff-{{ q.difficulty | lower }}">{{ q.difficulty }}</span>
+  <!-- =========================================================== -->
+  <!-- THEORY PANEL                                                  -->
+  <!-- =========================================================== -->
+  <div class="pyq-panel" data-panel="theory" role="tabpanel" hidden>
+    <div class="pyq-filters card">
+      <div class="pyq-filter-group">
+        <span class="pyq-filter-label">Difficulty</span>
+        <div class="filter-chips" data-filter="difficulty" data-scope="theory">
+          <button type="button" class="filter-chip is-active" data-value="all" data-gtag="pyq_filter" data-gtag-label="all-difficulty-theory">All</button>
+          <button type="button" class="filter-chip" data-value="Easy"   data-gtag="pyq_filter" data-gtag-label="theory-Easy">Easy</button>
+          <button type="button" class="filter-chip" data-value="Medium" data-gtag="pyq_filter" data-gtag-label="theory-Medium">Medium</button>
+          <button type="button" class="filter-chip" data-value="Hard"   data-gtag="pyq_filter" data-gtag-label="theory-Hard">Hard</button>
+        </div>
       </div>
-      <div class="pyq-meta">
-        <span class="pyq-cat">{{ q.category }}</span>
-        <span class="pyq-companies">
-          {% for c in q.companies %}<span class="pyq-co">{{ c }}</span>{% endfor %}
-        </span>
-      </div>
-      <p class="pyq-approach"><strong>Approach:</strong> {{ q.approach }}</p>
 
-      <details class="pyq-reveal">
-        <summary class="pyq-reveal-btn" data-gtag="solution_reveal" data-gtag-label="{{ q.title }}">
-          <span class="pyq-reveal-show">▼ Show solution</span>
-          <span class="pyq-reveal-hide">▲ Hide solution</span>
-        </summary>
-        <div class="pyq-solution">
-          <div class="pyq-code-head">
-            <span class="pyq-code-lang">python</span>
-            <button type="button" class="pyq-copy-btn" data-gtag="solution_copy" data-gtag-label="{{ q.title }}">Copy</button>
-          </div>
-          <pre class="pyq-code"><code>{{ q.code }}</code></pre>
-          <div class="pyq-complexity">⏱ {{ q.complexity }}</div>
-          {% if q.url %}
-          <a class="pyq-leetcode" href="{{ q.url }}" target="_blank" rel="noopener"
-             data-gtag="leetcode_link" data-gtag-label="{{ q.title }}">
-            Open on LeetCode ↗
-          </a>
+      <div class="pyq-filter-group">
+        <span class="pyq-filter-label">Topic</span>
+        <div class="filter-chips" data-filter="category" data-scope="theory">
+          <button type="button" class="filter-chip is-active" data-value="all" data-gtag="pyq_filter" data-gtag-label="all-topic">All</button>
+          {% for cat in theory_categories %}
+          <button type="button" class="filter-chip" data-value="{{ cat }}" data-gtag="pyq_filter" data-gtag-label="theory-{{ cat }}">{{ cat }}</button>
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="pyq-search-wrap">
+        <input type="search" class="pyq-search" id="pyqTheorySearch" placeholder="Search by keyword, topic, or question…" aria-label="Search Python theory questions" />
+        <span class="pyq-count" id="pyqTheoryCount">{{ theory_questions | length }} questions</span>
+      </div>
+    </div>
+
+    <!-- Theory question cards -->
+    <ol class="pyq-list" id="pyqTheoryList">
+      {% for t in theory_questions %}
+      <li class="pyq-card pyq-theory-card"
+          data-difficulty="{{ t.difficulty }}"
+          data-category="{{ t.category }}"
+          data-search="{{ t.question | lower }} {{ t.category | lower }} {{ (t.keywords | default([])) | join(' ') | lower }}">
+        <div class="pyq-head">
+          <span class="pyq-num">Q{{ t.id }}</span>
+          <h3 class="pyq-title">{{ t.question }}</h3>
+          <span class="pyq-diff pyq-diff-{{ t.difficulty | lower }}">{{ t.difficulty }}</span>
+        </div>
+        <div class="pyq-meta">
+          <span class="pyq-cat">{{ t.category }}</span>
+          {% if t.keywords %}
+          <span class="pyq-companies">
+            {% for k in t.keywords %}<span class="pyq-co pyq-kw">{{ k }}</span>{% endfor %}
+          </span>
           {% endif %}
         </div>
-      </details>
-    </li>
-    {% endfor %}
-  </ol>
 
-  <div class="pyq-empty" id="pyqEmpty" hidden>
-    <p>No questions match those filters. Try clearing the search or changing difficulty.</p>
+        <details class="pyq-reveal">
+          <summary class="pyq-reveal-btn" data-gtag="theory_reveal" data-gtag-label="{{ t.question }}">
+            <span class="pyq-reveal-show">▼ Show answer</span>
+            <span class="pyq-reveal-hide">▲ Hide answer</span>
+          </summary>
+          <div class="pyq-solution">
+            <p class="pyq-answer">{{ t.answer }}</p>
+            {% if t.code %}
+            <div class="pyq-code-head">
+              <span class="pyq-code-lang">python</span>
+              <div class="pyq-code-actions">
+                <button type="button" class="pyq-run-btn" data-gtag="theory_run" data-gtag-label="{{ t.question }}">
+                  <span class="pyq-run-icon">▶</span>
+                  <span class="pyq-run-text">Run</span>
+                </button>
+                <button type="button" class="pyq-copy-btn" data-gtag="theory_copy" data-gtag-label="{{ t.question }}">Copy</button>
+              </div>
+            </div>
+            <pre class="pyq-code"><code>{{ t.code }}</code></pre>
+            <div class="pyq-run-panel" hidden>
+              <div class="pyq-run-head">
+                <span class="pyq-run-label">Output</span>
+                <span class="pyq-run-status">Idle</span>
+                <button type="button" class="pyq-run-close" aria-label="Close output">✕</button>
+              </div>
+              <pre class="pyq-run-output" aria-live="polite"></pre>
+            </div>
+            {% endif %}
+          </div>
+        </details>
+      </li>
+      {% endfor %}
+    </ol>
+
+    <div class="pyq-empty" id="pyqTheoryEmpty" hidden>
+      <p>No theory questions match those filters. Try clearing the search or changing topic.</p>
+    </div>
   </div>
 </section>
 
@@ -103,8 +228,8 @@
 {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  "name": "100 Most Asked Python Coding Interview Questions (FAANG)",
-  "description": "Curated list of the top 100 Python coding interview questions asked at FAANG companies (Google, Amazon, Meta, Apple, Microsoft, Netflix), each with a worked Python solution.",
+  "name": "{{ questions | length }} Most Asked Python Coding Interview Questions (FAANG)",
+  "description": "Curated list of the top {{ questions | length }} Python coding interview questions asked at FAANG companies (Google, Amazon, Meta, Apple, Microsoft, Netflix), each with a worked Python solution.",
   "numberOfItems": {{ questions | length }},
   "itemListElement": [
     {% for q in questions %}
@@ -124,7 +249,7 @@
 }
 </script>
 
-<!-- AEO: FAQ schema for the category overview -->
+<!-- AEO: FAQ schema — general overview + 50 Python theory questions -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -153,12 +278,21 @@
         "@type": "Answer",
         "text": "If you have under 6 weeks, solve the Blind 75 (covered in this list). If you have 2–3 months, expand to NeetCode 150. The goal is pattern recognition, not problem count — 80–150 well-understood problems beat 400 surface-level solves."
       }
-    }
+    }{% for t in theory_questions %},
+    {
+      "@type": "Question",
+      "name": {{ t.question | tojson }},
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": {{ t.answer | tojson }}
+      }
+    }{% endfor %}
   ]
 }
 </script>
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', path='/js/python_questions.js') }}"></script>
+<script src="{{ url_for('static', path='/js/python_runner.js') }}?v={{ static_v('js/python_runner.js') }}"></script>
+<script src="{{ url_for('static', path='/js/python_questions.js') }}?v={{ static_v('js/python_questions.js') }}"></script>
 {% endblock %}

@@ -87,12 +87,16 @@ p { margin: 0 0 0.8rem; }
   border-radius: 8px;
   font-weight: 800; font-size: 0.8rem;
 }
-.primary-nav { display: flex; gap: 0.4rem; align-items: center; }
-.primary-nav a {
-  padding: 0.5rem 0.9rem; border-radius: 8px; color: var(--text-muted); font-weight: 500; font-size: 0.95rem;
+.primary-nav { display: flex; gap: 0.25rem; align-items: center; }
+.primary-nav > a,
+.nav-group-toggle {
+  padding: 0.5rem 0.85rem; border-radius: 8px;
+  color: var(--text-muted); font-weight: 500; font-size: 0.92rem;
   transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
 }
-.primary-nav a:hover { background: var(--bg-hover); color: var(--text); }
+.primary-nav > a:hover,
+.nav-group-toggle:hover { background: var(--bg-hover); color: var(--text); }
 .nav-cta {
   background: var(--grad);
   color: #0b0f1a !important;
@@ -100,14 +104,95 @@ p { margin: 0 0 0.8rem; }
 }
 .nav-cta:hover { transform: translateY(-1px); }
 
+/* ----- Dropdown groups (desktop) ----- */
+.nav-group { position: relative; }
+.nav-group-toggle {
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  background: transparent; border: none;
+  font-family: inherit; cursor: pointer;
+}
+.nav-caret {
+  font-size: 0.7rem;
+  transition: transform 0.18s ease;
+  opacity: 0.75;
+}
+.nav-group:hover .nav-caret,
+.nav-group.is-open .nav-caret { transform: rotate(180deg); }
+
+.nav-group-menu {
+  position: absolute; top: calc(100% + 4px); left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  min-width: 220px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.4rem;
+  box-shadow: var(--shadow-md);
+  display: flex; flex-direction: column; gap: 0.1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  z-index: 50;
+}
+/* Invisible bridge so the menu doesn't close when cursor crosses the gap */
+.nav-group-menu::before {
+  content: '';
+  position: absolute; left: 0; right: 0; bottom: 100%;
+  height: 8px;
+}
+.nav-group:hover .nav-group-menu,
+.nav-group.is-open .nav-group-menu,
+.nav-group:focus-within .nav-group-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-group-label { display: none; }   /* desktop: hide redundant header */
+.nav-group-menu a {
+  padding: 0.55rem 0.85rem; border-radius: 6px;
+  color: var(--text-muted); font-weight: 500; font-size: 0.92rem;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-group-menu a:hover { background: var(--bg-hover); color: var(--text); }
+
 .nav-toggle { display: none; background: none; border: none; flex-direction: column; gap: 4px; cursor: pointer; padding: 0.5rem; }
 .nav-toggle span { width: 22px; height: 2px; background: var(--text); display: block; border-radius: 2px; }
 
+/* ----- Mobile hamburger menu ----- */
 @media (max-width: 860px) {
   .nav-toggle { display: flex; }
-  .primary-nav { display: none; position: absolute; top: 100%; right: 1rem; flex-direction: column; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.5rem; min-width: 220px; box-shadow: var(--shadow-md); }
+  .primary-nav {
+    display: none; position: absolute; top: 100%; right: 1rem;
+    flex-direction: column; align-items: stretch;
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 0.5rem; min-width: 240px; max-width: calc(100vw - 2rem);
+    box-shadow: var(--shadow-md);
+    gap: 0;
+  }
   .primary-nav.open { display: flex; }
-  .primary-nav a { padding: 0.7rem 1rem; }
+  .primary-nav > a,
+  .nav-group-toggle { padding: 0.7rem 1rem; font-size: 1rem; }
+
+  /* Group toggle becomes a non-button header on mobile; menu always shown */
+  .nav-group { position: static; }
+  .nav-group-toggle { display: none; }      /* hide the caret button */
+  .nav-group-menu {
+    position: static; transform: none;
+    min-width: 0; background: transparent; border: none; padding: 0;
+    box-shadow: none;
+    opacity: 1; pointer-events: auto;
+    display: flex; flex-direction: column;
+    margin: 0.3rem 0 0.5rem;
+  }
+  .nav-group-menu::before { display: none; }
+  .nav-group-label {
+    display: block;
+    padding: 0.6rem 1rem 0.25rem;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em;
+    color: var(--text-dim); text-transform: uppercase;
+  }
+  .nav-group-menu a { padding: 0.65rem 1.2rem; font-size: 0.95rem; }
 }
 
 /* ----- Buttons ----- */
@@ -777,13 +862,74 @@ textarea { resize: vertical; min-height: 100px; }
 /* ============================================================
    Python Coding Questions page
    ============================================================ */
-.pyq-stats {
+.pyq-stats,
+.jp-stats {
   display: flex; gap: 2rem; flex-wrap: wrap;
   margin-top: 1.6rem; padding-top: 1.2rem; border-top: 1px solid var(--border);
 }
-.pyq-stats div { display: flex; flex-direction: column; }
-.pyq-stats strong { font-size: 1.5rem; font-weight: 800; }
-.pyq-stats span { font-size: 0.82rem; color: var(--text-muted); }
+.pyq-stats div,
+.jp-stats div { display: flex; flex-direction: column; }
+.pyq-stats strong,
+.jp-stats strong { font-size: 1.5rem; font-weight: 800; }
+.pyq-stats span,
+.jp-stats span { font-size: 0.82rem; color: var(--text-muted); }
+
+/* ============================================================
+   Job Portals page — sticky category jumpnav + audience labels
+   ============================================================ */
+.jp-page { padding-bottom: 3rem; }
+
+.jp-jumpnav {
+  position: sticky;
+  top: 70px;
+  z-index: 20;
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+  padding: 0.7rem;
+  margin: -0.4rem 0 1.8rem;
+  background: rgba(15, 19, 31, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.jp-jumpnav a {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.4rem 0.85rem;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text-muted);
+  font-size: 0.82rem; font-weight: 600;
+  white-space: nowrap;
+  transition: color 0.15s, background 0.15s, border-color 0.15s, transform 0.12s;
+}
+.jp-jumpnav a:hover {
+  color: var(--text);
+  background: var(--bg-hover);
+  border-color: rgba(124, 92, 255, 0.4);
+  transform: translateY(-1px);
+}
+.jp-jumpnav-icon { font-size: 1rem; line-height: 1; }
+.jp-jumpnav-text { font-size: 0.8rem; }
+
+.jp-audience {
+  margin: 0.15rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.jp-audience::before {
+  content: '◆';
+  color: var(--accent);
+  margin-right: 0.4rem;
+  font-size: 0.7em;
+}
+
+@media (max-width: 720px) {
+  .jp-jumpnav { top: 60px; padding: 0.5rem; }
+  .jp-jumpnav a { padding: 0.35rem 0.7rem; font-size: 0.78rem; }
+  .jp-jumpnav-text { display: none; }   /* icons-only on mobile */
+  .jp-jumpnav-icon { font-size: 1.1rem; }
+}
 
 .pyq-page { padding-bottom: 4rem; }
 
@@ -927,12 +1073,359 @@ textarea { resize: vertical; min-height: 100px; }
   background: var(--bg-card); border: 1px dashed var(--border); border-radius: var(--radius);
 }
 
+/* ----------------------------------------------------------------
+   Coding / Theory tab toggle
+   ---------------------------------------------------------------- */
+.pyq-tabs {
+  display: flex; gap: 0.5rem; flex-wrap: wrap;
+  margin: 0 0 1.4rem;
+  padding: 0.4rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.pyq-tab {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  flex: 1 1 220px;
+  justify-content: center;
+  padding: 0.7rem 1.2rem;
+  background: transparent; border: 1px solid transparent;
+  color: var(--text-muted);
+  font-family: var(--font); font-weight: 700; font-size: 0.95rem;
+  border-radius: calc(var(--radius) - 4px);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.12s;
+}
+.pyq-tab:hover { background: var(--bg-hover); color: var(--text); }
+.pyq-tab.is-active {
+  background: var(--grad); color: #0b0f1a;
+  box-shadow: 0 4px 14px rgba(124, 92, 255, 0.25);
+}
+.pyq-tab-icon { font-size: 1.1rem; line-height: 1; }
+.pyq-tab-count {
+  margin-left: 0.3rem;
+  font-family: var(--mono); font-size: 0.78rem; font-weight: 700;
+  padding: 0.15rem 0.55rem; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  color: inherit;
+}
+.pyq-tab:not(.is-active) .pyq-tab-count {
+  background: var(--bg-soft);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.pyq-panel { display: none; }
+.pyq-panel.is-active { display: block; }
+
+/* ----------------------------------------------------------------
+   Theory card extras
+   ---------------------------------------------------------------- */
+.pyq-theory-card .pyq-num {
+  background: rgba(0, 212, 180, 0.12);
+  color: var(--accent-2);
+  border: 1px solid rgba(0, 212, 180, 0.3);
+}
+.pyq-theory-card .pyq-title {
+  font-size: 1rem; font-weight: 700; line-height: 1.45;
+}
+.pyq-kw {
+  background: rgba(124, 92, 255, 0.08) !important;
+  color: var(--accent) !important;
+  border-color: rgba(124, 92, 255, 0.25) !important;
+  font-family: var(--mono);
+  font-size: 0.7rem !important;
+}
+.pyq-answer {
+  color: var(--text);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin: 0 0 0.9rem;
+  padding: 0.9rem 1.1rem;
+  background: rgba(0, 212, 180, 0.05);
+  border-left: 3px solid var(--accent-2);
+  border-radius: var(--radius-sm);
+}
+
 @media (max-width: 720px) {
   .pyq-head { gap: 0.5rem; }
   .pyq-title { font-size: 1rem; }
   .pyq-code { font-size: 0.76rem; padding: 0.85rem; }
   .pyq-filter-label { min-width: 0; }
   .pyq-search { max-width: none; }
+  .pyq-tab { flex-basis: 100%; }
+  .pyq-answer { padding: 0.75rem 0.9rem; font-size: 0.9rem; }
+}
+
+/* ============================================================
+   Inline Run button + output panel (on coding/theory cards)
+   ============================================================ */
+.pyq-code-actions {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+}
+.pyq-run-btn {
+  display: inline-flex; align-items: center; gap: 0.35rem;
+  padding: 0.25rem 0.7rem;
+  background: rgba(0, 212, 180, 0.14);
+  border: 1px solid rgba(0, 212, 180, 0.45);
+  color: var(--accent-2);
+  border-radius: 6px;
+  font-family: var(--font); font-size: 0.78rem; font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.12s;
+}
+.pyq-run-btn:hover:not(:disabled) {
+  background: rgba(0, 212, 180, 0.22);
+  border-color: var(--accent-2);
+  transform: translateY(-1px);
+}
+.pyq-run-btn:disabled { opacity: 0.6; cursor: progress; }
+.pyq-run-btn.is-running .pyq-run-icon { display: inline-block; animation: pyq-spin 0.8s linear infinite; }
+.pyq-run-icon { display: inline-block; font-size: 0.75rem; line-height: 1; }
+@keyframes pyq-spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* The textarea that CodeMirror replaces — invisible by default;
+   CodeMirror itself supplies the visible editor surface. */
+.pyq-run-editor {
+  width: 100%;
+  min-height: 200px;
+  background: #0a0d18;
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  padding: 0.9rem 1.1rem;
+  color: #e6e9f2;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  line-height: 1.65;
+  tab-size: 4;
+  resize: vertical;
+}
+/* CodeMirror's own .CodeMirror element overrides this once it attaches. */
+.pyq-solution .CodeMirror,
+.playground-editor-wrap .CodeMirror {
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  height: auto;
+  min-height: 180px;
+}
+.playground-editor-wrap .CodeMirror {
+  min-height: 360px;
+  border-radius: var(--radius-sm);
+  border-top: 1px solid var(--border);
+}
+.CodeMirror-scroll { min-height: inherit; }
+
+/* Output panel */
+.pyq-run-panel {
+  margin-top: 0.7rem;
+  background: #0a0d18;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.pyq-run-head {
+  display: flex; align-items: center; gap: 0.7rem;
+  padding: 0.45rem 0.9rem;
+  background: rgba(124, 92, 255, 0.08);
+  border-bottom: 1px solid var(--border);
+}
+.pyq-run-label {
+  font-family: var(--mono); font-size: 0.72rem; font-weight: 700;
+  color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em;
+  flex: 0 0 auto;
+}
+.pyq-run-status {
+  font-family: var(--mono); font-size: 0.72rem;
+  color: var(--text-muted);
+  flex: 1; min-width: 0;
+}
+.pyq-run-status.is-busy { color: var(--accent-warn); }
+.pyq-run-status.is-ok   { color: var(--accent-2); }
+.pyq-run-status.is-err  { color: var(--accent-danger); }
+.pyq-run-close {
+  background: transparent; border: 1px solid transparent;
+  color: var(--text-muted); padding: 0.1rem 0.45rem; border-radius: 4px;
+  font-size: 0.85rem; font-family: var(--font); cursor: pointer;
+}
+.pyq-run-close:hover { color: var(--text); background: var(--bg-hover); }
+
+.pyq-run-output {
+  margin: 0; padding: 0.9rem 1.1rem;
+  background: transparent;
+  color: #e6e9f2;
+  font-family: var(--mono); font-size: 0.82rem; line-height: 1.55;
+  max-height: 320px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.pyq-run-output:empty::before {
+  content: '(no output yet — click ▶ Run)';
+  color: var(--text-dim);
+  font-style: italic;
+}
+.pyq-run-output .out-stdout { color: #e6e9f2; }
+.pyq-run-output .out-stderr { color: var(--accent-danger); }
+.pyq-run-output .out-muted  { color: var(--text-dim); font-style: italic; }
+.pyq-run-output .out-sep    { color: var(--border); }
+
+/* ============================================================
+   Standalone /python-playground page
+   ============================================================ */
+.playground-page {
+  padding-bottom: 4rem;
+  display: grid;
+  gap: 1.4rem;
+}
+.playground-card { padding: 0; overflow: hidden; }
+.playground-toolbar {
+  display: flex; align-items: center; gap: 0.8rem;
+  padding: 0.7rem 1rem;
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.playground-toolbar-left,
+.playground-toolbar-right {
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.playground-toolbar-right { margin-left: auto; }
+
+.playground-label {
+  font-family: var(--mono); font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.playground-select {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  font-family: var(--font); font-size: 0.85rem;
+  cursor: pointer;
+}
+.playground-btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-family: var(--font); font-size: 0.82rem; font-weight: 600;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+.playground-btn-ghost:hover {
+  color: var(--text); border-color: rgba(124, 92, 255, 0.4); background: var(--bg-hover);
+}
+
+.playground-btn-run {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  padding: 0.45rem 1.1rem;
+  background: var(--grad);
+  border: none;
+  color: #0b0f1a;
+  border-radius: 8px;
+  font-family: var(--font); font-size: 0.9rem; font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(124, 92, 255, 0.25);
+  transition: transform 0.12s, box-shadow 0.15s;
+}
+.playground-btn-run:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(124, 92, 255, 0.35);
+}
+.playground-btn-run:disabled { opacity: 0.7; cursor: progress; transform: none; }
+.playground-btn-run .run-spinner {
+  display: inline-block; width: 0.9rem; height: 0.9rem;
+  border: 2px solid rgba(11, 15, 26, 0.35);
+  border-top-color: #0b0f1a;
+  border-radius: 50%;
+  animation: pyq-spin 0.7s linear infinite;
+}
+
+.playground-editor-wrap {
+  background: #0a0d18;
+}
+.playground-editor {
+  width: 100%;
+  min-height: 360px;
+  background: transparent;
+  border: none;
+  padding: 1rem 1.2rem;
+  color: #e6e9f2;
+  font-family: var(--mono); font-size: 0.88rem; line-height: 1.6;
+  tab-size: 4;
+  resize: vertical;
+  outline: none;
+}
+.playground-output-wrap {
+  border-top: 1px solid var(--border);
+  background: #0a0d18;
+}
+.playground-output-head {
+  display: flex; align-items: center; gap: 0.7rem;
+  padding: 0.5rem 1rem;
+  background: rgba(124, 92, 255, 0.08);
+  border-bottom: 1px solid var(--border);
+}
+.playground-output-label {
+  font-family: var(--mono); font-size: 0.74rem; font-weight: 700;
+  color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em;
+}
+.playground-status {
+  font-family: var(--mono); font-size: 0.74rem; color: var(--text-muted);
+}
+.playground-status.is-busy { color: var(--accent-warn); }
+.playground-status.is-ok   { color: var(--accent-2); }
+.playground-status.is-err  { color: var(--accent-danger); }
+
+.playground-output {
+  margin: 0; padding: 1rem 1.2rem;
+  background: transparent;
+  color: #e6e9f2;
+  font-family: var(--mono); font-size: 0.85rem; line-height: 1.55;
+  min-height: 140px; max-height: 360px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.playground-output:empty::before {
+  content: '▶ Click Run (or press Ctrl+Enter) to execute your code.';
+  color: var(--text-dim);
+  font-style: italic;
+}
+.playground-output .out-stdout { color: #e6e9f2; }
+.playground-output .out-stderr { color: var(--accent-danger); }
+.playground-output .out-muted  { color: var(--text-dim); font-style: italic; }
+.playground-output .out-sep    { color: var(--border); }
+
+.playground-help { padding: 1.4rem 1.6rem; }
+.playground-help h2 { margin-top: 0; font-size: 1.1rem; }
+.playground-tips { margin: 0; padding-left: 1.2rem; line-height: 1.7; color: var(--text); }
+.playground-tips code { font-size: 0.85em; }
+.playground-tips kbd {
+  display: inline-block; padding: 0.1rem 0.4rem;
+  background: var(--bg-soft); border: 1px solid var(--border); border-bottom-width: 2px;
+  border-radius: 4px;
+  font-family: var(--mono); font-size: 0.78em;
+  color: var(--text);
+}
+
+@media (max-width: 720px) {
+  .playground-toolbar { padding: 0.55rem 0.7rem; }
+  .playground-toolbar-right { margin-left: 0; width: 100%; justify-content: flex-end; }
+  .playground-editor { min-height: 280px; font-size: 0.82rem; }
+  .playground-output { font-size: 0.8rem; }
+  .pyq-code-actions { gap: 0.3rem; }
+  .pyq-run-btn { padding: 0.2rem 0.55rem; font-size: 0.72rem; }
 }
 
 /* ============================================================
@@ -1787,9 +2280,6 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   .form-grid, .form-grid.two { grid-template-columns: 1fr; gap: 0; }
   .medium-toggle { grid-template-columns: 1fr 1fr; }
 
-  /* Reduce cockroach swarm density / size — less intrusive on phones */
-  .cockroach { transform: scale(0.7) rotate(var(--angle, 0deg)); }
-  .cockroach-logo-bug { display: none !important; }
 }
 
 /* Small phones (≤ 380px) */

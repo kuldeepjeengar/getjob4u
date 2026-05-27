@@ -97,6 +97,13 @@ PATH_REDIRECTS: dict[str, str] = {
     "/resume": "/sample-resumes",
     "/resumes": "/sample-resumes",
     "/feedbacks": "/feedback",
+    # Job portals shortcuts
+    "/job-portal": "/job-portals",
+    "/jobs": "/job-portals",
+    "/job-sites": "/job-portals",
+    "/job-boards": "/job-portals",
+    "/best-job-portals": "/job-portals",
+    "/remote-jobs": "/job-portals",
     # ATS / scanner shortcuts
     "/ats": "/ats-scanner",
     "/ats-scan": "/ats-scanner",
@@ -446,15 +453,37 @@ def python_questions_page(request: Request):
         {
             "questions": data["questions"],
             "categories": data["categories"],
-            "page_title": "100 Most Asked Python Coding Interview Questions (FAANG) - getjob4u",
-            "page_description": "Top 100 Python coding interview questions asked at FAANG companies — Google, Amazon, Meta, Apple, Microsoft, Netflix. Each with a worked Python solution you can reveal, copy, and study. Free, no signup.",
-            "keywords": "Python coding interview questions, FAANG Python questions, Python LeetCode questions, Blind 75 Python, NeetCode 150 Python, Google Python interview, Amazon Python interview, Meta Python interview, Microsoft Python interview, Netflix Python interview, Apple Python interview, Python algorithm questions, Python data structure interview, two pointer Python, sliding window Python, dynamic programming Python, recursion Python interview, top 100 Python questions, Python interview practice free, Python coding round, Python DSA questions",
+            "theory_questions": data.get("theory_questions", []),
+            "theory_categories": data.get("theory_categories", []),
+            "page_title": f"{len(data['questions']) + len(data.get('theory_questions', []))} Python Interview Questions — Coding + Theory (FAANG) - getjob4u",
+            "page_description": f"{len(data['questions'])} Python coding problems with worked solutions (Blind 75 + NeetCode 150) plus {len(data.get('theory_questions', []))} Python theory questions on OOP, decorators, generators, the GIL, async, exceptions, modules, and the standard library. Curated for FAANG interviews. Free, no signup.",
+            "keywords": "Python interview questions, Python coding interview questions, Python theory interview questions, Python OOP interview, Python decorators interview, Python generators interview, GIL interview question, Python async interview, asyncio interview, Python multithreading interview, dunder methods interview, MRO Python, FAANG Python questions, Python LeetCode questions, Blind 75 Python, NeetCode 150 Python, Google Python interview, Amazon Python interview, Meta Python interview, Microsoft Python interview, Apple Python interview, Python DSA questions, Python interview practice free",
             "og_url": "/python-questions",
             "canonical_url": "/python-questions",
             "page_category": "python_questions",
             "breadcrumbs": [
                 {"name": "Home", "url": "/"},
-                {"name": "Python Coding Questions", "url": "/python-questions"},
+                {"name": "Python Interview Questions", "url": "/python-questions"},
+            ],
+        },
+    )
+
+
+@app.get("/python-playground", response_class=HTMLResponse)
+def python_playground_page(request: Request):
+    return templates.TemplateResponse(
+        request,
+        "python_playground.html",
+        {
+            "page_title": "Python Online Compiler — Run Python in your Browser — getjob4u",
+            "page_description": "Free Python online compiler running fully in your browser via Pyodide (Python 3.12 + standard library — collections, heapq, itertools, functools, re, json). No signup, no server, no rate limits. Great for trying out interview solutions, learning Python, or quick scripting.",
+            "keywords": "python online compiler, python online editor, run python in browser, pyodide playground, free python interpreter, browser python, python webassembly, learn python online, python sandbox, python repl online, online python ide, python coding practice browser",
+            "og_url": "/python-playground",
+            "canonical_url": "/python-playground",
+            "page_category": "python_playground",
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Python Playground", "url": "/python-playground"},
             ],
         },
     )
@@ -475,6 +504,31 @@ def feedback_page(request: Request):
             "breadcrumbs": [
                 {"name": "Home", "url": "/"},
                 {"name": "Feedback", "url": "/feedback"},
+            ],
+        },
+    )
+
+
+@app.get("/job-portals", response_class=HTMLResponse)
+def job_portals_page(request: Request):
+    data = _load_json("job_portals.json")
+    total_portals = sum(len(c.get("portals", [])) for c in data["categories"])
+    return templates.TemplateResponse(
+        request,
+        "job_portals.html",
+        {
+            "categories": data["categories"],
+            "intro": data.get("intro", ""),
+            "total_portals": total_portals,
+            "page_title": f"{total_portals}+ Best Job Portals (India · Global · Remote · Freelance) - getjob4u",
+            "page_description": f"Hand-picked list of {total_portals} job portals where job seekers actually get callbacks — Naukri, LinkedIn, Wellfound, We Work Remotely, Indeed, plus Indian fresher boards, startup boards, country-specific (US/UK/EU/APAC) and freelance marketplaces. Free for job seekers.",
+            "keywords": "best job portals, best job sites india, job portals for freshers, job portals for experienced, remote job portals, work from home job portals, job sites india, job sites global, job sites usa, job sites uk, job sites canada, job sites australia, naukri vs linkedin, internshala alternative, wellfound jobs, we work remotely, remote ok, freelance job sites, upwork alternative, toptal review, startup job boards, faang job portals, tech job sites, women job portals, fresher job sites india, internship portals india, government job portals india",
+            "og_url": "/job-portals",
+            "canonical_url": "/job-portals",
+            "page_category": "job_portals",
+            "breadcrumbs": [
+                {"name": "Home", "url": "/"},
+                {"name": "Job Portals", "url": "/job-portals"},
             ],
         },
     )
@@ -892,8 +946,10 @@ def sitemap():
         ("/",                  "weekly",  "1.00", "index.html"),
         ("/ats-scanner",       "weekly",  "0.95", "ats_scanner.html"),
         ("/python-questions",  "weekly",  "0.95", "python_questions.html"),
+        ("/python-playground", "monthly", "0.85", "python_playground.html"),
         ("/career-roadmap",    "monthly", "0.90", "career_roadmap.html"),
         ("/free-ai-tools",     "weekly",  "0.95", "free_ai_tools.html"),
+        ("/job-portals",       "weekly",  "0.92", "job_portals.html"),
         ("/free-courses",      "weekly",  "0.95", "free_courses.html"),
         ("/interview-tips",    "weekly",  "0.90", "interview_tips.html"),
         ("/email-generator",   "weekly",  "0.90", "email_generator.html"),

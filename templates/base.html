@@ -4,6 +4,11 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="format-detection" content="telephone=no" />
+  <!-- HTML responses must always re-validate so visitors never see a stale
+       page after we ship a content/animation update. Static assets (css/js/img)
+       still cache normally via their ?v= query strings. -->
+  <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   {% if robots_noindex %}
@@ -131,13 +136,15 @@
     "@graph": [
       { "@type": "SiteNavigationElement", "position": 1, "name": "ATS Scanner",   "url": "https://getjob4u.com/ats-scanner" },
       { "@type": "SiteNavigationElement", "position": 2, "name": "Python Questions", "url": "https://getjob4u.com/python-questions" },
-      { "@type": "SiteNavigationElement", "position": 3, "name": "Interview Tips", "url": "https://getjob4u.com/interview-tips" },
-      { "@type": "SiteNavigationElement", "position": 4, "name": "Cold Email Generator", "url": "https://getjob4u.com/email-generator" },
-      { "@type": "SiteNavigationElement", "position": 5, "name": "Career Roadmap",  "url": "https://getjob4u.com/career-roadmap" },
-      { "@type": "SiteNavigationElement", "position": 6, "name": "Free AI Tools",  "url": "https://getjob4u.com/free-ai-tools" },
-      { "@type": "SiteNavigationElement", "position": 7, "name": "Free Courses",   "url": "https://getjob4u.com/free-courses" },
-      { "@type": "SiteNavigationElement", "position": 8, "name": "Sample Resumes", "url": "https://getjob4u.com/sample-resumes" },
-      { "@type": "SiteNavigationElement", "position": 9, "name": "Blogs",          "url": "https://getjob4u.com/blogs" },
+      { "@type": "SiteNavigationElement", "position": 3, "name": "Python Playground", "url": "https://getjob4u.com/python-playground" },
+      { "@type": "SiteNavigationElement", "position": 4, "name": "Interview Tips", "url": "https://getjob4u.com/interview-tips" },
+      { "@type": "SiteNavigationElement", "position": 5, "name": "Cold Email Generator", "url": "https://getjob4u.com/email-generator" },
+      { "@type": "SiteNavigationElement", "position": 6, "name": "Blogs",          "url": "https://getjob4u.com/blogs" },
+      { "@type": "SiteNavigationElement", "position": 7, "name": "Job Portals",    "url": "https://getjob4u.com/job-portals" },
+      { "@type": "SiteNavigationElement", "position": 8, "name": "Career Roadmap", "url": "https://getjob4u.com/career-roadmap" },
+      { "@type": "SiteNavigationElement", "position": 9, "name": "Free AI Tools",  "url": "https://getjob4u.com/free-ai-tools" },
+      { "@type": "SiteNavigationElement", "position": 10, "name": "Free Courses",  "url": "https://getjob4u.com/free-courses" },
+      { "@type": "SiteNavigationElement", "position": 11, "name": "Sample Resumes", "url": "https://getjob4u.com/sample-resumes" },
       { "@type": "SiteNavigationElement", "position": 10, "name": "About",         "url": "https://getjob4u.com/about" },
       { "@type": "SiteNavigationElement", "position": 11, "name": "Contact",       "url": "https://getjob4u.com/contact" }
     ]
@@ -179,14 +186,39 @@
         <span></span><span></span><span></span>
       </button>
       <nav class="primary-nav" id="primaryNav">
-        <a href="/ats-scanner"       data-gtag="nav_click" data-gtag-label="ATS Scanner">ATS Scanner</a>
-        <a href="/python-questions"  data-gtag="nav_click" data-gtag-label="Python Q">Python Q</a>
-        <a href="/interview-tips"    data-gtag="nav_click" data-gtag-label="Interview Tips">Interview Tips</a>
-        <a href="/email-generator"   data-gtag="nav_click" data-gtag-label="Cold Emails">Cold Emails</a>
-        <a href="/career-roadmap"    data-gtag="nav_click" data-gtag-label="Roadmap">Roadmap</a>
-        <a href="/free-ai-tools"     data-gtag="nav_click" data-gtag-label="AI Tools">AI Tools</a>
-        <a href="/free-courses"      data-gtag="nav_click" data-gtag-label="Free Courses">Free Courses</a>
-        <a href="/about"             data-gtag="nav_click" data-gtag-label="About">About</a>
+        <a href="/ats-scanner" data-gtag="nav_click" data-gtag-label="ATS Scanner">ATS Scanner</a>
+
+        <div class="nav-group" data-group="python">
+          <button type="button" class="nav-group-toggle" aria-haspopup="true" aria-expanded="false"
+                  data-gtag="nav_click" data-gtag-label="Python menu">
+            Python <span class="nav-caret" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-group-menu" role="menu">
+            <span class="nav-group-label" aria-hidden="true">Python</span>
+            <a href="/python-questions"  role="menuitem" data-gtag="nav_click" data-gtag-label="Python Questions">100 Interview Questions</a>
+            <a href="/python-playground" role="menuitem" data-gtag="nav_click" data-gtag-label="Python Playground">Online Playground</a>
+          </div>
+        </div>
+
+        <a href="/interview-tips" data-gtag="nav_click" data-gtag-label="Interview Tips">Interview Tips</a>
+        <a href="/email-generator" data-gtag="nav_click" data-gtag-label="Cold Emails">Cold Emails</a>
+        <a href="/blogs" data-gtag="nav_click" data-gtag-label="Blogs">Blogs</a>
+
+        <div class="nav-group" data-group="resources">
+          <button type="button" class="nav-group-toggle" aria-haspopup="true" aria-expanded="false"
+                  data-gtag="nav_click" data-gtag-label="Resources menu">
+            Resources <span class="nav-caret" aria-hidden="true">▾</span>
+          </button>
+          <div class="nav-group-menu" role="menu">
+            <span class="nav-group-label" aria-hidden="true">Resources</span>
+            <a href="/job-portals"    role="menuitem" data-gtag="nav_click" data-gtag-label="Job Portals">Best Job Portals</a>
+            <a href="/career-roadmap" role="menuitem" data-gtag="nav_click" data-gtag-label="Roadmap">Career Roadmap</a>
+            <a href="/free-ai-tools"  role="menuitem" data-gtag="nav_click" data-gtag-label="AI Tools">Free AI Tools</a>
+            <a href="/free-courses"   role="menuitem" data-gtag="nav_click" data-gtag-label="Free Courses">Free Courses</a>
+          </div>
+        </div>
+
+        <a href="/about" data-gtag="nav_click" data-gtag-label="About">About</a>
         <a href="/contact" class="nav-cta" data-gtag="nav_cta_click" data-gtag-label="Contact">Contact</a>
       </nav>
     </div>
@@ -212,10 +244,12 @@
         </div>
         <div>
           <h4>Learn</h4>
-          <a href="/python-questions" data-gtag="footer_click" data-gtag-label="Python Questions">100 Python Questions</a>
+          <a href="/python-questions" data-gtag="footer_click" data-gtag-label="Python Questions">Python Interview Questions</a>
+          <a href="/python-playground" data-gtag="footer_click" data-gtag-label="Python Playground">Python Online Compiler</a>
           <a href="/interview-tips"    data-gtag="footer_click" data-gtag-label="Interview Tips">Interview Tips</a>
           <a href="/blogs"             data-gtag="footer_click" data-gtag-label="Blogs">Blogs</a>
           <a href="/youtube-resources" data-gtag="footer_click" data-gtag-label="YouTube + Courses">YouTube + Courses</a>
+          <a href="/job-portals"       data-gtag="footer_click" data-gtag-label="Job Portals">Best Job Portals</a>
           <a href="/career-roadmap"    data-gtag="footer_click" data-gtag-label="Career Roadmap">Career Roadmap</a>
           <a href="/free-courses"      data-gtag="footer_click" data-gtag-label="Free Courses">Free Certificate Courses</a>
           <a href="/free-ai-tools"     data-gtag="footer_click" data-gtag-label="Free AI Tools">Free AI Tools</a>

@@ -821,69 +821,104 @@
 </script>
 
 <!-- ============================================================== -->
-<!-- Cockroach infestation: swarm on load + one bug near the logo   -->
+<!-- "Hire Hype" — floating success badges drift upward             -->
+<!-- along the edges of the viewport. Pure CSS animation,           -->
+<!-- JS only spawns + cleans up DOM nodes.                          -->
 <!-- ============================================================== -->
-<div class="cockroach-swarm" id="cockroachSwarm" aria-hidden="true"></div>
+<div class="hype-stage" id="hypeStage" aria-hidden="true"></div>
 
 <style>
-  .cockroach-swarm {
+  .hype-stage {
     position: fixed;
     inset: 0;
     overflow: hidden;
     pointer-events: none;
-    z-index: 99998;
+    z-index: 10;
   }
-  .cockroach {
+
+  /* Slim glassmorphic pill — designed to fit inside the empty
+     side-gutter outside the centered content column. */
+  .hype-badge {
     position: absolute;
-    width: 52px;
-    height: 68px;
-    pointer-events: none;
-    transform-origin: center;
-    transform: rotate(var(--angle, 0deg));
-    filter: drop-shadow(0 4px 6px rgba(0,0,0,0.45));
-    will-change: left, top, opacity, transform;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.85rem 0.4rem 0.45rem;
+    max-width: 165px;
+    background: linear-gradient(135deg, rgba(20, 25, 40, 0.88), rgba(15, 18, 30, 0.84));
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    border: 1px solid rgba(124, 92, 255, 0.45);
+    border-radius: 999px;
+    color: #f1f3fb;
+    font-family: var(--font, system-ui, -apple-system, sans-serif);
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    opacity: 0;
+    will-change: transform, opacity;
+    box-shadow:
+      0 10px 28px rgba(124, 92, 255, 0.22),
+      0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+      0 2px 0 0 rgba(255, 255, 255, 0.06) inset;
   }
-  .cockroach-inner {
-    display: block;
-    width: 100%;
-    height: 100%;
-    transform-origin: center;
-    animation: roach-wiggle 0.16s linear infinite;
+  .hype-badge.is-cyan {
+    border-color: rgba(0, 212, 180, 0.5);
+    box-shadow:
+      0 10px 28px rgba(0, 212, 180, 0.22),
+      0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+      0 2px 0 0 rgba(255, 255, 255, 0.06) inset;
   }
-  .cockroach-inner svg {
-    width: 100%;
-    height: 100%;
-    display: block;
-    overflow: visible;
+  .hype-badge .hype-icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px;
+    background: rgba(124, 92, 255, 0.18);
+    border-radius: 50%;
+    font-size: 0.82rem;
+    line-height: 1;
+    flex: 0 0 auto;
   }
-  @keyframes roach-wiggle {
-    0%, 100% { transform: rotate(-5deg) translateY(0); }
-    50%      { transform: rotate(5deg)  translateY(-1.5px); }
+  .hype-badge.is-cyan .hype-icon {
+    background: rgba(0, 212, 180, 0.18);
   }
-  .cockroach-logo-bug {
-    position: absolute;
-    width: 40px;
-    height: 52px;
-    top: 50%;
-    right: -42px;
-    margin-top: -26px;
-    transform: rotate(40deg);
-    pointer-events: none;
-    z-index: 5;
-    filter: drop-shadow(0 3px 4px rgba(0,0,0,0.5));
+  .hype-badge .hype-text {
+    font-size: 0.76rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
-  .cockroach-logo-bug .cockroach-inner {
-    animation: roach-wiggle 0.22s linear infinite, logo-bug-jitter 3s ease-in-out infinite;
+
+  /* Float upward and gently fade in then out */
+  .hype-rise {
+    animation: hype-rise 7s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
   }
-  @keyframes logo-bug-jitter {
-    0%, 100% { translate: 0 0; }
-    20%      { translate: 4px -3px; }
-    40%      { translate: -3px 3px; }
-    60%      { translate: 6px 1px; }
-    80%      { translate: -4px -2px; }
+  @keyframes hype-rise {
+    0%   { opacity: 0; transform: translate3d(0, 40px, 0) scale(0.85); }
+    14%  { opacity: 1; transform: translate3d(0, 0,    0) scale(1);    }
+    86%  { opacity: 1; transform: translate3d(0, -260px, 0) scale(1);  }
+    100% { opacity: 0; transform: translate3d(0, -320px, 0) scale(0.94); }
   }
+
+  /* Gentle glow pulse so the badge feels alive while visible */
+  .hype-rise .hype-icon { animation: hype-icon-pulse 1.8s ease-in-out infinite; }
+  @keyframes hype-icon-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(124, 92, 255, 0.0); }
+    50%      { box-shadow: 0 0 0 6px rgba(124, 92, 255, 0.18); }
+  }
+  .hype-badge.is-cyan .hype-icon { animation-name: hype-icon-pulse-cyan; }
+  @keyframes hype-icon-pulse-cyan {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(0, 212, 180, 0.0); }
+    50%      { box-shadow: 0 0 0 6px rgba(0, 212, 180, 0.18); }
+  }
+
+  /* Mobile: smaller badges, fewer on screen, narrower edges */
+  @media (max-width: 720px) {
+    .hype-badge { padding: 0.45rem 0.85rem 0.45rem 0.65rem; font-size: 0.78rem; }
+    .hype-badge .hype-icon { width: 22px; height: 22px; font-size: 0.85rem; }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .cockroach-swarm, .cockroach-logo-bug { display: none !important; }
+    .hype-stage { display: none !important; }
   }
 </style>
 
@@ -891,169 +926,88 @@
 (function () {
   if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  // {ID} is replaced per-instance so gradient defs don't collide across many SVGs.
-  var ROACH_SVG_TPL = '' +
-    '<svg viewBox="-18 -18 96 116" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-      '<defs>' +
-        '<radialGradient id="body{ID}" cx="38%" cy="32%" r="70%">' +
-          '<stop offset="0%"   stop-color="#9b6532"/>' +
-          '<stop offset="45%"  stop-color="#5a3818"/>' +
-          '<stop offset="100%" stop-color="#1f0f04"/>' +
-        '</radialGradient>' +
-        '<radialGradient id="head{ID}" cx="42%" cy="32%" r="65%">' +
-          '<stop offset="0%"   stop-color="#7a4520"/>' +
-          '<stop offset="100%" stop-color="#1f0f04"/>' +
-        '</radialGradient>' +
-        '<linearGradient id="sheen{ID}" x1="0" y1="0" x2="0" y2="1">' +
-          '<stop offset="0%"   stop-color="#ffe2bf" stop-opacity="0.75"/>' +
-          '<stop offset="100%" stop-color="#ffe2bf" stop-opacity="0"/>' +
-        '</linearGradient>' +
-        '<radialGradient id="eye{ID}" cx="35%" cy="30%" r="70%">' +
-          '<stop offset="0%"   stop-color="#3a2208"/>' +
-          '<stop offset="100%" stop-color="#000"/>' +
-        '</radialGradient>' +
-      '</defs>' +
+  // Short punchy labels so the slim badge stays narrow enough to fit
+  // inside the side-gutter without overlapping the centered content.
+  var BADGES = [
+    { icon: '🎯', text: 'ATS passed',     cyan: false },
+    { icon: '💼', text: 'Hired @ Google', cyan: false },
+    { icon: '⚡', text: 'Code crushed',   cyan: true  },
+    { icon: '🚀', text: 'Cracked it',     cyan: false },
+    { icon: '⭐', text: '95% match',      cyan: true  },
+    { icon: '📈', text: '+40% offer',     cyan: false },
+    { icon: '🤝', text: 'Offer in!',      cyan: true  },
+    { icon: '🎓', text: 'Course done',    cyan: false },
+    { icon: '🔥', text: '1,200 hired',    cyan: false },
+    { icon: '💯', text: '30-day hire',    cyan: true  },
+    { icon: '🏆', text: 'FAANG offer',    cyan: false },
+    { icon: '🧠', text: 'DSA mastered',   cyan: true  },
+    { icon: '✨', text: 'New skill +1',   cyan: true  },
+    { icon: '📨', text: 'Recruiter DM',   cyan: false },
+    { icon: '🎉', text: 'Got an offer!',  cyan: true  }
+  ];
 
-      // Ground shadow blob
-      '<ellipse cx="30" cy="86" rx="22" ry="4.5" fill="#000" opacity="0.22"/>' +
+  // Badges are anchored to the LEFT or RIGHT screen edge — they live
+  // inside the side empty-space, never crossing into the centered content.
+  // Alternate sides for visual balance.
+  var lastSide = 'right';   // so first badge spawns on the left
 
-      // Antennae
-      '<path d="M26 9 Q17 -6 4 -14"  stroke="#1f1206" stroke-width="2"   fill="none" stroke-linecap="round"/>' +
-      '<path d="M34 9 Q43 -6 56 -14" stroke="#1f1206" stroke-width="2"   fill="none" stroke-linecap="round"/>' +
-      // Antenna highlight
-      '<path d="M26 9 Q17 -6 4 -14"  stroke="#7a4520" stroke-width="0.7" fill="none" stroke-linecap="round" opacity="0.8"/>' +
-      '<path d="M34 9 Q43 -6 56 -14" stroke="#7a4520" stroke-width="0.7" fill="none" stroke-linecap="round" opacity="0.8"/>' +
+  function spawnBadge(stage) {
+    var data = BADGES[Math.floor(Math.random() * BADGES.length)];
+    var el = document.createElement('div');
+    el.className = 'hype-badge hype-rise' + (data.cyan ? ' is-cyan' : '');
 
-      // Legs (dark base for depth)
-      '<path d="M15 24 Q3 22 -8 26"  stroke="#1a0d04" stroke-width="3.5" fill="none" stroke-linecap="round"/>' +
-      '<path d="M45 24 Q57 22 68 26" stroke="#1a0d04" stroke-width="3.5" fill="none" stroke-linecap="round"/>' +
-      '<path d="M13 44 Q1 46 -10 54" stroke="#1a0d04" stroke-width="3.5" fill="none" stroke-linecap="round"/>' +
-      '<path d="M47 44 Q59 46 70 54" stroke="#1a0d04" stroke-width="3.5" fill="none" stroke-linecap="round"/>' +
-      '<path d="M17 62 Q6 66 0 78"   stroke="#1a0d04" stroke-width="3.5" fill="none" stroke-linecap="round"/>' +
-      '<path d="M43 62 Q54 66 60 78" stroke="#1a0d04" stroke-width="3.5" fill="none" stroke-linecap="round"/>' +
-      // Leg highlights (thin lighter stroke on top for 3D look)
-      '<path d="M15 24 Q3 22 -8 26"  stroke="#6a4220" stroke-width="1.2" fill="none" stroke-linecap="round"/>' +
-      '<path d="M45 24 Q57 22 68 26" stroke="#6a4220" stroke-width="1.2" fill="none" stroke-linecap="round"/>' +
-      '<path d="M13 44 Q1 46 -10 54" stroke="#6a4220" stroke-width="1.2" fill="none" stroke-linecap="round"/>' +
-      '<path d="M47 44 Q59 46 70 54" stroke="#6a4220" stroke-width="1.2" fill="none" stroke-linecap="round"/>' +
-      '<path d="M17 62 Q6 66 0 78"   stroke="#6a4220" stroke-width="1.2" fill="none" stroke-linecap="round"/>' +
-      '<path d="M43 62 Q54 66 60 78" stroke="#6a4220" stroke-width="1.2" fill="none" stroke-linecap="round"/>' +
+    var icon = document.createElement('span');
+    icon.className = 'hype-icon';
+    icon.textContent = data.icon;
+    var text = document.createElement('span');
+    text.className = 'hype-text';
+    text.textContent = data.text;
+    el.appendChild(icon);
+    el.appendChild(text);
 
-      // Main body with radial-gradient shading
-      '<ellipse cx="30" cy="50" rx="21" ry="33" fill="url(#body{ID})"/>' +
-      // Glossy back sheen
-      '<ellipse cx="22" cy="36" rx="6" ry="20" fill="url(#sheen{ID})"/>' +
-      // Wing centerline
-      '<line x1="30" y1="22" x2="30" y2="76" stroke="#0d0602" stroke-width="1.4" stroke-linecap="round"/>' +
-      // Wing vein detail
-      '<path d="M22 34 Q24 52 22 70" stroke="#1a0d04" stroke-width="0.7" fill="none" opacity="0.55"/>' +
-      '<path d="M38 34 Q36 52 38 70" stroke="#1a0d04" stroke-width="0.7" fill="none" opacity="0.55"/>' +
-      // Pronotum (the "shoulder" plate)
-      '<ellipse cx="30" cy="24" rx="14" ry="6" fill="#3a2410"/>' +
-      '<ellipse cx="27" cy="22" rx="6" ry="2.5" fill="#7a4520" opacity="0.5"/>' +
+    // Alternate sides — left, right, left, right... regardless of screen width.
+    var side = (lastSide === 'left') ? 'right' : 'left';
+    lastSide = side;
 
-      // Head
-      '<ellipse cx="30" cy="13" rx="12" ry="10" fill="url(#head{ID})"/>' +
-      // Head highlight
-      '<ellipse cx="26" cy="9" rx="3.5" ry="2" fill="#a87040" opacity="0.65"/>' +
-      // Eyes with white catch-light for that creepy 3D pop
-      '<circle cx="24" cy="12" r="2.4" fill="url(#eye{ID})"/>' +
-      '<circle cx="36" cy="12" r="2.4" fill="url(#eye{ID})"/>' +
-      '<circle cx="23.3" cy="11.2" r="0.8" fill="#fff" opacity="0.9"/>' +
-      '<circle cx="35.3" cy="11.2" r="0.8" fill="#fff" opacity="0.9"/>' +
-    '</svg>';
-
-  var roachIdCounter = 0;
-  function uniqueRoachSVG() {
-    var id = 'r' + (++roachIdCounter) + Math.floor(Math.random() * 1e6).toString(36);
-    return ROACH_SVG_TPL.replace(/\{ID\}/g, id);
-  }
-
-  function makeRoachEl(scale) {
-    var root = document.createElement('div');
-    root.className = 'cockroach';
-    if (scale && scale !== 1) {
-      root.style.width  = (52 * scale) + 'px';
-      root.style.height = (68 * scale) + 'px';
+    // Small variance from the very edge (12–32 px) so badges don't all
+    // line up on exactly the same vertical column.
+    var edgeInset = 12 + Math.random() * 20;
+    if (side === 'left') {
+      el.style.left = edgeInset + 'px';
+      el.style.right = 'auto';
+    } else {
+      el.style.right = edgeInset + 'px';
+      el.style.left = 'auto';
     }
-    var inner = document.createElement('div');
-    inner.className = 'cockroach-inner';
-    inner.innerHTML = uniqueRoachSVG();
-    root.appendChild(inner);
-    return root;
-  }
 
-  function spawnRoach(swarm) {
-    var w = window.innerWidth, h = window.innerHeight;
-    var side = Math.floor(Math.random() * 4);
-    var sx, sy, ex, ey;
-    if (side === 0)      { sx = Math.random() * w; sy = -40;     ex = Math.random() * w; ey = h + 40; }
-    else if (side === 1) { sx = w + 40; sy = Math.random() * h;  ex = -40;               ey = Math.random() * h; }
-    else if (side === 2) { sx = Math.random() * w; sy = h + 40;  ex = Math.random() * w; ey = -40; }
-    else                 { sx = -40;    sy = Math.random() * h;  ex = w + 40;            ey = Math.random() * h; }
+    // Slight vertical variation so badges don't all share one baseline.
+    el.style.bottom = (Math.random() * 90 - 30) + 'px';
 
-    var scale = 0.7 + Math.random() * 0.7;
-    var roach = makeRoachEl(scale);
-    var angle = Math.atan2(ey - sy, ex - sx) * 180 / Math.PI + 90;
-    roach.style.setProperty('--angle', angle + 'deg');
-    roach.style.left = sx + 'px';
-    roach.style.top  = sy + 'px';
-    swarm.appendChild(roach);
-
-    // Force a synchronous layout so the browser commits the start position
-    // BEFORE we apply the transition + end position. Without this, some
-    // cockroaches never animate and appear stuck on the entry edge.
-    void roach.offsetHeight;
-
-    var duration = 3500 + Math.random() * 4500;
-    roach.style.transition = 'left ' + duration + 'ms linear, top ' + duration + 'ms linear, opacity 600ms ease';
-    roach.style.left = ex + 'px';
-    roach.style.top  = ey + 'px';
-
-    var fadeTimer   = setTimeout(function () { roach.style.opacity = '0'; }, duration - 200);
-    var removeTimer = setTimeout(function () { if (roach.parentNode) roach.parentNode.removeChild(roach); }, duration + 600);
-    // Hard fallback: if anything else hiccups (tab backgrounded, slow paint),
-    // make sure no bug lingers longer than ~12s.
+    stage.appendChild(el);
     setTimeout(function () {
-      clearTimeout(fadeTimer); clearTimeout(removeTimer);
-      if (roach.parentNode) roach.parentNode.removeChild(roach);
-    }, 12000);
+      if (el.parentNode) el.parentNode.removeChild(el);
+    }, 7200);
   }
 
-  function startSwarm() {
-    var swarm = document.getElementById('cockroachSwarm');
-    if (!swarm) return;
-    var count = 22;
-    for (var i = 0; i < count; i++) {
-      setTimeout(function () { spawnRoach(swarm); }, Math.random() * 900);
+  function start() {
+    var stage = document.getElementById('hypeStage');
+    if (!stage) return;
+
+    // Initial staggered burst so the page already feels alive on load.
+    for (var i = 0; i < 3; i++) {
+      setTimeout(function () { spawnBadge(stage); }, 200 + i * 1300);
     }
-  }
-
-  function injectLogoBug() {
-    var brand = document.querySelector('header.site-header .brand');
-    if (!brand) return;
-    if (getComputedStyle(brand).position === 'static') {
-      brand.style.position = 'relative';
-    }
-    var bug = document.createElement('span');
-    bug.className = 'cockroach-logo-bug';
-    bug.setAttribute('aria-hidden', 'true');
-    var inner = document.createElement('span');
-    inner.className = 'cockroach-inner';
-    inner.innerHTML = uniqueRoachSVG();
-    bug.appendChild(inner);
-    brand.appendChild(bug);
-  }
-
-  function init() {
-    injectLogoBug();
-    startSwarm();
+    // Continuous slow stream. Skip while tab is hidden to save CPU.
+    setInterval(function () {
+      if (document.hidden) return;
+      spawnBadge(stage);
+    }, 2200);
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', start);
   } else {
-    init();
+    start();
   }
 })();
 </script>

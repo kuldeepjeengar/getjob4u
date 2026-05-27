@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}Python Online Compiler — Run Python in your Browser — getjob4u{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="pill">Pyodide · Python 3.12 · Runs entirely in your browser</span>
+    <h1>Python Online Compiler &amp; Playground</h1>
+    <p class="lead">A free Python interpreter that runs <strong>in your browser</strong>. No signup, no server, your code never leaves your laptop. Includes the full Python standard library — <code>collections</code>, <code>heapq</code>, <code>itertools</code>, <code>functools</code>, <code>re</code>, <code>json</code>, all your interview favorites. First load takes ~5 seconds (downloads the runtime); after that, every run is instant.</p>
+  </div>
+</section>
+
+<section class="container playground-page">
+  <div class="playground-card card">
+    <div class="playground-toolbar">
+      <div class="playground-toolbar-left">
+        <label for="presetSelect" class="playground-label">Example:</label>
+        <select id="presetSelect" class="playground-select">
+          <option value="">— pick a starter —</option>
+          <option value="hello">Hello, World</option>
+          <option value="fib">Fibonacci (generator)</option>
+          <option value="fizzbuzz">FizzBuzz</option>
+          <option value="twosum">Two Sum (interview)</option>
+          <option value="counter">Counter / word frequency</option>
+          <option value="deepcopy">Mutable default argument trap</option>
+          <option value="dataclass">Dataclass example</option>
+          <option value="decorator">Timing decorator</option>
+        </select>
+      </div>
+      <div class="playground-toolbar-right">
+        <button type="button" id="resetBtn" class="playground-btn-ghost"
+                data-gtag="playground_action" data-gtag-label="reset">
+          ↺ Reset
+        </button>
+        <button type="button" id="clearOutputBtn" class="playground-btn-ghost"
+                data-gtag="playground_action" data-gtag-label="clear-output">
+          ✕ Clear output
+        </button>
+        <button type="button" id="runBtn" class="playground-btn-run"
+                data-gtag="playground_action" data-gtag-label="run">
+          <span class="run-icon">▶</span>
+          <span class="run-text">Run</span>
+          <span class="run-spinner" hidden></span>
+        </button>
+      </div>
+    </div>
+
+    <div class="playground-editor-wrap">
+      <textarea id="playgroundEditor" class="playground-editor" spellcheck="false" autocomplete="off"># Welcome to the getjob4u Python playground.
+# Edit this code and click "Run" — it executes 100% in your browser
+# via Pyodide (Python 3.12 compiled to WebAssembly).
+
+print("Hello from Python", 3, "+", 4, "=", 3 + 4)
+
+from collections import Counter
+words = "the quick brown fox jumps over the lazy dog the".split()
+print("Most common:", Counter(words).most_common(3))
+</textarea>
+    </div>
+
+    <div class="playground-output-wrap">
+      <div class="playground-output-head">
+        <span class="playground-output-label">Output</span>
+        <span class="playground-status" id="runStatus">Idle</span>
+      </div>
+      <pre class="playground-output" id="playgroundOutput" aria-live="polite"></pre>
+    </div>
+  </div>
+
+  <div class="playground-help card">
+    <h2>Tips</h2>
+    <ul class="playground-tips">
+      <li><kbd>Ctrl</kbd>+<kbd>Enter</kbd> (or <kbd>⌘</kbd>+<kbd>Enter</kbd>) runs the current code.</li>
+      <li>Your code never leaves your browser — Pyodide is a full Python 3.12 interpreter compiled to WebAssembly.</li>
+      <li>The standard library is available out of the box: <code>import collections, heapq, itertools, functools, re, json, math, datetime…</code></li>
+      <li>For third-party packages (NumPy, Pandas), call <code>await micropip.install("pkg")</code> first — most pure-Python and many compiled packages work.</li>
+      <li>Looking for interview problems? Try the <a href="/python-questions">100 coding questions</a> page — every solution has a "Run" button.</li>
+    </ul>
+  </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "getjob4u Python Online Compiler",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "offers": { "@type": "Offer", "price": "0" },
+  "description": "Free online Python compiler running entirely in the browser via Pyodide (Python 3.12 + standard library, no signup required)."
+}
+</script>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', path='/js/python_runner.js') }}?v={{ static_v('js/python_runner.js') }}"></script>
+<script src="{{ url_for('static', path='/js/python_playground.js') }}?v={{ static_v('js/python_playground.js') }}"></script>
+{% endblock %}

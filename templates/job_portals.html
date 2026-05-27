@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+  <div class="container">
+    <span class="pill">{{ total_portals }} portals · India · Global · Remote · Freelance</span>
+    <h1>Best <span class="grad-text">Job Portals</span> for fresher &amp; experienced job seekers</h1>
+    <p class="lead">{{ intro }}</p>
+
+    <div class="jp-stats">
+      <div><strong>{{ categories | length }}</strong><span>Categories</span></div>
+      <div><strong>{{ total_portals }}</strong><span>Portals</span></div>
+      <div><strong>10+</strong><span>Countries</span></div>
+      <div><strong>0</strong><span>Paywalls for job-seekers</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="container jp-page">
+  <!-- Sticky category jump-nav -->
+  <nav class="jp-jumpnav" aria-label="Jump to category">
+    {% for cat in categories %}
+    <a href="#cat-{{ loop.index }}" data-gtag="jp_jump" data-gtag-label="{{ cat.title }}">
+      <span class="jp-jumpnav-icon">{{ cat.icon }}</span>
+      <span class="jp-jumpnav-text">{{ cat.title | replace(cat.icon, '') | trim }}</span>
+    </a>
+    {% endfor %}
+  </nav>
+
+  {% for cat in categories %}
+  <div class="resource-section" id="cat-{{ loop.index }}">
+    <div class="resource-section-head">
+      <div>
+        <h2>{{ cat.title }}</h2>
+        {% if cat.audience %}
+        <p class="jp-audience">Best for: {{ cat.audience }}</p>
+        {% endif %}
+      </div>
+      <span class="muted small">{{ cat.portals | length }} portals</span>
+    </div>
+    <div class="tool-grid">
+      {% for p in cat.portals %}
+      <a class="tool-card"
+         href="{{ p.url }}"
+         target="_blank" rel="noopener noreferrer"
+         data-gtag="job_portal_click"
+         data-gtag-label="{{ p.name }}">
+        <div class="tool-card-top">
+          <div class="tool-icon">{{ cat.icon }}</div>
+          <h3>{{ p.name }}</h3>
+        </div>
+        <p>{{ p.description }}</p>
+        <span class="link-arrow">Visit →</span>
+      </a>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+
+  <p class="ul-footnote">Know a job portal we're missing? <a href="/feedback" data-gtag="jp_suggest">Suggest one →</a></p>
+
+  <!-- Related resources -->
+  <div class="related-block">
+    <h2>Before you apply — sharpen your edge</h2>
+    <div class="related-grid">
+      <a class="related-card" href="/ats-scanner"><strong>Free ATS Resume Scanner →</strong><span>Score your resume against the job description in 5 seconds</span></a>
+      <a class="related-card" href="/email-generator"><strong>Cold Email &amp; LinkedIn DMs →</strong><span>Outreach templates that get replies from recruiters</span></a>
+      <a class="related-card" href="/python-questions"><strong>100 Python Interview Questions →</strong><span>FAANG-level coding + theory with worked solutions</span></a>
+      <a class="related-card" href="/interview-tips"><strong>Interview Tips →</strong><span>What hiring managers actually look for</span></a>
+      <a class="related-card" href="/career-roadmap"><strong>Visual Career Roadmaps →</strong><span>DS, AI/ML Eng, Data Analyst, Gen AI Eng</span></a>
+      <a class="related-card" href="/free-courses"><strong>Free Courses with Certificates →</strong><span>IBM, Google, Hugging Face, freeCodeCamp &amp; more</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- JSON-LD: ItemList of job portals (Google rich result eligible) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": {{ page_title | tojson }},
+  "description": {{ page_description | tojson }},
+  "mainEntity": {
+    "@type": "ItemList",
+    "numberOfItems": {{ total_portals }},
+    "itemListElement": [
+      {% set ns = namespace(pos=0) %}
+      {% for cat in categories %}{% for p in cat.portals %}{% set ns.pos = ns.pos + 1 %}
+      {
+        "@type": "ListItem",
+        "position": {{ ns.pos }},
+        "item": {
+          "@type": "WebSite",
+          "name": {{ p.name | tojson }},
+          "url": {{ p.url | tojson }},
+          "description": {{ p.description | tojson }},
+          "keywords": {{ [cat.title, cat.audience or ''] | tojson }}
+        }
+      }{% if ns.pos < total_portals %},{% endif %}{% endfor %}{% endfor %}
+    ]
+  }
+}
+</script>
+
+<!-- JSON-LD: FAQ schema for AEO/SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Which job portal is best for freshers in India?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For Indian freshers, Internshala is the best starting point — internships, work-from-home roles, and free training programs. Apna and Hirect work well for non-IT entry-level roles. Naukri.com and LinkedIn cover fresher tech roles after you have 1–2 internships on your profile. FreshersWorld is the place to find off-campus drives and walk-ins."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which job portal is best for remote work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For 100% remote roles: We Work Remotely is the largest dedicated board. RemoteOK and Remote.co are strong runners-up. FlexJobs ($15/mo) curates and verifies every posting — zero scams. For developers, Arc.dev and Toptal specifically vet for senior remote engineering roles."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which job portal is best for experienced professionals?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "LinkedIn is the universal default for experienced hires — recruiters source heavily from it. For mid-senior tech roles in India, Iimjobs (consulting / product / finance) and Hirist (pure tech) have higher signal than Naukri. Hired and Otta act as 'reverse job boards' — companies apply to you after you set salary expectations."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I apply to jobs outside India from India?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Filter by 'remote — anywhere' on Wellfound, We Work Remotely, RemoteOK, or Himalayas. For visa-sponsored on-site roles, search 'visa sponsorship' on LinkedIn Jobs and check AI-Jobs.net's visa-sponsorship filter. Y Combinator's Work at a Startup explicitly tags startups open to international hires."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do these job portals charge job seekers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No — every portal on this page is free for job seekers. FlexJobs is the only exception (a small monthly fee for premium curation of remote jobs), and it's optional. Reputable boards make their money from employers, not candidates. If a 'job portal' asks you to pay a registration fee, it's a scam."
+      }
+    }
+  ]
+}
+</script>
+{% endblock %}

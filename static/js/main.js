@@ -8,6 +8,54 @@
     toggle.addEventListener('click', () => nav.classList.toggle('open'));
   }
 
+  // Nav dropdown groups (Python / Resources)
+  // Hover behaviour comes from CSS. JS handles click (touch + keyboard),
+  // Escape to close, and outside-click to close.
+  const navGroups = document.querySelectorAll('.nav-group');
+  navGroups.forEach((group) => {
+    const btn = group.querySelector('.nav-group-toggle');
+    if (!btn) return;
+    btn.addEventListener('click', (e) => {
+      // On mobile (<=860px), the toggle is display:none and links show inline.
+      // On desktop, toggle the open state on click for touch / keyboard users.
+      const onMobile = window.matchMedia('(max-width: 860px)').matches;
+      if (onMobile) return;
+      e.preventDefault();
+      const isOpen = group.classList.contains('is-open');
+      // Close other groups first
+      navGroups.forEach((g) => {
+        g.classList.remove('is-open');
+        const t = g.querySelector('.nav-group-toggle');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        group.classList.add('is-open');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+
+  // Esc closes any open dropdown; click outside closes too.
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    navGroups.forEach((g) => {
+      if (g.classList.contains('is-open')) {
+        g.classList.remove('is-open');
+        const t = g.querySelector('.nav-group-toggle');
+        if (t) { t.setAttribute('aria-expanded', 'false'); t.focus(); }
+      }
+    });
+  });
+  document.addEventListener('click', (e) => {
+    navGroups.forEach((g) => {
+      if (!g.contains(e.target)) {
+        g.classList.remove('is-open');
+        const t = g.querySelector('.nav-group-toggle');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+
   const dqBtn = document.getElementById('newQuestionBtn');
   const dq = document.getElementById('dailyQuestion');
   if (dqBtn && dq) {

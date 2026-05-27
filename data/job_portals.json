@@ -1,0 +1,169 @@
+{
+  "intro": "Hand-picked job portals where job seekers can apply and actually get callbacks. Organized by region (India, Global, Remote, country-specific) and by audience (freshers, experienced, startups, freelance). Every link is verified to be active. Some require free signup to apply; none of them charge job seekers.",
+  "categories": [
+    {
+      "title": "🇮🇳 India — General Job Boards",
+      "icon": "🇮🇳",
+      "audience": "Freshers & experienced",
+      "portals": [
+        {"name": "Naukri.com", "url": "https://www.naukri.com", "description": "India's largest job portal — most recruiters use it. Strong for IT, BFSI, sales, and engineering across experience levels."},
+        {"name": "LinkedIn", "url": "https://www.linkedin.com/jobs", "description": "Best for tech, product, and management roles in India. Easy Apply, recruiter outreach, and salary insights."},
+        {"name": "Indeed India", "url": "https://in.indeed.com", "description": "Massive aggregator pulling from career pages + direct postings. Filters for fresher, work-from-home, and Saturday-off."},
+        {"name": "Shine.com", "url": "https://www.shine.com", "description": "HT Media's portal. Strong in non-metro hiring and across BPO, sales, retail, and admin roles."},
+        {"name": "Foundit (Monster India)", "url": "https://www.foundit.in", "description": "Rebranded from Monster. Decent for mid-senior IT and BFSI; good salary calculator."},
+        {"name": "TimesJobs", "url": "https://www.timesjobs.com", "description": "Times of India's job board. Long-running, mostly mid-senior roles and government / PSU listings."},
+        {"name": "Glassdoor India", "url": "https://www.glassdoor.co.in", "description": "Apply + read company reviews, salaries, and interview questions in one place. Great for due diligence."},
+        {"name": "Quikr Jobs", "url": "https://www.quikr.com/jobs", "description": "Blue-collar, hourly, and entry-level roles across Indian cities."}
+      ]
+    },
+    {
+      "title": "🎓 India — Freshers & Entry-Level",
+      "icon": "🎓",
+      "audience": "0–2 years experience, students, interns",
+      "portals": [
+        {"name": "Internshala", "url": "https://internshala.com", "description": "India's top internship + fresher job portal. Stipend-paid internships, work-from-home roles, and free training programs."},
+        {"name": "FreshersWorld", "url": "https://www.freshersworld.com", "description": "Walk-ins, off-campus drives, govt-job notifications, and fresher openings across India."},
+        {"name": "Apna", "url": "https://apna.co", "description": "Mobile-first job app. Strong in Tier-2/3 cities, sales, BPO, delivery, retail — direct chat with recruiters."},
+        {"name": "Hirect India", "url": "https://www.hirect.in", "description": "Direct chat with founders/hiring managers. Mostly startup and tech roles for early-career candidates."},
+        {"name": "CutShort", "url": "https://cutshort.io", "description": "AI-matched tech jobs for early-to-mid career engineers. Skills-based filtering."},
+        {"name": "Unstop (formerly Dare2Compete)", "url": "https://unstop.com", "description": "Hackathons, case competitions, internships, and fresher hiring drives. Great for college students."},
+        {"name": "LetsIntern", "url": "https://www.letsintern.com", "description": "Internships and entry-level openings — finance, marketing, design, and consulting."},
+        {"name": "Hello Intern", "url": "https://www.hellointern.com", "description": "Curated internships and trainee programs across India."}
+      ]
+    },
+    {
+      "title": "🚀 India — Startups & Product Companies",
+      "icon": "🚀",
+      "audience": "Tech-focused, mid-level engineers, startup-curious",
+      "portals": [
+        {"name": "Instahyre", "url": "https://www.instahyre.com", "description": "Curated, invite-only-feeling listings. Recruiter response rates are high. Strong for product startups."},
+        {"name": "Wellfound (AngelList Talent)", "url": "https://wellfound.com", "description": "Apply directly to startups globally — including thousands in India. Salary + equity shown upfront."},
+        {"name": "Cutshort", "url": "https://cutshort.io", "description": "Product-startup-friendly. AI-skill matching and direct founder access."},
+        {"name": "Iimjobs", "url": "https://www.iimjobs.com", "description": "Premier portal for MBA / consulting / product / finance roles at mid-senior level."},
+        {"name": "Hirist", "url": "https://www.hirist.com", "description": "Tech-only sibling of iimjobs. Backend, frontend, DevOps, data — mid-senior."},
+        {"name": "Hasjob (HasGeek)", "url": "https://hasjob.co", "description": "Tech community job board run by HasGeek. Authentic startup postings, no spam."},
+        {"name": "Topmate Jobs", "url": "https://topmate.io/jobs", "description": "Curated openings shared by industry mentors — often before they hit LinkedIn."}
+      ]
+    },
+    {
+      "title": "🌍 Global — Major Job Boards",
+      "icon": "🌍",
+      "audience": "Anywhere, all experience levels",
+      "portals": [
+        {"name": "LinkedIn Jobs", "url": "https://www.linkedin.com/jobs", "description": "The default global job platform. Easy Apply, recruiter messaging, and salary data in every market."},
+        {"name": "Indeed", "url": "https://www.indeed.com", "description": "The world's largest job aggregator. 250M+ unique visitors / month. Filters for remote, salary, employer rating."},
+        {"name": "Glassdoor", "url": "https://www.glassdoor.com", "description": "Jobs + transparent salaries + interview reviews. Indispensable for company research before applying."},
+        {"name": "Monster", "url": "https://www.monster.com", "description": "Long-running global board. Strongest in US, Canada, and EU for mid-senior roles."},
+        {"name": "ZipRecruiter", "url": "https://www.ziprecruiter.com", "description": "AI-matched US roles. One-click apply across hundreds of postings; mobile-first UX."},
+        {"name": "SimplyHired", "url": "https://www.simplyhired.com", "description": "Aggregator with strong filtering by salary, commute, and remote options."},
+        {"name": "CareerBuilder", "url": "https://www.careerbuilder.com", "description": "US-focused board with resume builder and skills assessments built in."},
+        {"name": "JobBank (Google for Jobs)", "url": "https://www.google.com/search?q=jobs", "description": "Google Jobs surfaces postings from across the web — search 'jobs near me' or '[role] jobs [city]'."}
+      ]
+    },
+    {
+      "title": "🏠 Remote-First & Work-From-Anywhere",
+      "icon": "🏠",
+      "audience": "Anyone wanting fully-remote, often international roles",
+      "portals": [
+        {"name": "We Work Remotely", "url": "https://weworkremotely.com", "description": "The largest remote-only job board. Programming, design, marketing, customer support, sales."},
+        {"name": "Remote.co", "url": "https://remote.co", "description": "Hand-curated remote roles plus advice articles. Strong in mid-senior tech and ops."},
+        {"name": "RemoteOK", "url": "https://remoteok.com", "description": "Indie hacker–popular board. Salary shown in most listings; lots of US-pay-anywhere-remote roles."},
+        {"name": "Working Nomads", "url": "https://www.workingnomads.com", "description": "Curated digest of remote openings, emailed weekly. Engineering, design, and marketing focus."},
+        {"name": "JustRemote", "url": "https://justremote.co", "description": "Filterable remote board with a 'no-bullshit' policy on listings — every role is truly remote."},
+        {"name": "Remotive", "url": "https://remotive.com", "description": "Active community + remote board. Free job alerts and a Slack community for remote workers."},
+        {"name": "FlexJobs", "url": "https://www.flexjobs.com", "description": "Premium curated board ($15/mo) with verified remote and flexible roles — zero scam listings."},
+        {"name": "Pangian", "url": "https://pangian.com", "description": "Global remote network. Curated roles + community + courses."},
+        {"name": "Jobspresso", "url": "https://jobspresso.co", "description": "Hand-vetted remote jobs. Tech, marketing, and customer support categories."},
+        {"name": "NoDesk", "url": "https://nodesk.co", "description": "Curated remote jobs + resources for distributed teams."},
+        {"name": "Himalayas", "url": "https://himalayas.app", "description": "Modern remote job board. Strong filters for timezone, salary, and benefits."},
+        {"name": "Dynamite Jobs", "url": "https://dynamitejobs.com", "description": "Remote roles at bootstrapped + profitable companies. Quality over quantity."}
+      ]
+    },
+    {
+      "title": "💻 Tech & Engineering",
+      "icon": "💻",
+      "audience": "Software engineers, data scientists, ML/AI, DevOps",
+      "portals": [
+        {"name": "Hired.com", "url": "https://hired.com", "description": "Companies apply to YOU. Free for candidates; tech-focused with upfront salary + equity."},
+        {"name": "Otta (Welcome to the Jungle)", "url": "https://welcometothejungle.com", "description": "Curated tech roles at startups and scale-ups, mostly UK/EU/US. Modern, transparent listings."},
+        {"name": "Dice", "url": "https://www.dice.com", "description": "Tech jobs in the US — strong for contract, federal, and security-clearance roles."},
+        {"name": "Built In", "url": "https://builtin.com", "description": "Tech jobs at US startups by city (NYC, SF, LA, Boston, Chicago, Austin, etc.)."},
+        {"name": "Toptal", "url": "https://www.toptal.com", "description": "Top-3% network — rigorous screening. High pay rates for freelance dev / design / finance work."},
+        {"name": "Triplebyte (Karat)", "url": "https://triplebyte.com", "description": "Take a tech assessment once, get matched to companies. US-focused; fully remote options."},
+        {"name": "AI-Jobs.net", "url": "https://ai-jobs.net", "description": "AI / ML / data science only. Global, with strong remote and visa-sponsorship filtering."},
+        {"name": "MLJobs.io", "url": "https://mljobs.io", "description": "Curated machine-learning openings across research, applied, and infrastructure roles."},
+        {"name": "HackerRank Jobs", "url": "https://www.hackerrank.com/career", "description": "Solve coding challenges to unlock interviews at the host companies."},
+        {"name": "Stack Overflow Talent", "url": "https://stackoverflow.com/jobs", "description": "Aggregated developer roles surfaced via Stack Overflow's profile + tag system."}
+      ]
+    },
+    {
+      "title": "🌱 Startups (Global)",
+      "icon": "🌱",
+      "audience": "Anyone wanting equity-bearing roles at early-stage companies",
+      "portals": [
+        {"name": "Wellfound (AngelList Talent)", "url": "https://wellfound.com", "description": "The flagship startup job platform. Apply with one profile to thousands of seed–Series-C startups."},
+        {"name": "Y Combinator Work at a Startup", "url": "https://www.workatastartup.com", "description": "All YC-backed companies (1000+) hiring in one place. High signal."},
+        {"name": "Crunchboard", "url": "https://www.crunchboard.com", "description": "Job board from TechCrunch. Startup roles across functions, US-skewed."},
+        {"name": "Startup Jobs (startup.jobs)", "url": "https://startup.jobs", "description": "Massive aggregator of openings at funded startups worldwide."},
+        {"name": "Underdog.io", "url": "https://underdog.io", "description": "Apply to 50+ startups with one profile. NYC, SF, LA, remote."},
+        {"name": "VentureLoop", "url": "https://www.ventureloop.com", "description": "Openings at venture-backed companies. Categorized by stage and function."},
+        {"name": "BuiltIn (Startups section)", "url": "https://builtin.com", "description": "Filter by 'startup' tag to see early-stage roles by US tech-hub city."}
+      ]
+    },
+    {
+      "title": "🌏 Country-Specific (US, UK, EU, APAC, Canada, Australia)",
+      "icon": "🌏",
+      "audience": "Looking for visa-sponsored, on-site, or local roles outside India",
+      "portals": [
+        {"name": "USAJobs.gov", "url": "https://www.usajobs.gov", "description": "US federal government openings — Department of Defense, NASA, civilian agencies, GS pay scale."},
+        {"name": "Reed.co.uk", "url": "https://www.reed.co.uk", "description": "UK's most-used job board across all sectors. Strong for finance, tech, and graduate schemes."},
+        {"name": "TotalJobs", "url": "https://www.totaljobs.com", "description": "UK-focused, all industries. Owned by Stepstone group."},
+        {"name": "CV-Library", "url": "https://www.cv-library.co.uk", "description": "UK board with 5M+ candidates. Filtered job alerts + CV uploads."},
+        {"name": "StepStone (Germany)", "url": "https://www.stepstone.de", "description": "Largest German job board. Strong for engineering, finance, and Mittelstand roles."},
+        {"name": "Welcome to the Jungle (FR/EU)", "url": "https://www.welcometothejungle.com", "description": "Modern, visual EU job board. Strong in France, Germany, Spain, UK tech scenes."},
+        {"name": "Jooble", "url": "https://jooble.org", "description": "Multi-country aggregator (US, UK, India, Brazil, 70+ countries). Localized filters."},
+        {"name": "Adzuna", "url": "https://www.adzuna.com", "description": "Aggregator across 20+ countries with salary stats and trend graphs."},
+        {"name": "EuropeRemotely", "url": "https://europeremotely.com", "description": "Remote roles specifically within EU timezones."},
+        {"name": "Seek (Australia / NZ)", "url": "https://www.seek.com.au", "description": "The #1 job site in Australia and New Zealand. All sectors, all experience levels."},
+        {"name": "JobStreet (SE Asia)", "url": "https://www.jobstreet.com", "description": "Major board across Malaysia, Singapore, Philippines, Indonesia, Vietnam, Hong Kong."},
+        {"name": "Wantedly (Japan)", "url": "https://www.wantedly.com", "description": "Japan-focused, startup-friendly. Many roles open to English-speaking talent."},
+        {"name": "Job Bank Canada", "url": "https://www.jobbank.gc.ca", "description": "Government of Canada's official job board — includes LMIA/work-permit roles."},
+        {"name": "Indeed (country versions)", "url": "https://www.indeed.com/worldwide", "description": "Indeed runs localized sites for 60+ countries — switch via the worldwide page."}
+      ]
+    },
+    {
+      "title": "💰 Freelance, Contract & Gig Work",
+      "icon": "💰",
+      "audience": "Self-employed, side-hustlers, contractors",
+      "portals": [
+        {"name": "Upwork", "url": "https://www.upwork.com", "description": "Largest freelance marketplace — software, design, writing, admin. Compete on hourly or fixed-price bids."},
+        {"name": "Fiverr", "url": "https://www.fiverr.com", "description": "Sell productized 'gigs' starting at $5. Strong for design, writing, video, and voiceover."},
+        {"name": "Freelancer.com", "url": "https://www.freelancer.com", "description": "Global freelance marketplace with contests and project bidding."},
+        {"name": "Toptal", "url": "https://www.toptal.com", "description": "Top-3% gated network. Premium pay rates for senior software / design / finance freelancers."},
+        {"name": "Guru.com", "url": "https://www.guru.com", "description": "Long-running freelance platform. Lower competition than Upwork in some categories."},
+        {"name": "PeoplePerHour", "url": "https://www.peopleperhour.com", "description": "UK-rooted freelance marketplace. Strong in design and digital marketing."},
+        {"name": "Contra", "url": "https://contra.com", "description": "0% commission freelance platform — keep 100% of your pay. Designer-friendly UI."},
+        {"name": "Arc.dev", "url": "https://arc.dev", "description": "Remote-only platform for senior developers. Permanent + contract roles, vetted."},
+        {"name": "Braintrust", "url": "https://www.usebraintrust.com", "description": "User-owned freelance network. Skip the middleman — clients pay full rate."},
+        {"name": "Workana", "url": "https://www.workana.com", "description": "LatAm + Spanish-speaking freelance marketplace, also accepts international talent."}
+      ]
+    },
+    {
+      "title": "🎯 Internships, Diversity & Niche Boards",
+      "icon": "🎯",
+      "audience": "Students, women returning to work, underrepresented groups",
+      "portals": [
+        {"name": "Handshake", "url": "https://joinhandshake.com", "description": "Internship platform used by 1500+ US universities. Free for students with .edu email."},
+        {"name": "WayUp", "url": "https://www.wayup.com", "description": "Entry-level and internship roles in the US — Fortune 500 + startups."},
+        {"name": "Chegg Internships", "url": "https://www.internships.com", "description": "Search internships by location, industry, and remote — US-focused."},
+        {"name": "JobsForHer", "url": "https://www.jobsforher.com", "description": "Indian platform for women returning to work, including part-time and remote options."},
+        {"name": "HerKey (formerly Sheroes)", "url": "https://herkey.com", "description": "India-focused career platform for women, with mentorship and upskilling."},
+        {"name": "PowerToFly", "url": "https://powertofly.com", "description": "Global platform for women + non-binary candidates in tech and leadership."},
+        {"name": "Tech Ladies", "url": "https://www.hiretechladies.com", "description": "Curated job board for women in tech, with a strong community + newsletter."},
+        {"name": "Diversity.com", "url": "https://www.diversity.com", "description": "US board focused on roles at companies with strong diversity programs."},
+        {"name": "Recruit Disability", "url": "https://www.recruitdisability.org", "description": "US board for candidates with disabilities — partnered with major employers."},
+        {"name": "VetJobs", "url": "https://vetjobs.org", "description": "Free job placement service for US military veterans, spouses, and active-duty members."}
+      ]
+    }
+  ]
+}
