@@ -144,6 +144,40 @@ PATH_REDIRECTS: dict[str, str] = {
 }
 
 
+# Maintenance-mode toggle. Flip on by setting MAINTENANCE_MODE=1 in env
+# (Elastic Beanstalk: Configuration → Software → Environment properties).
+# When on, every public request returns the static maintenance page with HTTP
+# 503 + Retry-After so search engines treat it as temporary, not a real outage.
+# Admin paths stay reachable so you can still log in / fix things.
+MAINTENANCE_PAGE = BASE_DIR / "static" / "maintenance.html"
+_MAINTENANCE_ALLOW_PREFIXES = ("/admin", "/static", "/api/health", "/robots.txt", "/sitemap.xml")
+
+
+def _maintenance_mode_on() -> bool:
+    return os.environ.get("MAINTENANCE_MODE", "").strip().lower() in {"1", "true", "yes", "on"}
+
+
+@app.middleware("http")
+async def maintenance_mode(request: Request, call_next):
+    """Short-circuit every public request to a static 'we're working on it'
+    page when MAINTENANCE_MODE is enabled. Runs BEFORE canonical_redirects so
+    even path-typo URLs land on the maintenance page during an outage window.
+    """
+    if _maintenance_mode_on():
+        path = request.url.path
+        if not any(path.startswith(p) for p in _MAINTENANCE_ALLOW_PREFIXES):
+            try:
+                html = MAINTENANCE_PAGE.read_text(encoding="utf-8")
+            except OSError:
+                html = "<h1>We'll be right back.</h1><p>getjob4u is briefly offline. Please try again shortly.</p>"
+            return HTMLResponse(
+                content=html,
+                status_code=503,
+                headers={"Retry-After": "120", "Cache-Control": "no-store"},
+            )
+    return await call_next(request)
+
+
 @app.middleware("http")
 async def canonical_redirects(request: Request, call_next):
     """Enforce canonical hostname + fix common path typos with 301s.
@@ -173,6 +207,23 @@ async def canonical_redirects(request: Request, call_next):
         return RedirectResponse(target, status_code=301)
 
     return await call_next(request)
+
+
+@app.exception_handler(500)
+async def _internal_error_page(request: Request, exc: Exception):
+    """Show the friendly maintenance page instead of a raw 500 traceback when
+    something unexpected blows up in a route. The user sees 'we're working on
+    it' (with HTTP 503 + Retry-After so SEO isn't impacted) — they shouldn't
+    see Python stack traces in production."""
+    try:
+        html = MAINTENANCE_PAGE.read_text(encoding="utf-8")
+    except OSError:
+        html = "<h1>We'll be right back.</h1><p>Something went wrong on our side. Please try again shortly.</p>"
+    return HTMLResponse(
+        content=html,
+        status_code=503,
+        headers={"Retry-After": "60", "Cache-Control": "no-store"},
+    )
 
 
 @app.on_event("startup")
