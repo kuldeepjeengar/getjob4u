@@ -13,6 +13,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 from fastapi import FastAPI, File, Form, HTTPException, Request, UploadFile, Depends, Cookie
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse, PlainTextResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -48,6 +49,10 @@ app = FastAPI(
     docs_url=None,
     redoc_url=None,
 )
+# Gzip JSON/HTML/CSS responses >1KB. Cuts wire bytes ~70% on big pages
+# like /python-questions and /blogs without touching any per-route code.
+app.add_middleware(GZipMiddleware, minimum_size=1000)
+
 app.mount("/static", StaticFiles(directory=BASE_DIR / "static"), name="static")
 templates = Jinja2Templates(directory=BASE_DIR / "templates")
 
@@ -175,9 +180,26 @@ def on_startup() -> None:
     init_db()
 
 
+# Parsed JSON cache. Key includes the file's mtime so we automatically
+# re-parse if the file changes on disk (dev workflow), but a hot path like
+# /python-questions doesn't re-read 174 KB on every request in prod.
+_JSON_CACHE: dict[tuple[str, float], dict] = {}
+
+
 def _load_json(name: str) -> dict:
-    with open(DATA_DIR / name, encoding="utf-8") as f:
-        return json.load(f)
+    path = DATA_DIR / name
+    try:
+        mtime = path.stat().st_mtime
+    except OSError:
+        mtime = 0.0
+    cache_key = (name, mtime)
+    cached = _JSON_CACHE.get(cache_key)
+    if cached is not None:
+        return cached
+    with open(path, encoding="utf-8") as f:
+        data = json.load(f)
+    _JSON_CACHE[cache_key] = data
+    return data
 
 
 # ---------------------------------------------------------------- Admin session
@@ -224,7 +246,7 @@ def home(request: Request):
             "daily_question": daily_question,
             "page_title": "getjob4u — Free ATS Scanner, Interview Prep & AI/ML/DS Career Toolkit",
             "page_description": "Free career toolkit for AI, ML, and Data Science job seekers. ATS resume scanner, 100 FAANG Python questions, 49+ interview tips, cold email generator, career roadmap, and free certificate courses.",
-            "keywords": "free ATS resume scanner, ATS resume checker free, AI resume scanner, ML resume checker, data science resume scanner, machine learning interview questions, data science interview questions, AI engineer interview prep, FAANG Python interview questions, Python coding interview, free AI courses with certificate, free ML courses, free data science courses, cold email generator, LinkedIn referral message, data science career roadmap, ML engineer roadmap, AI job search toolkit, ATS friendly resume, free interview prep, getjob4u",
+            "keywords": "free ATS resume scanner, ATS resume checker free, AI resume scanner, ML resume checker, data science resume scanner, machine learning interview questions, data science interview questions, AI engineer interview prep, FAANG Python interview questions, Python coding interview, free AI courses with certificate, free ML courses, free data science courses, cold email generator, LinkedIn referral message, data science career roadmap, ML engineer roadmap, AI job search toolkit, ATS friendly resume, free interview prep, getjob4u, free job seeker toolkit, online python compiler, python playground browser, 100 python interview questions, ATS optimization tool, resume keyword scanner, AI ML DS career platform, fresher data science jobs, generative AI engineer jobs, LLM engineer roadmap, MLOps engineer interview, free AI tools 2026, best free job sites india, work from home AI ML jobs, free AI ML certifications, free career resources for students, no signup ATS tool, instant resume score, cold email template free",
             "og_url": "/",
             "canonical_url": "/",
             "page_category": "home",
@@ -241,7 +263,7 @@ def ats_scanner_page(request: Request):
             "roles": ats_scorer.available_roles(),
             "page_title": "Free ATS Resume Scanner - getjob4u",
             "page_description": "Free AI-powered ATS resume scanner. Check your resume against role keywords or a specific job description. Get an instant ATS score, missing keywords, and concrete fixes.",
-            "keywords": "free ATS resume scanner, ATS resume checker online, AI resume checker, resume ATS score, ATS friendly resume, ATS optimization, beat the ATS, resume keyword scanner, job description matcher, resume optimizer, Workday ATS, Greenhouse ATS, Lever ATS, iCIMS ATS, Taleo ATS, data scientist resume scanner, ML engineer resume scanner, AI engineer resume scanner, no signup ATS scanner, instant ATS score, JD vs resume match, resume keywords for data science, resume keywords for ML engineer",
+            "keywords": "free ATS resume scanner, ATS resume checker online, AI resume checker, resume ATS score, ATS friendly resume, ATS optimization, beat the ATS, resume keyword scanner, job description matcher, resume optimizer, Workday ATS, Greenhouse ATS, Lever ATS, iCIMS ATS, Taleo ATS, BambooHR ATS, SmartRecruiters ATS, JobScan alternative, data scientist resume scanner, ML engineer resume scanner, AI engineer resume scanner, no signup ATS scanner, instant ATS score, JD vs resume match, resume keywords for data science, resume keywords for ML engineer, free resume grader, online resume checker, resume parser online, AI powered resume scanner, resume ATS test, check resume ATS compatibility, resume scoring tool, resume keyword optimizer, applicant tracking system test, free resume analyzer, resume rewrite tool, NLP resume scanner, resume vs job description, ATS resume tips 2026",
             "og_url": "/ats-scanner",
             "canonical_url": "/ats-scanner",
             "page_category": "ats_scanner",
@@ -263,7 +285,7 @@ def interview_tips_page(request: Request):
             "categories": data["categories"],
             "page_title": "AI/ML/DS Interview Tips & Questions - getjob4u",
             "page_description": "Master your AI, ML, and Data Science interviews. Daily questions, behavioral tips, technical prep, and expert guidance for landing your dream role.",
-            "keywords": "data science interview questions, machine learning interview questions, AI interview questions, deep learning interview questions, LLM interview questions, generative AI interview questions, RAG interview questions, transformer interview questions, NLP interview questions, statistics interview questions, A/B testing interview questions, SQL interview questions, behavioral interview questions data science, FAANG data science interview, Google data science interview, Meta ML interview, ML engineer interview prep, AI engineer interview prep, MLOps interview questions, data science behavioral questions, STAR method data science",
+            "keywords": "data science interview questions, machine learning interview questions, AI interview questions, deep learning interview questions, LLM interview questions, generative AI interview questions, RAG interview questions, transformer interview questions, NLP interview questions, statistics interview questions, A/B testing interview questions, SQL interview questions, behavioral interview questions data science, FAANG data science interview, Google data science interview, Meta ML interview, ML engineer interview prep, AI engineer interview prep, MLOps interview questions, data science behavioral questions, STAR method data science, computer vision interview questions, reinforcement learning interview questions, prompt engineering interview, vector database interview, embeddings interview questions, feature engineering interview, bias variance tradeoff interview, hypothesis testing interview, data engineer interview questions, system design ML interview, case study data science interview, Amazon data science interview, Microsoft AI interview, Netflix ML interview, Apple ML interview, daily ML question, free ML interview prep, AI ML mock interview questions, interview tips for freshers data science",
             "og_url": "/interview-tips",
             "canonical_url": "/interview-tips",
             "page_category": "interview_tips",
@@ -286,7 +308,7 @@ def youtube_page(request: Request):
             "courses": data["free_courses"],
             "page_title": "Free AI/ML/DS Learning Resources - YouTube & Courses",
             "page_description": "Curated free YouTube channels and courses for AI, ML, and Data Science learning. Top creators and structured learning paths.",
-            "keywords": "free YouTube channels machine learning, best YouTube channels for data science, free AI YouTube channels, free ML video courses, StatQuest, 3Blue1Brown, Andrej Karpathy, Andrew Ng courses free, Yannic Kilcher, free deep learning lectures, free ML lectures, free Stanford ML lectures, free MIT AI lectures, free YouTube data analytics, free generative AI tutorials YouTube",
+            "keywords": "free YouTube channels machine learning, best YouTube channels for data science, free AI YouTube channels, free ML video courses, StatQuest, 3Blue1Brown, Andrej Karpathy, Andrew Ng courses free, Yannic Kilcher, free deep learning lectures, free ML lectures, free Stanford ML lectures, free MIT AI lectures, free YouTube data analytics, free generative AI tutorials YouTube, free Python YouTube tutorials, sentdex, Krish Naik, Codebasics, Two Minute Papers, Machine Learning Street Talk, free LLM tutorials YouTube, free RAG tutorials, free Hugging Face tutorials, free PyTorch YouTube, free TensorFlow YouTube, free SQL YouTube, free data analytics tutorials, free statistics for data science, free deep learning playlist, fast.ai free course, CS231n free lectures, CS224n free lectures, free MLOps tutorials, free transformer tutorials, free generative AI playlist, freeCodeCamp data science, learn data science YouTube, learn ML YouTube, learn AI YouTube",
             "og_url": "/youtube-resources",
             "canonical_url": "/youtube-resources",
             "page_category": "youtube_resources",
@@ -307,9 +329,25 @@ def _format_post_date(iso: str) -> str:
         return iso or ""
 
 
+import re as _re
+
+# Cache the decorated+sorted post list, keyed on blog_posts.json mtime so the
+# expensive HTML-strip / word-count pass runs once per file revision, not once
+# per request. /blogs and /blogs/{slug} both pay this cost otherwise.
+_BLOG_POSTS_CACHE: dict[float, list[dict]] = {}
+
+
 def _load_blog_posts() -> list[dict]:
     """Load blog_posts.json, decorate each post with display dates + word count,
     and return them sorted newest-first."""
+    path = DATA_DIR / "blog_posts.json"
+    try:
+        mtime = path.stat().st_mtime
+    except OSError:
+        mtime = 0.0
+    cached = _BLOG_POSTS_CACHE.get(mtime)
+    if cached is not None:
+        return cached
     data = _load_json("blog_posts.json")
     posts = list(data.get("posts", []))
     for p in posts:
@@ -317,10 +355,10 @@ def _load_blog_posts() -> list[dict]:
         p["updated_display"] = _format_post_date(p.get("updated", p.get("published", "")))
         # Cheap word count for Article schema — strip HTML tags, split on whitespace.
         text = " ".join(s.get("body_html", "") for s in p.get("sections", []))
-        import re as _re
         words = _re.sub(r"<[^>]+>", " ", text).split()
         p["word_count"] = len(words) + len(p.get("title", "").split()) + len(p.get("summary", "").split())
     posts.sort(key=lambda x: x.get("published", ""), reverse=True)
+    _BLOG_POSTS_CACHE[mtime] = posts
     return posts
 
 
@@ -337,7 +375,7 @@ def blogs_page(request: Request):
             "internal_posts": internal_posts,
             "page_title": "AI / ML / Data Science Blog - Guides & Curated Reading - getjob4u",
             "page_description": "Original long-form guides on ATS resumes, cold email referrals, and AI/ML career roadmaps, plus a hand-picked list of the best external AI/ML/Data Science blogs to follow.",
-            "keywords": "AI blog, ML blog, data science blog, AI ML newsletters, ATS resume tips, cold email referral guide, ML career roadmap guide, best AI blogs to follow 2026, best ML blogs to read, best data science blogs, generative AI blog, LLM blog, MLOps blog, Sebastian Raschka, Lilian Weng, Distill.pub, Towards Data Science, free AI newsletters, AI papers explained, ML paper summaries",
+            "keywords": "AI blog, ML blog, data science blog, AI ML newsletters, ATS resume tips, cold email referral guide, ML career roadmap guide, best AI blogs to follow 2026, best ML blogs to read, best data science blogs, generative AI blog, LLM blog, MLOps blog, Sebastian Raschka, Lilian Weng, Distill.pub, Towards Data Science, free AI newsletters, AI papers explained, ML paper summaries, AI career tips, data science career tips, ML career advice, AI ML reading list, weekly AI newsletter, weekly ML newsletter, The Batch newsletter, Import AI newsletter, Data Elixir newsletter, AI Alignment blog, OpenAI blog, DeepMind blog, Google AI blog, Meta AI blog, Anthropic blog, Hugging Face blog, kaggle blog, AI ML tutorials, AI ML guides, getjob4u blog, free job search guides",
             "og_url": "/blogs",
             "canonical_url": "/blogs",
             "page_category": "blogs",
@@ -387,7 +425,7 @@ def email_generator_page(request: Request):
             "templates": email_generator.available_templates(),
             "page_title": "Cold Email & LinkedIn Message Generator - getjob4u",
             "page_description": "Generate personalized cold emails and LinkedIn DMs for job seekers. Templates for referrals, applications, follow-ups, and networking.",
-            "keywords": "cold email generator free, LinkedIn message generator, referral request email template, job application email, recruiter outreach email, networking email templates, follow up email after interview, cold email for data science job, cold email for ML engineer job, referral cold email template, free cold email tool, cold DM template LinkedIn, AI cold email generator, cold email examples that work, cold email subject lines",
+            "keywords": "cold email generator free, LinkedIn message generator, referral request email template, job application email, recruiter outreach email, networking email templates, follow up email after interview, cold email for data science job, cold email for ML engineer job, referral cold email template, free cold email tool, cold DM template LinkedIn, AI cold email generator, cold email examples that work, cold email subject lines, LinkedIn connection request message, LinkedIn InMail template, cold email recruiter template, referral request LinkedIn message, thank you email after interview, networking message LinkedIn, alumni referral email, cold email for internship, job inquiry email template, cold email response rate, cold email automation, cold email AI assistant, free LinkedIn message templates, hiring manager email template, cold email best practices, free cold email examples, referral email subject line, cold email script tech jobs, AI generated job email, getjob4u cold email tool",
             "og_url": "/email-generator",
             "canonical_url": "/email-generator",
             "page_category": "email_generator",
@@ -410,7 +448,7 @@ def sample_resumes_page(request: Request):
             "tips": data["general_tips"],
             "page_title": "Sample AI/ML/DS Resumes - Free Resume Templates",
             "page_description": "Download free sample resumes for Data Scientists, ML Engineers, and AI specialists. ATS-optimized templates and best practices.",
-            "keywords": "sample data science resume, sample ML engineer resume, sample AI resume, sample data analyst resume, free resume templates download, ATS friendly resume template, data scientist resume template free, ML resume sample download, resume for data science fresher, AI engineer resume sample, machine learning resume sample, deep learning engineer resume, NLP engineer resume sample, data engineer resume sample, MLOps engineer resume sample, resume PDF download free",
+            "keywords": "sample data science resume, sample ML engineer resume, sample AI resume, sample data analyst resume, free resume templates download, ATS friendly resume template, data scientist resume template free, ML resume sample download, resume for data science fresher, AI engineer resume sample, machine learning resume sample, deep learning engineer resume, NLP engineer resume sample, data engineer resume sample, MLOps engineer resume sample, resume PDF download free, computer vision engineer resume, generative AI engineer resume, LLM engineer resume sample, data analyst resume template free, BI analyst resume sample, business analyst resume sample, AI research engineer resume, AI product manager resume, junior data scientist resume, senior data scientist resume, lead ML engineer resume, fresher AI resume template, resume format for FAANG, resume format for data science, one page resume template, two column resume template, modern resume template free, latex resume template data science, resume bullet points data science, ATS optimized resume sample, free downloadable resume",
             "og_url": "/sample-resumes",
             "canonical_url": "/sample-resumes",
             "page_category": "sample_resumes",
@@ -432,7 +470,7 @@ def roadmap_page(request: Request):
             "roadmaps": data["roadmaps"],
             "page_title": "AI/ML/DS Career Roadmap - Learning Paths & Milestones",
             "page_description": "Step-by-step career roadmaps for Data Scientists and ML Engineers. Learn skills, milestones, and resources for each level.",
-            "keywords": "data scientist career roadmap, ML engineer roadmap, AI engineer roadmap, data analyst career roadmap, machine learning learning path, data science learning path 2026, how to become data scientist, how to become ML engineer, AI engineer career path, data science fresher roadmap, ML beginner roadmap, MLOps career path, generative AI engineer roadmap, LLM engineer roadmap, data science skills 2026, AI career path with no experience",
+            "keywords": "data scientist career roadmap, ML engineer roadmap, AI engineer roadmap, data analyst career roadmap, machine learning learning path, data science learning path 2026, how to become data scientist, how to become ML engineer, AI engineer career path, data science fresher roadmap, ML beginner roadmap, MLOps career path, generative AI engineer roadmap, LLM engineer roadmap, data science skills 2026, AI career path with no experience, computer vision engineer roadmap, NLP engineer roadmap, deep learning engineer roadmap, data engineer roadmap 2026, BI analyst roadmap, AI product manager roadmap, AI research engineer path, prompt engineer roadmap, GenAI career path, transition to data science, switch career to AI, self taught data scientist, data science roadmap for beginners, ML engineer skills checklist, data science learning milestones, AI/ML projects for portfolio, data science career change, ML career switch from software, data science career India, data science career USA, free roadmap data science, step by step ML roadmap",
             "og_url": "/career-roadmap",
             "canonical_url": "/career-roadmap",
             "page_category": "career_roadmap",
@@ -457,7 +495,7 @@ def python_questions_page(request: Request):
             "theory_categories": data.get("theory_categories", []),
             "page_title": f"{len(data['questions']) + len(data.get('theory_questions', []))} Python Interview Questions — Coding + Theory (FAANG) - getjob4u",
             "page_description": f"{len(data['questions'])} Python coding problems with worked solutions (Blind 75 + NeetCode 150) plus {len(data.get('theory_questions', []))} Python theory questions on OOP, decorators, generators, the GIL, async, exceptions, modules, and the standard library. Curated for FAANG interviews. Free, no signup.",
-            "keywords": "Python interview questions, Python coding interview questions, Python theory interview questions, Python OOP interview, Python decorators interview, Python generators interview, GIL interview question, Python async interview, asyncio interview, Python multithreading interview, dunder methods interview, MRO Python, FAANG Python questions, Python LeetCode questions, Blind 75 Python, NeetCode 150 Python, Google Python interview, Amazon Python interview, Meta Python interview, Microsoft Python interview, Apple Python interview, Python DSA questions, Python interview practice free",
+            "keywords": "Python interview questions, Python coding interview questions, Python theory interview questions, Python OOP interview, Python decorators interview, Python generators interview, GIL interview question, Python async interview, asyncio interview, Python multithreading interview, dunder methods interview, MRO Python, FAANG Python questions, Python LeetCode questions, Blind 75 Python, NeetCode 150 Python, Google Python interview, Amazon Python interview, Meta Python interview, Microsoft Python interview, Apple Python interview, Python DSA questions, Python interview practice free, Python data structures questions, Python algorithms questions, Python comprehensions interview, Python lambda interview, Python context manager interview, Python iterators interview, Python pickle interview, Python typing interview, Python pytest interview, Python pandas interview questions, Python numpy interview, Python coding test, Python interview cheat sheet, top 100 Python interview questions, Python interview for data science, Python interview for ML engineer, Python live coding interview, Python whiteboard interview questions, free Python LeetCode practice",
             "og_url": "/python-questions",
             "canonical_url": "/python-questions",
             "page_category": "python_questions",
@@ -477,7 +515,7 @@ def python_playground_page(request: Request):
         {
             "page_title": "Python Online Compiler — Run Python in your Browser — getjob4u",
             "page_description": "Free Python online compiler running fully in your browser via Pyodide (Python 3.12 + standard library — collections, heapq, itertools, functools, re, json). No signup, no server, no rate limits. Great for trying out interview solutions, learning Python, or quick scripting.",
-            "keywords": "python online compiler, python online editor, run python in browser, pyodide playground, free python interpreter, browser python, python webassembly, learn python online, python sandbox, python repl online, online python ide, python coding practice browser",
+            "keywords": "python online compiler, python online editor, run python in browser, pyodide playground, free python interpreter, browser python, python webassembly, learn python online, python sandbox, python repl online, online python ide, python coding practice browser, free python compiler online, python 3.12 online, python online without installation, online python interpreter free, python coding playground, python web sandbox, run python without install, python online for students, python online for beginners, python interview practice online, python online jupyter alternative, python WASM compiler, free pyodide IDE, online code execution python, code playground python, python online with stdlib, python data science online, learn python free browser, python tutorials online compiler, online python with numpy, online python with pandas, online python REPL, getjob4u python playground, free in-browser python",
             "og_url": "/python-playground",
             "canonical_url": "/python-playground",
             "page_category": "python_playground",
@@ -497,7 +535,7 @@ def feedback_page(request: Request):
         {
             "page_title": "Share Feedback - getjob4u",
             "page_description": "Help us improve getjob4u. Share your feedback, suggestions, and feature requests.",
-            "keywords": "getjob4u feedback, AI ML toolkit feedback, ATS scanner feedback, suggest a feature, free career tools feedback, contact getjob4u, report a bug, request a feature",
+            "keywords": "getjob4u feedback, AI ML toolkit feedback, ATS scanner feedback, suggest a feature, free career tools feedback, contact getjob4u, report a bug, request a feature, getjob4u review, rate getjob4u, share feedback getjob4u, AI career tool feedback, free job seeker tool feedback, resume scanner review, cold email tool review, python playground feedback, career roadmap feedback, send feedback to creator, getjob4u suggestions, user feedback form, career platform feedback, ATS resume review, AI ML platform feedback, getjob4u user reviews, feedback for indie developer, support getjob4u, request new feature getjob4u, idea submission getjob4u, getjob4u testimonial, getjob4u rating, free career tool rating, AI ML toolkit review, free resume scanner rating, helpful AI ML site, getjob4u community feedback",
             "og_url": "/feedback",
             "canonical_url": "/feedback",
             "page_category": "feedback",
@@ -522,7 +560,7 @@ def job_portals_page(request: Request):
             "total_portals": total_portals,
             "page_title": f"{total_portals}+ Best Job Portals (India · Global · Remote · Freelance) - getjob4u",
             "page_description": f"Hand-picked list of {total_portals} job portals where job seekers actually get callbacks — Naukri, LinkedIn, Wellfound, We Work Remotely, Indeed, plus Indian fresher boards, startup boards, country-specific (US/UK/EU/APAC) and freelance marketplaces. Free for job seekers.",
-            "keywords": "best job portals, best job sites india, job portals for freshers, job portals for experienced, remote job portals, work from home job portals, job sites india, job sites global, job sites usa, job sites uk, job sites canada, job sites australia, naukri vs linkedin, internshala alternative, wellfound jobs, we work remotely, remote ok, freelance job sites, upwork alternative, toptal review, startup job boards, faang job portals, tech job sites, women job portals, fresher job sites india, internship portals india, government job portals india",
+            "keywords": "best job portals, best job sites india, job portals for freshers, job portals for experienced, remote job portals, work from home job portals, job sites india, job sites global, job sites usa, job sites uk, job sites canada, job sites australia, naukri vs linkedin, internshala alternative, wellfound jobs, we work remotely, remote ok, freelance job sites, upwork alternative, toptal review, startup job boards, faang job portals, tech job sites, women job portals, fresher job sites india, internship portals india, government job portals india, AI ML job sites, data science job boards, machine learning job sites, generative AI job sites, LLM engineer job boards, MLOps job sites, AI job portals 2026, top job sites for tech, remote AI jobs, Hired alternative, BuiltIn jobs, AngelList alternative, FlexJobs review, Jobspresso alternative, Working Nomads, Indeed vs Naukri, job sites for women in tech, foundit (formerly Monster), Hirect app, Apna app, AI jobs Bangalore, AI jobs Hyderabad, AI jobs Pune, AI jobs Gurgaon, freelance ML jobs, contract data science jobs",
             "og_url": "/job-portals",
             "canonical_url": "/job-portals",
             "page_category": "job_portals",
@@ -545,7 +583,7 @@ def free_ai_tools_page(request: Request):
             "intro": data.get("intro", ""),
             "page_title": "50+ Free AI Tools (Video, PDF, Image, Code, Voice) - getjob4u",
             "page_description": "Hand-picked free AI tools across video generation, PDF tools, image gen, voice, code, presentations and more. All links verified, every tool has a real free tier.",
-            "keywords": "free AI tools, free AI tools 2026, best free AI tools, free AI video generation, free AI image generation, free AI PDF tools, free AI coding tools, free AI voice generator, free AI chatbot, free ChatGPT alternatives, free AI presentation generator, free AI summarizer, free AI writing tools, free AI design tools, free AI productivity tools, free AI for students, free AI without signup, free AI for resume, free AI logo maker, free AI music generator",
+            "keywords": "free AI tools, free AI tools 2026, best free AI tools, free AI video generation, free AI image generation, free AI PDF tools, free AI coding tools, free AI voice generator, free AI chatbot, free ChatGPT alternatives, free AI presentation generator, free AI summarizer, free AI writing tools, free AI design tools, free AI productivity tools, free AI for students, free AI without signup, free AI for resume, free AI logo maker, free AI music generator, free AI translator, free AI transcription, free AI mind map, free AI flowchart, free AI text to speech, free AI speech to text, free AI background remover, free AI image upscaler, free AI avatar generator, free AI headshot generator, free AI thumbnail maker, free AI SEO tools, free AI grammar checker, free AI paraphraser, free AI essay writer, free AI code reviewer, free AI debugger, free AI agents, free AI image editor, free AI website builder, free AI infographic maker, free Stable Diffusion online, free Midjourney alternative, free DALL-E alternative, free Gemini alternatives, free Claude alternatives",
             "og_url": "/free-ai-tools",
             "canonical_url": "/free-ai-tools",
             "page_category": "free_ai_tools",
@@ -568,7 +606,7 @@ def free_courses_page(request: Request):
             "intro": data.get("intro", ""),
             "page_title": "Free AI/ML/Data Science Courses with Certificates - getjob4u",
             "page_description": "Free online courses with certificates in AI, ML, Data Science, Data Analytics, and Generative AI from IBM, Google, Microsoft, Coursera, Udemy, freeCodeCamp, Kaggle, Hugging Face and more.",
-            "keywords": "free AI courses with certificate, free machine learning courses with certificate, free data science courses with certificate, free data analytics certificate, free generative AI courses, free Coursera courses, free Udemy courses, free IBM Cognitive Class, free Google AI courses, free Microsoft Learn, free Kaggle courses, free Hugging Face courses, free LangChain course, free LLM courses, free Python certification, free SQL course free certificate, Great Learning Academy free, Simplilearn SkillUp free, freeCodeCamp data science, free MLOps course, free PyTorch course, free TensorFlow course",
+            "keywords": "free AI courses with certificate, free machine learning courses with certificate, free data science courses with certificate, free data analytics certificate, free generative AI courses, free Coursera courses, free Udemy courses, free IBM Cognitive Class, free Google AI courses, free Microsoft Learn, free Kaggle courses, free Hugging Face courses, free LangChain course, free LLM courses, free Python certification, free SQL course free certificate, Great Learning Academy free, Simplilearn SkillUp free, freeCodeCamp data science, free MLOps course, free PyTorch course, free TensorFlow course, free deep learning specialization, free NLP course with certificate, free computer vision course free, free statistics course free certificate, free prompt engineering course, free AWS AI certification free, free Azure AI free, free GCP AI free, free Stanford ML course, free Harvard CS50 AI, free MIT AI course online, free DataCamp courses, free Pluralsight AI, free LinkedIn Learning AI, free DeepLearning.AI courses, free fast.ai course, free OpenAI tutorials, free RAG course free certificate, free Vector DB course, free agents course free, free LLMOps course, free AI ethics course",
             "og_url": "/free-courses",
             "canonical_url": "/free-courses",
             "page_category": "free_courses",
@@ -588,7 +626,7 @@ def about_page(request: Request):
         {
             "page_title": "About getjob4u - Built solo by Kuldeep Jeengar",
             "page_description": "About getjob4u - a free career toolkit for AI, ML and Data Science job seekers. Built solo by Kuldeep Jeengar to make the AI/ML job hunt fair for everyone.",
-            "keywords": "about getjob4u, Kuldeep Jeengar, indie founder data science, free AI ML toolkit creator, getjob4u story, who built getjob4u, AI career toolkit by Kuldeep Jeengar, solo founder data scientist",
+            "keywords": "about getjob4u, Kuldeep Jeengar, indie founder data science, free AI ML toolkit creator, getjob4u story, who built getjob4u, AI career toolkit by Kuldeep Jeengar, solo founder data scientist, getjob4u origin story, getjob4u mission, free AI ML toolkit, indie hacker data science, builder profile, getjob4u about page, AI ML career platform creator, getjob4u team, getjob4u founder, why getjob4u, getjob4u vision, free career platform builder, solo developer AI tools, self funded AI ML platform, getjob4u history, story behind getjob4u, getjob4u community, AI ML career advocate, free tools for job seekers, getjob4u philosophy, getjob4u values, getjob4u social impact, AI ML for everyone, fair AI ML job hunt, getjob4u contact founder, kuldeep jeengar data scientist, kuldeep jeengar linkedin, free AI ML platform india",
             "og_url": "/about",
             "canonical_url": "/about",
             "page_category": "about",
@@ -611,7 +649,7 @@ def privacy_page(request: Request):
         {
             "page_title": "Privacy Policy — getjob4u",
             "page_description": "How getjob4u collects, uses, and protects your data. Covers Google Analytics, Google AdSense, cookies, your rights under GDPR / CCPA / DPDP, and how to request deletion.",
-            "keywords": "getjob4u privacy policy, data privacy AI tools, GDPR privacy policy, CCPA privacy policy, DPDP India privacy policy, cookie policy, Google Analytics privacy, Google AdSense privacy, data deletion request",
+            "keywords": "getjob4u privacy policy, data privacy AI tools, GDPR privacy policy, CCPA privacy policy, DPDP India privacy policy, cookie policy, Google Analytics privacy, Google AdSense privacy, data deletion request, user data rights, personal data protection, third party cookies policy, opt out tracking, data retention policy, data processing notice, user consent policy, resume data privacy, ATS scanner data privacy, AI tool privacy notice, free tool privacy policy, EU privacy compliance, US privacy compliance, India DPDP Act 2023, right to be forgotten, data portability rights, secure data storage, privacy by design, no resume retention, anonymous analytics, cookieless tracking, ad personalization opt out, contact for privacy concerns, data controller info, processor info getjob4u, data security measures, getjob4u terms of use, getjob4u cookies info",
             "canonical_url": "/privacy",
             "og_url": "/privacy",
             "page_category": "privacy",
@@ -632,7 +670,7 @@ def contact_page(request: Request):
         {
             "page_title": "Contact getjob4u",
             "page_description": "Get in touch with getjob4u. Email getjob4u@gmail.com (launching soon), reach out to founder Kuldeep Jeengar on LinkedIn, or use our feedback form.",
-            "keywords": "contact getjob4u, getjob4u email, Kuldeep Jeengar LinkedIn, AI ML toolkit contact, getjob4u support, partnership getjob4u, hire Kuldeep Jeengar",
+            "keywords": "contact getjob4u, getjob4u email, Kuldeep Jeengar LinkedIn, AI ML toolkit contact, getjob4u support, partnership getjob4u, hire Kuldeep Jeengar, get in touch getjob4u, reach getjob4u team, getjob4u help center, talk to getjob4u, getjob4u customer support, getjob4u contact form, send message getjob4u, getjob4u feedback contact, collaboration getjob4u, sponsor getjob4u, advertise on getjob4u, business inquiry getjob4u, media inquiry getjob4u, press contact getjob4u, contact AI ML platform, contact resume scanner, contact career roadmap creator, contact career toolkit, reach AI ML toolkit creator, contact indie founder, AI ML platform partnerships, contact for guest post, write for getjob4u, contact for backlink, contact for affiliate, founder email getjob4u, getjob4u twitter, getjob4u social handles, getjob4u network",
             "og_url": "/contact",
             "canonical_url": "/contact",
             "page_category": "contact",

@@ -965,6 +965,11 @@ textarea { resize: vertical; min-height: 100px; }
   background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
   padding: 1.2rem 1.4rem;
   transition: border-color 0.15s, box-shadow 0.15s;
+  /* Skip rendering work for cards far off-screen. contain-intrinsic-size
+     reserves layout space so the scroll position stays stable. Huge perf win
+     on /python-questions where 100+ cards live in one DOM. */
+  content-visibility: auto;
+  contain-intrinsic-size: 0 220px;
 }
 .pyq-card:hover { border-color: rgba(124,92,255,0.4); box-shadow: var(--shadow-glow); }
 

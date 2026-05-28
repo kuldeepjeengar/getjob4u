@@ -4,19 +4,48 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="format-detection" content="telephone=no" />
-  <!-- HTML responses must always re-validate so visitors never see a stale
-       page after we ship a content/animation update. Static assets (css/js/img)
-       still cache normally via their ?v= query strings. -->
-  <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
-  <meta http-equiv="Pragma" content="no-cache" />
+  <!-- HTML responses cache for 5 minutes then re-validate. Repeat visits load
+       instantly from disk cache; freshly-shipped content/animation updates are
+       visible within 5 minutes (or immediately on Ctrl+F5). Static assets
+       (css/js/img) still cache normally via their ?v= query strings. -->
+  <meta http-equiv="Cache-Control" content="public, max-age=300, must-revalidate" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   {% if robots_noindex %}
   <meta name="robots" content="noindex, nofollow" />
+  <meta name="googlebot" content="noindex, nofollow" />
+  <meta name="bingbot" content="noindex, nofollow" />
   {% else %}
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="bingbot" content="index, follow" />
+  <meta name="slurp" content="index, follow" />
+  <meta name="duckduckbot" content="index, follow" />
   {% endif %}
   <meta name="author" content="getjob4u" />
+  <meta name="publisher" content="getjob4u" />
+  <meta name="copyright" content="getjob4u" />
+  <meta name="application-name" content="getjob4u" />
+  <meta name="apple-mobile-web-app-title" content="getjob4u" />
+  <meta name="generator" content="getjob4u" />
+  <meta name="rating" content="general" />
+  <meta name="distribution" content="global" />
+  <meta name="coverage" content="worldwide" />
+  <meta name="target" content="all" />
+  <meta name="audience" content="all" />
+  <meta name="HandheldFriendly" content="true" />
+  <meta name="MobileOptimized" content="width" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="referrer" content="origin-when-cross-origin" />
+  <meta name="revisit-after" content="7 days" />
+  <meta name="language" content="English" />
+  <meta http-equiv="content-language" content="en" />
+  <meta name="geo.region" content="IN" />
+  <meta name="geo.placename" content="India" />
+  <meta name="msapplication-TileColor" content="#7c5cff" />
+  <meta name="msapplication-navbutton-color" content="#7c5cff" />
+  <meta name="theme-color" content="#7c5cff" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#0b0b13" media="(prefers-color-scheme: dark)" />
   <meta name="keywords" content="{% block keywords %}{{ keywords | default('free ATS resume scanner, ATS resume checker, AI resume scanner, ML resume scanner, data science resume scanner, AI ML DS career toolkit, free interview prep, machine learning interview questions, data science interview questions, AI engineer interview, Python coding interview questions, FAANG interview prep, cold email generator, LinkedIn referral message, data science career roadmap, ML engineer roadmap, free AI courses with certificate, free machine learning courses, free data science courses, getjob4u') }}{% endblock %}" />
   
   <title>{% block title %}{{ page_title | default('getjob4u — Land Your AI/ML/DS Job') }}{% endblock %}</title>
@@ -49,6 +78,10 @@
   
   <!-- Canonical URL -->
   <link rel="canonical" href="https://getjob4u.com{% block canonical_url %}{{ canonical_url | default('/') }}{% endblock %}" />
+
+  <!-- hreflang — declares the page language to Google for international SEO -->
+  <link rel="alternate" hreflang="en" href="https://getjob4u.com{{ canonical_url | default('/') }}" />
+  <link rel="alternate" hreflang="x-default" href="https://getjob4u.com{{ canonical_url | default('/') }}" />
   
   <!-- Icons -->
   <link rel="icon" type="image/svg+xml" href="{{ url_for('static', path='/images/favicon.svg') }}" />
@@ -64,13 +97,15 @@
   <!-- Stylesheets -->
   <link rel="preload" as="style" href="{{ url_for('static', path='/css/style.css') }}?v={{ static_v('css/style.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', path='/css/style.css') }}?v={{ static_v('css/style.css') }}" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- Google Fonts loaded non-blocking (media=print swap trick). System fonts
+       render immediately; Inter/JetBrains swap in once the stylesheet arrives. -->
+  <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+        onload="this.rel='stylesheet'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  </noscript>
 
-  <!-- Google AdSense -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8170876893682596"
-       crossorigin="anonymous">
-  </script>
-  
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
   {
@@ -275,5 +310,11 @@
   <script src="{{ url_for('static', path='/js/analytics.js') }}?v={{ static_v('js/analytics.js') }}"></script>
   <script src="{{ url_for('static', path='/js/main.js') }}?v={{ static_v('js/main.js') }}"></script>
   {% block scripts %}{% endblock %}
+
+  <!-- Google AdSense — loaded last so it never blocks first paint, first
+       contentful paint, or first input. Still async + crossorigin per AdSense
+       policy. Render-blocking impact: zero. -->
+  <script async crossorigin="anonymous"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8170876893682596"></script>
 </body>
 </html>
