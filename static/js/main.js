@@ -8,6 +8,34 @@
     toggle.addEventListener('click', () => nav.classList.toggle('open'));
   }
 
+  // ---- Highlight the nav link for the current page ------------------
+  // Adds .is-current to the matching <a> in the top-level nav, the matching
+  // <a> inside a dropdown menu, and the parent group's toggle button (so
+  // "Python" or "Resources" lights up when on one of their child pages).
+  if (nav) {
+    const currentPath = (location.pathname || '/').replace(/\/+$/, '') || '/';
+    const links = nav.querySelectorAll('a[href]');
+    links.forEach((a) => {
+      const href = (a.getAttribute('href') || '').split('?')[0].split('#')[0];
+      if (!href.startsWith('/')) return;   // skip externals (LinkedIn etc.)
+      const linkPath = href.replace(/\/+$/, '') || '/';
+      const isMatch =
+        linkPath === currentPath ||
+        // Treat /blogs as active on /blogs/some-post too
+        (linkPath !== '/' && currentPath.startsWith(linkPath + '/'));
+      if (!isMatch) return;
+      a.classList.add('is-current');
+      a.setAttribute('aria-current', 'page');
+      // If this active link lives inside a dropdown, also light up its parent
+      // toggle button so the visitor sees which top-level section is active.
+      const group = a.closest('.nav-group');
+      if (group) {
+        const t = group.querySelector('.nav-group-toggle');
+        if (t) t.classList.add('is-current');
+      }
+    });
+  }
+
   // Nav dropdown groups (Python / Resources)
   // Hover behaviour comes from CSS. JS handles click (touch + keyboard),
   // Escape to close, and outside-click to close.

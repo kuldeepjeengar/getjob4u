@@ -97,12 +97,36 @@ p { margin: 0 0 0.8rem; }
 }
 .primary-nav > a:hover,
 .nav-group-toggle:hover { background: var(--bg-hover); color: var(--text); }
+
+/* Active nav item — shows which page / section the visitor is on.
+   Applied by main.js based on location.pathname.
+   - Top-level link  (ATS Scanner, Interview Tips, Blogs, About):  filled pill
+   - Group toggle    (Python, Resources): same filled pill when any child is active
+   - Dropdown child  (Python > Online Playground): subtle highlight inside the menu */
+.primary-nav > a.is-current,
+.nav-group-toggle.is-current {
+  background: rgba(124, 92, 255, 0.18);
+  color: #fff;
+  box-shadow: inset 0 0 0 1px rgba(124, 92, 255, 0.45);
+}
+.nav-group-menu a.is-current {
+  background: rgba(124, 92, 255, 0.16);
+  color: #fff;
+}
+
 .nav-cta {
   background: var(--grad);
   color: #0b0f1a !important;
   font-weight: 600 !important;
 }
 .nav-cta:hover { transform: translateY(-1px); }
+/* Contact CTA when active: invert to a glowing outlined pill so it's clearly
+   distinguishable from its default dark-on-gradient look. */
+.nav-cta.is-current {
+  background: rgba(124, 92, 255, 0.22) !important;
+  color: #fff !important;
+  box-shadow: inset 0 0 0 1.5px rgba(124, 92, 255, 0.6), 0 0 14px rgba(124, 92, 255, 0.35);
+}
 
 /* ----- Dropdown groups (desktop) ----- */
 .nav-group { position: relative; }

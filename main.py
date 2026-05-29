@@ -1141,3 +1141,21 @@ Crawl-delay: 10
 Sitemap: https://getjob4u.com/sitemap.xml
 Sitemap: https://getjob4u.com/blogs-sitemap.xml
 """
+
+
+@app.get("/ads.txt", response_class=PlainTextResponse)
+def ads_txt():
+    """Google AdSense ads.txt (IAB Authorized Digital Sellers).
+
+    Tells advertisers / programmatic platforms that Google AdSense is the only
+    authorized seller of inventory on getjob4u.com. Required by AdSense — until
+    this file is served from the root domain, AdSense shows an "Earnings at
+    risk" warning and may stop bidding on your inventory.
+
+    Field format (per https://iabtechlab.com/ads-txt/):
+        <ad system domain>, <publisher account ID>, <DIRECT|RESELLER>, <cert authority ID>
+
+    The cert authority ID `f08c47fec0942fa0` is Google's well-known TAG-ID;
+    the same value is used by every AdSense publisher.
+    """
+    return "google.com, pub-8170876893682596, DIRECT, f08c47fec0942fa0\n"
