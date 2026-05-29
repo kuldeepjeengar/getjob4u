@@ -40,4 +40,68 @@
     </div>
   </div>
 </section>
+
+<!-- CollectionPage with two nested ItemLists: curated YouTube channels and
+     free courses. Each channel is an Organization (its YouTube URL is the
+     subjectOf), each course a Course offered for free. Lets Google identify
+     this as a hand-picked learning hub rather than just a links page. -->
+{% set ns = namespace(flat=[]) %}
+{% for cat in categories %}{% for ch in cat.channels %}{% set ns.flat = ns.flat + [{'cat': cat.title, 'ch': ch}] %}{% endfor %}{% endfor %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Free AI / ML / Data Science Learning Resources",
+  "description": "Curated free YouTube channels and courses for AI, ML, and Data Science. Top creators and structured learning paths.",
+  "url": "https://getjob4u.com/youtube-resources",
+  "inLanguage": "en",
+  "isPartOf": { "@type": "WebSite", "name": "getjob4u", "url": "https://getjob4u.com" },
+  "about": { "@type": "Thing", "name": "Free learning resources for AI, ML, and Data Science" },
+  "mainEntity": [
+    {
+      "@type": "ItemList",
+      "name": "YouTube channels",
+      "numberOfItems": {{ ns.flat | length }},
+      "itemListElement": [
+        {% for x in ns.flat %}
+        {
+          "@type": "ListItem",
+          "position": {{ loop.index }},
+          "item": {
+            "@type": "Organization",
+            "name": {{ x.ch.name | tojson }},
+            "description": {{ x.ch.description | tojson }},
+            "url": {{ x.ch.url | tojson }},
+            "category": {{ x.cat | tojson }}
+          }
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "name": "Free courses",
+      "numberOfItems": {{ courses | length }},
+      "itemListElement": [
+        {% for c in courses %}
+        {
+          "@type": "ListItem",
+          "position": {{ loop.index }},
+          "item": {
+            "@type": "Course",
+            "name": {{ c.name | tojson }},
+            "description": {{ c.description | tojson }},
+            "url": {{ c.url | tojson }},
+            "provider": { "@type": "Organization", "name": {{ c.name | tojson }} },
+            "inLanguage": "en",
+            "isAccessibleForFree": true,
+            "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD", "category": "Free" }
+          }
+        }{% if not loop.last %},{% endif %}
+        {% endfor %}
+      ]
+    }
+  ]
+}
+</script>
 {% endblock %}

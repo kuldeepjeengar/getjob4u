@@ -42,6 +42,48 @@
     </article>
   </div>
 </section>
+
+<!-- CollectionPage + ItemList of CreativeWork — tells Google this page is a
+     curated set of downloadable resume templates, each a free CreativeWork.
+     Powers richer SERP cards ("3 sample resumes · Free · ATS-friendly"). -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Sample AI / ML / Data Science Resumes",
+  "description": "Three ATS-friendly resume templates — fresher, mid-level ML engineer, and AI/LLM engineer — with real structure and quantified impact.",
+  "url": "https://getjob4u.com/sample-resumes",
+  "inLanguage": "en",
+  "isPartOf": { "@type": "WebSite", "name": "getjob4u", "url": "https://getjob4u.com" },
+  "about": { "@type": "Thing", "name": "Resume templates for AI, ML, and Data Science roles" },
+  "mainEntity": {
+    "@type": "ItemList",
+    "name": "Sample resumes",
+    "numberOfItems": {{ resumes | length }},
+    "itemListElement": [
+      {% for r in resumes %}
+      {
+        "@type": "ListItem",
+        "position": {{ loop.index }},
+        "item": {
+          "@type": "CreativeWork",
+          "name": {{ r.title | tojson }},
+          "description": {{ r.summary | tojson }},
+          "url": "https://getjob4u.com/sample-resumes#tab-{{ r.id }}",
+          "creator": { "@type": "Organization", "name": "getjob4u", "url": "https://getjob4u.com" },
+          "publisher": { "@type": "Organization", "name": "getjob4u" },
+          "inLanguage": "en",
+          "isAccessibleForFree": true,
+          "license": "https://getjob4u.com/sample-resumes",
+          "audience": { "@type": "Audience", "audienceType": "Job seekers in AI, ML, and Data Science" },
+          "keywords": "resume template, ATS friendly, AI ML data science"
+        }
+      }{% if not loop.last %},{% endif %}
+      {% endfor %}
+    ]
+  }
+}
+</script>
 {% endblock %}
 
 {% block scripts %}

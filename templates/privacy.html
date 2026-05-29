@@ -156,4 +156,32 @@
     </div>
   </div>
 </section>
+
+<!-- WebPage schema for the privacy policy. schema.org has no PrivacyPolicy
+     type, so the convention is WebPage + about:Thing("Privacy Policy"). Google
+     uses dateModified on policy pages for the "Last updated" SERP annotation. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "@id": "https://getjob4u.com/privacy",
+  "name": "Privacy Policy",
+  "description": "How getjob4u collects, uses, and protects your data. Covers Google Analytics, Google AdSense, cookies, your rights under GDPR / CCPA / DPDP, and how to request deletion.",
+  "url": "https://getjob4u.com/privacy",
+  "dateModified": {{ last_updated | tojson }},
+  "inLanguage": "en",
+  "isPartOf": { "@type": "WebSite", "name": "getjob4u", "url": "https://getjob4u.com" },
+  "about": { "@type": "Thing", "name": "Privacy Policy" },
+  "publisher": {
+    "@type": "Organization",
+    "name": "getjob4u",
+    "url": "https://getjob4u.com",
+    "logo": { "@type": "ImageObject", "url": "https://getjob4u.com/static/images/favicon.svg" }
+  },
+  "mainContentOfPage": {
+    "@type": "WebPageElement",
+    "cssSelector": ".legal-content"
+  }
+}
+</script>
 {% endblock %}
